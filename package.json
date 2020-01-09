@@ -1,0 +1,19 @@
+{
+  "name": "Day Planner",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start":"node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ahmetbcakici/DayPlanner.git"
+  },
+  "author": "Ahmet Buğra Çakıcı",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ahmetbcakici/DayPlanner/issues"
+  },
+  "homepage": "https://github.com/ahmetbcakici/DayPlanner#readme"
+}
