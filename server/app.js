@@ -24,7 +24,8 @@ app.get('/task/get', (req, res) => {
 app.post('/task/insert', (req, res) => {
     User.findOne({ username: "ahmet" }).then((doc) => {
         doc.tasks.push({
-            title: req.query.title
+            title: req.query.title,
+            date: req.query.date
         });
         doc.save().then(() => res.end());
     });

@@ -44,7 +44,7 @@ class App extends Component {
 	postItem = e => {
 		if (e.key === 'Enter') {
 			axios
-				.post(`http://localhost:3001/task/insert?title=${document.getElementsByClassName('add-task')[0].value}`)
+				.post(`http://localhost:3001/task/insert?title=${document.getElementsByClassName('add-task')[0].value}&date=${new Date(Date.now()).toISOString()}`)
 				.then(() => {
 					this.getItem();
 					document.getElementsByClassName('add-task')[0].value = '';
@@ -109,8 +109,8 @@ class App extends Component {
 						<input
 							type="text"
 							className="add-task"
-							name=""
 							placeholder="Add new task"
+							style={{visibility:this.state.turnTodayVisibility === "hidden" ? "visible" : "hidden"}}
 							onKeyPress={this.postItem}
 						/>
 						<ul className="tasks">
