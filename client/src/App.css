@@ -1,3 +1,33 @@
+/* For Elements */
+
+body {
+    background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1053&q=80');
+    height: 100vh;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+
+/* For Elements */
+
+
+/* General Classes */
+
+.transparent-bg {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.transparent-color {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+
+/* General Classes */
+
+
+/* Tasks Card */
+
 ul.tasks {
     text-align: left;
     padding-left: 0;
@@ -10,3 +40,43 @@ ul.tasks>li {
     padding: 0.5rem;
     color: white;
 }
+
+.arrow {
+    font-size: 3rem;
+    height: 5rem !important;
+    position: absolute;
+    top: 50%;
+}
+
+.arrow:hover {
+    color: rgb(206, 211, 214);
+}
+
+.arrow-right {
+    left: 100%;
+    margin-left: 1rem;
+}
+
+.arrow-left {
+    right: 100%;
+    margin-right: 1rem;
+}
+
+.add-task {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid gray;
+    width: 100%;
+    margin-bottom: 1.5rem;
+}
+
+.add-task::placeholder {
+    color: rgba(41, 42, 41, 0.6);
+}
+
+.card {
+    width: 35% !important;
+}
+
+
+/* Tasks Card */

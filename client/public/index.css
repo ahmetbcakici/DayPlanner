@@ -1,0 +1,19 @@
+body {
+    overflow: hidden;
+}
+
+#sidebar {
+    margin-bottom: -5000px;
+    padding-bottom: 5000px;
+}
+
+footer {
+    z-index: -1;
+    text-align: center;
+    color: #343a40;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 2.5rem;
+    padding-top: 0.5rem;
+}
