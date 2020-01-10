@@ -17,7 +17,6 @@ mongoose.connect("mongodb://localhost:27017/DayPlanner", { useNewUrlParser: true
 
 app.get('/task/get', (req, res) => {
     User.findOne({ username: "ahmet" }).then((docs) => {
-        console.log(docs)
         res.send(docs);
     });
 });

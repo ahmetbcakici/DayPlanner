@@ -8,6 +8,11 @@ body {
     background-size: cover;
 }
 
+span>i:hover {
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.5);
+}
+
 
 /* For Elements */
 
@@ -76,6 +81,15 @@ ul.tasks>li {
 
 .card {
     width: 35% !important;
+}
+
+.turn-today {
+    font-size: 0.9rem;
+    color: #2fbcd8;
+}
+
+.turn-today:hover {
+    text-decoration: none;
 }
 
 

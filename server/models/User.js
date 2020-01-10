@@ -5,6 +5,7 @@ const TaskSchema = new Schema({
     title: String,
     color: String,
     status: String,
+    date: Date
 });
 
 const UserSchema = new Schema({
