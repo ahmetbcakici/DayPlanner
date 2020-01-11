@@ -116,8 +116,8 @@ ul.tasks>li:hover {
 }
 
 p>.fa-circle:hover {
-    font-size: 1.2rem;
-    text-shadow: 1px 1px rgba(0, 0, 0, 0.4);
+    font-size: 1.2rem !important;
+    text-shadow: 1px 1px rgba(0, 0, 0, 0.4) !important;
 }
 
 span>.fa-circle:hover {

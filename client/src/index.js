@@ -246,12 +246,37 @@ class App extends Component {
 							{this.state.usertasks.map(task => {
 								this.selectedDate();
 								if (task.date.substring(0, 10) == this.selectedDate()) {
-									return (
+									return task.status == 'uncompleted' ? (
 										<li key={task._id}>
 											<span>
 												<i
 													className="far fa-circle"
-													style={{ color: task.color,fontWeight:task.status == "completed" ? "bold" : "normal" }}
+													style={{
+														color: task.color,
+														fontWeight: task.status == 'completed' ? 'bold' : 'normal',
+													}}
+													onClick={() => this.completedStatus(task._id)}></i>{' '}
+											</span>
+											<span>{task.title}</span>
+											<span className="float-right">
+												<i
+													className="fas fa-pen mr-2"
+													onClick={() => this.onSetSidebarOpen(true, task._id)}></i>
+												<i
+													className="fas fa-trash-alt"
+													id={task._id}
+													onClick={this.deleteItem}></i>
+											</span>
+										</li>
+									) : (
+										<li key={task._id}>
+											<span>
+												<i
+													className="far fa-circle"
+													style={{
+														color: task.color,
+														fontWeight: task.status == 'completed' ? 'bold' : 'normal',
+													}}
 													onClick={() => this.completedStatus(task._id)}></i>{' '}
 											</span>
 											<span>{task.title}</span>
