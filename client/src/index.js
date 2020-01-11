@@ -253,11 +253,12 @@ class App extends Component {
 										<li key={task._id}>
 											<span>
 												<i
-													className="far fa-circle"
+													className={task.status == 'completed' ? 'far fa-check-circle' : 'far fa-circle'}
 													style={{
 														color: task.color,
-														fontWeight: task.status == 'completed' ? 'bold' : 'normal',
 													}}
+													onMouseEnter={null}
+													onMouseLeave={null}
 													onClick={() => this.completedStatus(task._id)}></i>{' '}
 											</span>
 											<span

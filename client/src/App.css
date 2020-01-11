@@ -125,7 +125,7 @@ p>.fa-circle:hover {
 }
 
 span>.fa-circle:hover {
-    font-weight: 700 !important;
+    /* font-weight: 700 !important; */
 }
 
 

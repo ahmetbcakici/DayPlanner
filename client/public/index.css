@@ -8,7 +8,7 @@ body {
 }
 
 footer {
-    z-index: -1;
+    /* z-index: -1; */
     text-align: center;
     color: #343a40;
     position: absolute;
