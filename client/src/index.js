@@ -44,7 +44,11 @@ class App extends Component {
 	postItem = e => {
 		if (e.key === 'Enter') {
 			axios
-				.post(`http://localhost:3001/task/insert?title=${document.getElementsByClassName('add-task')[0].value}&date=${new Date(Date.now()).toISOString()}`)
+				.post(
+					`http://localhost:3001/task/insert?title=${
+						document.getElementsByClassName('add-task')[0].value
+					}&date=${this.selectedDate()}` //new Date(Date.now()).toISOString()
+				)
 				.then(() => {
 					this.getItem();
 					document.getElementsByClassName('add-task')[0].value = '';
@@ -87,6 +91,50 @@ class App extends Component {
 		this.getDate();
 	};
 
+	selectedDate = () => {
+		let selectedDate = this.getDate().split(' ');
+		let monthNumber = '';
+		switch (selectedDate[1]) {
+			case 'Jan':
+				monthNumber = '01';
+				break;
+			case 'Feb':
+				monthNumber = '02';
+				break;
+			case 'Mar':
+				monthNumber = '03';
+				break;
+			case 'Apr':
+				monthNumber = '04';
+				break;
+			case 'May':
+				monthNumber = '05';
+				break;
+			case 'Jun':
+				monthNumber = '06';
+				break;
+			case 'Jul':
+				monthNumber = '07';
+				break;
+			case 'Aug':
+				monthNumber = '08';
+				break;
+			case 'Sep':
+				monthNumber = '09';
+				break;
+			case 'Oct':
+				monthNumber = '10';
+				break;
+			case 'Nov':
+				monthNumber = '11';
+				break;
+			case 'Dec':
+				monthNumber = '12';
+				break;
+		}
+		return selectedDate[3] + '-' + monthNumber + '-' + selectedDate[2];
+	};
+
 	render() {
 		return (
 			<div className="justify-content-center d-flex mt-5">
@@ -110,23 +158,31 @@ class App extends Component {
 							type="text"
 							className="add-task"
 							placeholder="Add new task"
-							style={{visibility:this.state.turnTodayVisibility === "hidden" ? "visible" : "hidden"}}
+							style={{ visibility: this.state.turnTodayVisibility === 'hidden' ? 'visible' : 'hidden' }}
 							onKeyPress={this.postItem}
 						/>
 						<ul className="tasks">
 							{this.state.usertasks.map(task => {
-								return (
-									<li key={task._id}>
-										<span>
-											<i class="far fa-circle"></i>{' '}
-										</span>
-										<span spellCheck="false">{task.title}</span>
-										<span className="float-right">
-											<i className="fas fa-pen mr-2" onClick={this.editHandle}></i>
-											<i className="fas fa-trash-alt" id={task._id} onClick={this.deleteItem}></i>
-										</span>
-									</li>
-								);
+								this.selectedDate();
+								if (task.date.substring(0, 10) == this.selectedDate()) {
+									// console.log("a:"+task.date)
+									// console.log("b:"+new Date(Date.now()).toISOString().substring(0,10))
+									return (
+										<li key={task._id}>
+											<span>
+												<i className="far fa-circle"></i>{' '}
+											</span>
+											<span>{task.title}</span>
+											<span className="float-right">
+												<i className="fas fa-pen mr-2" onClick={this.editHandle}></i>
+												<i
+													className="fas fa-trash-alt"
+													id={task._id}
+													onClick={this.deleteItem}></i>
+											</span>
+										</li>
+									);
+								}
 							})}
 						</ul>
 					</div>
