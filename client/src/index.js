@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import './App.css';
+import Sidebar from 'react-sidebar';
 
 class App extends Component {
 	state = {
@@ -10,6 +11,8 @@ class App extends Component {
 		taskEditable: 'false',
 		minusPlus: 0,
 		turnTodayVisibility: 'hidden',
+		sidebarOpen: false,
+		sidebarContent: '',
 	};
 
 	componentDidMount() {
@@ -135,9 +138,20 @@ class App extends Component {
 		return selectedDate[3] + '-' + monthNumber + '-' + selectedDate[2];
 	};
 
+	onSetSidebarOpen = (open, id) => {
+		this.setState({ sidebarContent: `<h1>${id}</h1>` });
+		this.setState({ sidebarOpen: open });
+	};
+
 	render() {
 		return (
 			<div className="justify-content-center d-flex mt-5">
+				<Sidebar
+					sidebar={this.state.sidebarContent}
+					open={this.state.sidebarOpen}
+					onSetOpen={this.onSetSidebarOpen}
+					pullRight="true"
+					styles={{ sidebar: { background: 'white', color: 'red',marginTop:"55px",opacity:".5" } }}></Sidebar>
 				<div className="card text-center transparent-bg" style={{ width: '30%' }}>
 					<div className="card-header">
 						<h3>{this.getDate()}</h3>
@@ -174,7 +188,10 @@ class App extends Component {
 											</span>
 											<span>{task.title}</span>
 											<span className="float-right">
-												<i className="fas fa-pen mr-2" onClick={this.editHandle}></i>
+												<i
+													className="fas fa-pen mr-2"
+													id={task._id}
+													onClick={() => this.onSetSidebarOpen(true, task._id)}></i>
 												<i
 													className="fas fa-trash-alt"
 													id={task._id}
