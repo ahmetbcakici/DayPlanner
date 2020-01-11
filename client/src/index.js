@@ -203,7 +203,7 @@ class App extends Component {
 									onClick={this.handleColorSelect}></i>
 								<i
 									className="far fa-circle pr-2 cursor-pointer"
-									style={{ color: 'Gold' }}
+									style={{ color: 'DarkOrange' }}
 									onClick={this.handleColorSelect}></i>
 							</p>
 							<button className="btn btn-success w-75" onClick={this.putItem}>

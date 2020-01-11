@@ -10,7 +10,8 @@ body {
 
 span>i:hover {
     cursor: pointer;
-    color: rgba(255, 255, 255, 0.5);
+    color: black;
+    /* color: rgba(255, 255, 255, 0.5); */
 }
 
 
@@ -44,10 +45,16 @@ ul.tasks {
 }
 
 ul.tasks>li {
-    background-color: gray;
+    background: rgba(255, 255, 255, 0.3);
     margin-bottom: 1rem;
     padding: 0.5rem;
-    color: white;
+    color: rgb(44, 42, 42);
+}
+
+ul.tasks>li:hover {
+    /* border: 1px solid; */
+    /* padding: 10px; */
+    box-shadow: 3px 3px 3px 3px #888888;
 }
 
 .arrow {
@@ -114,7 +121,7 @@ p>.fa-circle:hover {
 }
 
 span>.fa-circle:hover {
-    font-weight: 700;
+    font-weight: 700 !important;
 }
 
 
