@@ -27,7 +27,7 @@ app.get('/task/get', (req, res) => {
     }
 });
 
-app.post('/task/insert', (req, res) => {
+app.post('/task/post', (req, res) => {
     User.findOne({ username: "ahmet" }).then((doc) => {
         doc.tasks.push({
             title: req.query.title,
@@ -45,6 +45,10 @@ app.delete('/task/delete/:id', (req, res) => {
         doc.save().then(() => res.end());
     })
 });
+
+app.put('/task/put', (req, res) => {
+    console.log(req.query)
+})
 
 
 // Test request for add new user
