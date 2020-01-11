@@ -66,11 +66,14 @@ class App extends Component {
 					document.getElementsByClassName('put-task')[0].value
 				}&color=${this.state.selectedColor}`
 			)
-			.then(() => this.getItem());
+			.then(() => {
+				this.getItem();
+				this.setState({ selectedColor: '' });
+			});
 	};
 
 	deleteItem = e => {
-		axios.delete(`http://localhost:3001/task/delete/${e.target.id}`).then(() => this.getItem());
+		axios.delete(`http://localhost:3001/task/delete?id=${e.target.id}`).then(() => this.getItem());
 	};
 
 	minus = async () => {
@@ -246,7 +249,7 @@ class App extends Component {
 							{this.state.usertasks.map(task => {
 								this.selectedDate();
 								if (task.date.substring(0, 10) == this.selectedDate()) {
-									return task.status == 'uncompleted' ? (
+									return (
 										<li key={task._id}>
 											<span>
 												<i
@@ -257,29 +260,12 @@ class App extends Component {
 													}}
 													onClick={() => this.completedStatus(task._id)}></i>{' '}
 											</span>
-											<span>{task.title}</span>
-											<span className="float-right">
-												<i
-													className="fas fa-pen mr-2"
-													onClick={() => this.onSetSidebarOpen(true, task._id)}></i>
-												<i
-													className="fas fa-trash-alt"
-													id={task._id}
-													onClick={this.deleteItem}></i>
+											<span
+												className={
+													task.status == 'completed' ? 'text-decoration text-muted' : ''
+												}>
+												{task.title}
 											</span>
-										</li>
-									) : (
-										<li key={task._id}>
-											<span>
-												<i
-													className="far fa-circle"
-													style={{
-														color: task.color,
-														fontWeight: task.status == 'completed' ? 'bold' : 'normal',
-													}}
-													onClick={() => this.completedStatus(task._id)}></i>{' '}
-											</span>
-											<span>{task.title}</span>
 											<span className="float-right">
 												<i
 													className="fas fa-pen mr-2"

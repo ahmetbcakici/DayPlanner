@@ -32,6 +32,10 @@ span>i:hover {
     cursor: pointer;
 }
 
+.text-decoration {
+    text-decoration: line-through !important;
+}
+
 
 /* General Classes */
 

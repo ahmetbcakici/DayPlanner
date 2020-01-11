@@ -37,10 +37,10 @@ app.post('/task/post', (req, res) => {
     });
 });
 
-app.delete('/task/delete/:id', (req, res) => {
+app.delete('/task/delete', (req, res) => {
     User.findOne({ username: "ahmet" }).then((doc) => {
         doc.tasks.map(task => {
-            if (task.id === req.params.id) task.remove();
+            if (task.id === req.query.id) task.remove();
         })
         doc.save().then(() => res.end());
     })
@@ -60,8 +60,8 @@ app.put('/task/put', (req, res) => {
         User.findOne({ username: "ahmet" }).then((doc) => {
             doc.tasks.map(task => {
                 if (task.id === req.query.id) {
+                    if (req.query.color) task.color = req.query.color;
                     task.title = req.query.title;
-                    task.color = req.query.color;
                 }
             })
             doc.save().then(() => res.end());
