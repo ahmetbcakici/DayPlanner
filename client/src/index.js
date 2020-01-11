@@ -141,12 +141,8 @@ class App extends Component {
 
 	onSetSidebarOpen = async (open, id) => {
 		this.setState({ sidebarOpen: open });
-		if (!open) {
-			for (var element of document.getElementsByClassName('colors-area')[0].childNodes) {
-				element.style.fontSize = '1rem';
-				element.style.textShadow = '0px 0px rgba(0, 0, 0, 0)';
-			}
-		}else{
+		if (!open) this.clearColors();
+		else {
 			await this.state.usertasks.map(task => {
 				if (task._id === id) {
 					this.setState({ editingTask: task });
@@ -158,12 +154,25 @@ class App extends Component {
 					element.style.fontSize = '1.2rem';
 					element.style.textShadow = '1px 1px rgba(0, 0, 0, 0.4)';
 				}
-		}		
+		}
+	};
 
+	clearColors = () => {
+		for (var element of document.getElementsByClassName('colors-area')[0].childNodes) {
+			element.style.fontSize = '1rem';
+			element.style.textShadow = '0px 0px rgba(0, 0, 0, 0)';
+		}
 	};
 
 	handleColorSelect = e => {
 		this.setState({ selectedColor: e.target.style.color });
+		this.clearColors();
+		e.target.style.fontSize = '1.2rem';
+		e.target.style.textShadow = '1px 1px rgba(0, 0, 0, 0.4)';
+	};
+
+	completedStatus = id => {
+		axios.put(`http://localhost:3001/task/put?id=${id}`).then(() => this.getItem());
 	};
 
 	render() {
@@ -178,7 +187,7 @@ class App extends Component {
 							{/* <input type="hidden" name="" value={this.state.editingTask._id} /> */}
 							<input type="text" className="put-task w-75" />
 							<br />
-							<p className="colors-area text-left pl-5">
+							<p className="colors-area text-left pl-5" onChange={null}>
 								<span className="pr-2">Color:</span>
 								<i
 									className="far fa-circle pr-2 cursor-pointer"
@@ -240,7 +249,10 @@ class App extends Component {
 									return (
 										<li key={task._id}>
 											<span>
-												<i className="far fa-circle" style={{ color: task.color }}></i>{' '}
+												<i
+													className="far fa-circle"
+													style={{ color: task.color,fontWeight:task.status == "completed" ? "bold" : "normal" }}
+													onClick={() => this.completedStatus(task._id)}></i>{' '}
 											</span>
 											<span>{task.title}</span>
 											<span className="float-right">

@@ -47,15 +47,26 @@ app.delete('/task/delete/:id', (req, res) => {
 });
 
 app.put('/task/put', (req, res) => {
-    User.findOne({ username: "ahmet" }).then((doc) => {
-        doc.tasks.map(task => {
-            if (task.id === req.query.id) {
-                task.title = req.query.title;
-                task.color = req.query.color;
-            }
+    if (Object.keys(req.query).length < 2) {
+        User.findOne({ username: "ahmet" }).then((doc) => {
+            doc.tasks.map(task => {
+                if (task.id === req.query.id) {
+                    task.status = task.status == "uncompleted" ? "completed" : "uncompleted";
+                }
+            })
+            doc.save().then(() => res.end());
         })
-        doc.save().then(() => res.end());
-    })
+    } else {
+        User.findOne({ username: "ahmet" }).then((doc) => {
+            doc.tasks.map(task => {
+                if (task.id === req.query.id) {
+                    task.title = req.query.title;
+                    task.color = req.query.color;
+                }
+            })
+            doc.save().then(() => res.end());
+        })
+    }
 })
 
 
