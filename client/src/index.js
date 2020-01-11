@@ -10,7 +10,7 @@ class App extends Component {
 		usertasks: [],
 		minusPlus: 0,
 		turnTodayVisibility: 'hidden',
-		sidebarOpen: true,
+		sidebarOpen: false,
 		selectedColor: '',
 		editingTask: '',
 	};
@@ -49,12 +49,12 @@ class App extends Component {
 			axios
 				.post(
 					`http://localhost:3001/task/post?title=${
-						document.getElementsByClassName('add-task')[1].value
+						document.getElementsByClassName('add-task')[0].value
 					}&date=${this.selectedDate()}` //new Date(Date.now()).toISOString()
 				)
 				.then(() => {
 					this.getItem();
-					document.getElementsByClassName('add-task')[1].value = '';
+					document.getElementsByClassName('add-task')[0].value = '';
 				});
 		}
 	};
@@ -63,7 +63,7 @@ class App extends Component {
 		axios
 			.put(
 				`http://localhost:3001/task/put?id=${this.state.editingTask._id}&title=${
-					document.getElementsByClassName('add-task')[0].value
+					document.getElementsByClassName('put-task')[0].value
 				}&color=${this.state.selectedColor}`
 			)
 			.then(() => this.getItem());
@@ -141,12 +141,25 @@ class App extends Component {
 
 	onSetSidebarOpen = async (open, id) => {
 		this.setState({ sidebarOpen: open });
-		await this.state.usertasks.map(task => {
-			if (task._id === id) {
-				this.setState({ editingTask: task });
+		if (!open) {
+			for (var element of document.getElementsByClassName('colors-area')[0].childNodes) {
+				element.style.fontSize = '1rem';
+				element.style.textShadow = '0px 0px rgba(0, 0, 0, 0)';
 			}
-		});
-		document.getElementsByClassName('add-task')[0].value = this.state.editingTask.title;
+		}else{
+			await this.state.usertasks.map(task => {
+				if (task._id === id) {
+					this.setState({ editingTask: task });
+				}
+			});
+			document.getElementsByClassName('put-task')[0].value = this.state.editingTask.title;
+			for (var element of document.getElementsByClassName('colors-area')[0].childNodes)
+				if (element.style.color == this.state.editingTask.color) {
+					element.style.fontSize = '1.2rem';
+					element.style.textShadow = '1px 1px rgba(0, 0, 0, 0.4)';
+				}
+		}		
+
 	};
 
 	handleColorSelect = e => {
@@ -162,10 +175,10 @@ class App extends Component {
 							<br />
 							<h4>Edit your task</h4>
 							<br />
-							<input type="hidden" name="" value={this.state.editingTask._id} />
-							<input type="text" className="add-task w-75" />
+							{/* <input type="hidden" name="" value={this.state.editingTask._id} /> */}
+							<input type="text" className="put-task w-75" />
 							<br />
-							<p className="text-left pl-5">
+							<p className="colors-area text-left pl-5">
 								<span className="pr-2">Color:</span>
 								<i
 									className="far fa-circle pr-2 cursor-pointer"
@@ -233,7 +246,6 @@ class App extends Component {
 											<span className="float-right">
 												<i
 													className="fas fa-pen mr-2"
-													id={task._id}
 													onClick={() => this.onSetSidebarOpen(true, task._id)}></i>
 												<i
 													className="fas fa-trash-alt"

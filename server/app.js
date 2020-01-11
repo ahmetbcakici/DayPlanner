@@ -47,11 +47,6 @@ app.delete('/task/delete/:id', (req, res) => {
 });
 
 app.put('/task/put', (req, res) => {
-    // console.log("cus")
-    // User.findByIdAndUpdate(req.query.id, { title: "bomba" }, err => {
-    //     if (err) throw err;
-    //     console.log("suc")
-    // })
     User.findOne({ username: "ahmet" }).then((doc) => {
         doc.tasks.map(task => {
             if (task.id === req.query.id) {

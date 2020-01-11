@@ -71,7 +71,8 @@ ul.tasks>li {
     margin-right: 1rem;
 }
 
-.add-task {
+.add-task,
+.put-task {
     background: transparent;
     border: none;
     border-bottom: 1px solid gray;
