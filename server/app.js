@@ -56,6 +56,7 @@ app.put('/task/put', (req, res) => {
         doc.tasks.map(task => {
             if (task.id === req.query.id) {
                 task.title = req.query.title;
+                task.color = req.query.color;
             }
         })
         doc.save().then(() => res.end());

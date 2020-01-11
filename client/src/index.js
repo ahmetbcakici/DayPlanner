@@ -11,7 +11,7 @@ class App extends Component {
 		minusPlus: 0,
 		turnTodayVisibility: 'hidden',
 		sidebarOpen: true,
-		// sidebarContent: '',
+		selectedColor: '',
 		editingTask: '',
 	};
 
@@ -60,8 +60,13 @@ class App extends Component {
 	};
 
 	putItem = () => {
-		axios.put(`http://localhost:3001/task/put?id=${this.state.editingTask._id}&title=${document.getElementsByClassName('add-task')[0].value}`).then(() => this.getItem());
-		// console.log(e.parent)
+		axios
+			.put(
+				`http://localhost:3001/task/put?id=${this.state.editingTask._id}&title=${
+					document.getElementsByClassName('add-task')[0].value
+				}&color=${this.state.selectedColor}`
+			)
+			.then(() => this.getItem());
 	};
 
 	deleteItem = e => {
@@ -144,6 +149,10 @@ class App extends Component {
 		document.getElementsByClassName('add-task')[0].value = this.state.editingTask.title;
 	};
 
+	handleColorSelect = e => {
+		this.setState({ selectedColor: e.target.style.color });
+	};
+
 	render() {
 		return (
 			<div className="justify-content-center d-flex mt-5">
@@ -154,21 +163,30 @@ class App extends Component {
 							<h4>Edit your task</h4>
 							<br />
 							<input type="hidden" name="" value={this.state.editingTask._id} />
-							<input
-								type="text"
-								className="add-task w-75"
-								// placeholder={this.state.editingTask.title}
-								// value={this.state.editingTask.title}
-							/>
+							<input type="text" className="add-task w-75" />
 							<br />
 							<p className="text-left pl-5">
 								<span className="pr-2">Color:</span>
-								<i className="far fa-circle text-danger pr-2"></i>
-								<i className="far fa-circle text-success pr-2"></i>
-								<i className="far fa-circle text-primary pr-2"></i>
-								<i className="far fa-circle text-warning pr-2"></i>
+								<i
+									className="far fa-circle pr-2 cursor-pointer"
+									style={{ color: 'LimeGreen' }}
+									onClick={this.handleColorSelect}></i>
+								<i
+									className="far fa-circle pr-2 cursor-pointer"
+									style={{ color: 'Crimson' }}
+									onClick={this.handleColorSelect}></i>
+								<i
+									className="far fa-circle pr-2 cursor-pointer"
+									style={{ color: 'DodgerBlue' }}
+									onClick={this.handleColorSelect}></i>
+								<i
+									className="far fa-circle pr-2 cursor-pointer"
+									style={{ color: 'Gold' }}
+									onClick={this.handleColorSelect}></i>
 							</p>
-							<button className="btn btn-success w-75" onClick={this.putItem}>Save Changes</button>
+							<button className="btn btn-success w-75" onClick={this.putItem}>
+								Save Changes
+							</button>
 						</div>
 					}
 					open={this.state.sidebarOpen}
@@ -206,12 +224,10 @@ class App extends Component {
 							{this.state.usertasks.map(task => {
 								this.selectedDate();
 								if (task.date.substring(0, 10) == this.selectedDate()) {
-									// console.log("a:"+task.date)
-									// console.log("b:"+new Date(Date.now()).toISOString().substring(0,10))
 									return (
 										<li key={task._id}>
 											<span>
-												<i className="far fa-circle"></i>{' '}
+												<i className="far fa-circle" style={{ color: task.color }}></i>{' '}
 											</span>
 											<span>{task.title}</span>
 											<span className="float-right">

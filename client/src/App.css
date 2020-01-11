@@ -27,6 +27,10 @@ span>i:hover {
     color: rgba(255, 255, 255, 0.5);
 }
 
+.cursor-pointer {
+    cursor: pointer;
+}
+
 
 /* General Classes */
 
@@ -97,6 +101,20 @@ ul.tasks>li {
 
 
 /* Sidebar */
+
+.selected-effect {
+    font-size: 1.2rem;
+    text-shadow: 1px 1px rgba(0, 0, 0, 0.4);
+}
+
+p>.fa-circle:hover {
+    font-size: 1.2rem;
+    text-shadow: 1px 1px rgba(0, 0, 0, 0.4);
+}
+
+span>.fa-circle:hover {
+    font-weight: 700;
+}
 
 
 /* Sidebar */
