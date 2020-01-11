@@ -60,7 +60,7 @@ class App extends Component {
 	};
 
 	putItem = () => {
-		axios.put(`http://localhost:3001/task/put?id=${this.state.editingTask._id}`).then(() => this.getItem());
+		axios.put(`http://localhost:3001/task/put?id=${this.state.editingTask._id}&title=${document.getElementsByClassName('add-task')[0].value}`).then(() => this.getItem());
 		// console.log(e.parent)
 	};
 
