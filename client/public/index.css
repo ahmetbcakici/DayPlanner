@@ -2,11 +2,6 @@ body {
     overflow: hidden;
 }
 
-#sidebar {
-    margin-bottom: -5000px;
-    padding-bottom: 5000px;
-}
-
 footer {
     /* z-index: -1; */
     text-align: center;

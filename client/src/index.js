@@ -153,7 +153,7 @@ class App extends Component {
 			});
 			document.getElementsByClassName('put-task')[0].value = this.state.editingTask.title;
 			for (var element of document.getElementsByClassName('colors-area')[0].childNodes)
-				if (element.style.color == this.state.editingTask.color) {
+				if (element.style.color === this.state.editingTask.color) {
 					element.style.fontSize = '1.2rem';
 					element.style.textShadow = '1px 1px rgba(0, 0, 0, 0.4)';
 				}
@@ -220,7 +220,6 @@ class App extends Component {
 					styles={{
 						sidebar: { background: 'rgba(255, 255, 255, 0.5)', marginTop: '55px', width: '25%' },
 					}}>
-					l
 				</Sidebar>
 				<div className="card text-center transparent-bg" style={{ width: '30%' }}>
 					<div className="card-header">
@@ -248,12 +247,12 @@ class App extends Component {
 						<ul className="tasks">
 							{this.state.usertasks.map(task => {
 								this.selectedDate();
-								if (task.date.substring(0, 10) == this.selectedDate()) {
+								if (task.date.substring(0, 10) === this.selectedDate()) {
 									return (
 										<li key={task._id}>
 											<span>
 												<i
-													className={task.status == 'completed' ? 'far fa-check-circle' : 'far fa-circle'}
+													className={task.status === 'completed' ? 'far fa-check-circle' : 'far fa-circle'}
 													style={{
 														color: task.color,
 													}}
@@ -263,7 +262,7 @@ class App extends Component {
 											</span>
 											<span
 												className={
-													task.status == 'completed' ? 'text-decoration text-muted' : ''
+													task.status === 'completed' ? 'text-decoration text-muted' : ''
 												}>
 												{task.title}
 											</span>

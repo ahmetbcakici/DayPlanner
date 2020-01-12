@@ -43,10 +43,17 @@ span>i:hover {
 /* Tasks Card */
 
 ul.tasks {
+    max-height: 400px !important;
+    overflow: hidden !important;
+    scrollbar-width: none;
+    overflow-y: scroll !important;
     text-align: left;
     padding-left: 0;
     list-style-type: none;
 }
+
+
+/* Optional: show position indicator in red */
 
 ul.tasks>li {
     background: rgba(255, 255, 255, 0.3);
