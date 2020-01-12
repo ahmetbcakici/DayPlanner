@@ -45,13 +45,10 @@ class App extends Component {
 	};
 
 	postItem = e => {
-		if (e.key === 'Enter') {
+		if (e.key === 'Enter' && e.target.value !== '') {
+			// console.log(e.target.value);
 			axios
-				.post(
-					`http://localhost:3001/task/post?title=${
-						document.getElementsByClassName('add-task')[0].value
-					}&date=${this.selectedDate()}` //new Date(Date.now()).toISOString()
-				)
+				.post(`http://localhost:3001/task/post?title=${e.target.value}&date=${this.selectedDate()}`)
 				.then(() => {
 					this.getItem();
 					document.getElementsByClassName('add-task')[0].value = '';
@@ -219,8 +216,7 @@ class App extends Component {
 					pullRight="true"
 					styles={{
 						sidebar: { background: 'rgba(255, 255, 255, 0.5)', marginTop: '55px', width: '25%' },
-					}}>
-				</Sidebar>
+					}}></Sidebar>
 				<div className="card text-center transparent-bg" style={{ width: '30%' }}>
 					<div className="card-header">
 						<h3>{this.getDate()}</h3>
@@ -252,7 +248,11 @@ class App extends Component {
 										<li key={task._id}>
 											<span>
 												<i
-													className={task.status === 'completed' ? 'far fa-check-circle' : 'far fa-circle'}
+													className={
+														task.status === 'completed'
+															? 'far fa-check-circle'
+															: 'far fa-circle'
+													}
 													style={{
 														color: task.color,
 													}}
