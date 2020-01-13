@@ -1,7 +1,6 @@
-import React,{Component} from 'react';
+import React, { Component } from 'react';
 import axios from 'axios';
 import './App.css';
-import Navbar from './components/Navbar';
 import Sidebar from 'react-sidebar';
 
 export default class App extends Component {
@@ -16,6 +15,13 @@ export default class App extends Component {
 	};
 
 	componentDidMount() {
+		document.body.style = `
+		background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1053&q=80');
+		height: 100vh;
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: cover;
+	`;
 		this.getItem();
 	}
 
@@ -47,7 +53,7 @@ export default class App extends Component {
 	postItem = e => {
 		if (e.key === 'Enter' && e.target.value !== '') {
 			axios
-				.post(`http://localhost:3001/task/post?title=${e.target.value}&date=${this.selectedDate()}`)
+				.post(`http://localhost:3001/task/post`, { title: e.target.value, date: this.selectedDate() })
 				.then(() => {
 					this.getItem();
 					document.getElementsByClassName('add-task')[0].value = '';
@@ -57,11 +63,11 @@ export default class App extends Component {
 
 	putItem = () => {
 		axios
-			.put(
-				`http://localhost:3001/task/put?id=${this.state.editingTask._id}&title=${
-					document.getElementsByClassName('put-task')[0].value
-				}&color=${this.state.selectedColor}`
-			)
+			.put(`http://localhost:3001/task/put`, {
+				id: this.state.editingTask._id,
+				title: document.getElementsByClassName('put-task')[0].value,
+				color: this.state.selectedColor,
+			})
 			.then(() => {
 				this.getItem();
 				this.setState({ selectedColor: '' });
@@ -69,7 +75,7 @@ export default class App extends Component {
 	};
 
 	deleteItem = e => {
-		axios.delete(`http://localhost:3001/task/delete?id=${e.target.id}`).then(() => this.getItem());
+		axios.delete(`http://localhost:3001/task/delete`, { data: { id: e.target.id } }).then(() => this.getItem());
 	};
 
 	minus = async () => {
@@ -171,118 +177,115 @@ export default class App extends Component {
 	};
 
 	completedStatus = id => {
-		axios.put(`http://localhost:3001/task/put?id=${id}`).then(() => this.getItem());
+		axios.put(`http://localhost:3001/task/put`, { id }).then(() => this.getItem());
 	};
 
 	render() {
 		return (
-			<div>
-				<Navbar />
-				<div className="justify-content-center d-flex mt-5">
-					<Sidebar
-						sidebar={
-							<div className="text-center">
-								<br />
-								<h4>Edit your task</h4>
-								<br />
-								<input type="text" className="put-task w-75" />
-								<br />
-								<p className="colors-area text-left pl-5" onChange={null}>
-									<span className="pr-2">Color:</span>
-									<i
-										className="far fa-circle pr-2 cursor-pointer"
-										style={{ color: 'LimeGreen' }}
-										onClick={this.handleColorSelect}></i>
-									<i
-										className="far fa-circle pr-2 cursor-pointer"
-										style={{ color: 'Crimson' }}
-										onClick={this.handleColorSelect}></i>
-									<i
-										className="far fa-circle pr-2 cursor-pointer"
-										style={{ color: 'DodgerBlue' }}
-										onClick={this.handleColorSelect}></i>
-									<i
-										className="far fa-circle pr-2 cursor-pointer"
-										style={{ color: 'DarkOrange' }}
-										onClick={this.handleColorSelect}></i>
-								</p>
-								<button className="btn btn-success w-75" onClick={this.putItem}>
-									Save Changes
-								</button>
-							</div>
-						}
-						open={this.state.sidebarOpen}
-						onSetOpen={this.onSetSidebarOpen}
-						pullRight="true"
-						styles={{
-							sidebar: { background: 'rgba(255, 255, 255, 0.5)', marginTop: '55px', width: '25%' },
-						}}></Sidebar>
-					<div className="card text-center transparent-bg" style={{ width: '30%' }}>
-						<div className="card-header">
-							<h3>{this.getDate()}</h3>
-							<span className="text-center" style={{ visibility: this.state.turnTodayVisibility }}>
-								<a href="#" className="turn-today" onClick={this.handleTurnToday}>
-									Turn Today
-								</a>
-							</span>
+			<div className="justify-content-center d-flex mt-5">
+				<Sidebar
+					sidebar={
+						<div className="text-center">
+							<br />
+							<h4>Edit your task</h4>
+							<br />
+							<input type="text" className="put-task w-75" />
+							<br />
+							<p className="colors-area text-left pl-5" onChange={null}>
+								<span className="pr-2">Color:</span>
+								<i
+									className="far fa-circle pr-2 cursor-pointer"
+									style={{ color: 'LimeGreen' }}
+									onClick={this.handleColorSelect}></i>
+								<i
+									className="far fa-circle pr-2 cursor-pointer"
+									style={{ color: 'Crimson' }}
+									onClick={this.handleColorSelect}></i>
+								<i
+									className="far fa-circle pr-2 cursor-pointer"
+									style={{ color: 'DodgerBlue' }}
+									onClick={this.handleColorSelect}></i>
+								<i
+									className="far fa-circle pr-2 cursor-pointer"
+									style={{ color: 'DarkOrange' }}
+									onClick={this.handleColorSelect}></i>
+							</p>
+							<button className="btn btn-success w-75" onClick={this.putItem}>
+								Save Changes
+							</button>
 						</div>
-						<div className="card-body text-left" style={{ height: '100%' }}>
-							<a href="#" className="arrow arrow-right transparent-color" onClick={this.minus}>
-								<i className="fas fa-chevron-right"></i>
+					}
+					open={this.state.sidebarOpen}
+					onSetOpen={this.onSetSidebarOpen}
+					pullRight="true"
+					styles={{
+						sidebar: { background: 'rgba(255, 255, 255, 0.5)', marginTop: '55px', width: '25%' },
+					}}></Sidebar>
+				<div className="card text-center transparent-bg" style={{ width: '30%' }}>
+					<div className="card-header">
+						<h3>{this.getDate()}</h3>
+						<span className="text-center" style={{ visibility: this.state.turnTodayVisibility }}>
+							<a href="#" className="turn-today" onClick={this.handleTurnToday}>
+								Turn Today
 							</a>
-							<a href="#" className="arrow arrow-left transparent-color" onClick={this.plus}>
-								<i className="fas fa-chevron-left"></i>
-							</a>
-							<input
-								type="text"
-								className="add-task"
-								placeholder="Add new task"
-								style={{
-									visibility: this.state.turnTodayVisibility === 'hidden' ? 'visible' : 'hidden',
-								}}
-								onKeyPress={this.postItem}
-							/>
-							<ul className="tasks">
-								{this.state.usertasks.map(task => {
-									this.selectedDate();
-									if (task.date.substring(0, 10) === this.selectedDate()) {
-										return (
-											<li key={task._id}>
-												<span>
-													<i
-														className={
-															task.status === 'completed'
-																? 'far fa-check-circle'
-																: 'far fa-circle'
-														}
-														style={{
-															color: task.color,
-														}}
-														onMouseEnter={null}
-														onMouseLeave={null}
-														onClick={() => this.completedStatus(task._id)}></i>{' '}
-												</span>
-												<span
+						</span>
+					</div>
+					<div className="card-body text-left" style={{ height: '100%' }}>
+						<a href="#" className="arrow arrow-right transparent-color" onClick={this.minus}>
+							<i className="fas fa-chevron-right"></i>
+						</a>
+						<a href="#" className="arrow arrow-left transparent-color" onClick={this.plus}>
+							<i className="fas fa-chevron-left"></i>
+						</a>
+						<input
+							type="text"
+							className="add-task"
+							placeholder="Add new task"
+							style={{
+								visibility: this.state.turnTodayVisibility === 'hidden' ? 'visible' : 'hidden',
+							}}
+							onKeyPress={this.postItem}
+						/>
+						<ul className="tasks">
+							{this.state.usertasks.map(task => {
+								this.selectedDate();
+								if (task.date.substring(0, 10) === this.selectedDate()) {
+									return (
+										<li key={task._id}>
+											<span>
+												<i
 													className={
-														task.status === 'completed' ? 'text-decoration text-muted' : ''
-													}>
-													{task.title}
-												</span>
-												<span className="float-right">
-													<i
-														className="fas fa-pen mr-2"
-														onClick={() => this.onSetSidebarOpen(true, task._id)}></i>
-													<i
-														className="fas fa-trash-alt"
-														id={task._id}
-														onClick={this.deleteItem}></i>
-												</span>
-											</li>
-										);
-									}
-								})}
-							</ul>
-						</div>
+														task.status === 'completed'
+															? 'far fa-check-circle'
+															: 'far fa-circle'
+													}
+													style={{
+														color: task.color,
+													}}
+													onMouseEnter={null}
+													onMouseLeave={null}
+													onClick={() => this.completedStatus(task._id)}></i>{' '}
+											</span>
+											<span
+												className={
+													task.status === 'completed' ? 'text-decoration text-muted' : ''
+												}>
+												{task.title}
+											</span>
+											<span className="float-right">
+												<i
+													className="fas fa-pen mr-2"
+													onClick={() => this.onSetSidebarOpen(true, task._id)}></i>
+												<i
+													className="fas fa-trash-alt"
+													id={task._id}
+													onClick={this.deleteItem}></i>
+											</span>
+										</li>
+									);
+								}
+							})}
+						</ul>
 					</div>
 				</div>
 			</div>
