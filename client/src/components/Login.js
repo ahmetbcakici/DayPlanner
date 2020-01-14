@@ -84,7 +84,15 @@ export default class Login extends Component {
 					</label>
 				</div>
 				<button class="btn btn-primary w-100">Submit</button>
-				{this.state.ErrorAlert ? <ErrorAlert msg={<span><strong>Error!</strong> Username or password are not correct!</span>}/> : null}
+				{this.state.ErrorAlert ? (
+					<ErrorAlert
+						msg={
+							<span>
+								<strong>Error!</strong> Username or password are not correct!
+							</span>
+						}
+					/>
+				) : null}
 			</form>
 		);
 	}
