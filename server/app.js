@@ -5,99 +5,18 @@ const bodyParser = require('body-parser');
 
 const app = express();
 
-// Models
-const User = require('./models/User');
-
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
+app.use("/task", require("./routes/task"));
+app.use("/user", require("./routes/user"));
 
 mongoose.connect('mongodb://localhost:27017/DayPlanner', { useNewUrlParser: true, useUnifiedTopology: true }, err => {
-	if (err) throw err;
-	console.log('Mongoose connected!');
-});
-
-app.get('/task/get', (req, res) => {
-	if (req.query.date) {
-		// User.findOne({ username: "ahmet" }).then((docs) => {
-		//     res.send(docs);
-		// });
-	} else {
-		User.findOne({ username: 'ahmet' }).then(docs => {
-			res.send(docs);
-		});
-	}
-});
-
-app.post('/task/post', (req, res) => {
-	User.findOne({ username: 'ahmet' }).then(doc => {
-		doc.tasks.push({
-			title: req.body.title,
-			date: req.body.date,
-		});
-		doc.save().then(() => res.end());
-	});
-});
-
-app.delete('/task/delete', (req, res) => {
-	User.findOne({ username: 'ahmet' }).then(doc => {
-		doc.tasks.map(task => {
-			if (task.id === req.body.id) task.remove();
-		});
-		doc.save().then(() => res.end());
-	});
-});
-
-app.put('/task/put', (req, res) => {
-	if (Object.keys(req.body).length < 2) {
-		User.findOne({ username: 'ahmet' }).then(doc => {
-			doc.tasks.map(task => {
-				if (task.id === req.body.id) {
-					task.status = task.status == 'uncompleted' ? 'completed' : 'uncompleted';
-				}
-			});
-			doc.save().then(() => res.end());
-		});
-	} else {
-		User.findOne({ username: 'ahmet' }).then(doc => {
-			doc.tasks.map(task => {
-				if (task.id === req.body.id) {
-					if (req.body.color) task.color = req.body.color;
-					task.title = req.body.title;
-				}
-			});
-			doc.save().then(() => res.end());
-		});
-	}
-});
-
-// Test request for add new user
-app.get('/test', (req, res) => {
-	const newrecord = new User({
-		username: 'mehmet',
-		password: '123',
-	});
-	newrecord.save(err => {
-		if (err) throw err;
-		console.log('SAVED!');
-	});
-});
-
-// Test request for add new task to an user
-app.get('/test/addtask', (req, res) => {
-	User.findOne({ username: 'ahmet' }).then(doc => {
-		doc.tasks.push({
-			title: 'you should make perfect your linkedin profile',
-			color: 'red',
-			status: 'active',
-		});
-		doc.save().then(() => {
-			console.log('oktur');
-		});
-	});
+    if (err) throw err;
+    console.log('Mongoose connected!');
 });
 
 app.listen(3001 || process.env.PORT, err => {
-	if (err) throw err;
-	console.log('Server is running now!');
+    if (err) throw err;
+    console.log('Server is running now!');
 });

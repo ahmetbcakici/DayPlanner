@@ -12,6 +12,8 @@ export default class App extends Component {
 		sidebarOpen: false,
 		selectedColor: '',
 		editingTask: '',
+		taskToPost: '',
+		taskToPut: '',
 	};
 
 	componentDidMount() {
@@ -56,7 +58,7 @@ export default class App extends Component {
 				.post(`http://localhost:3001/task/post`, { title: e.target.value, date: this.selectedDate() })
 				.then(() => {
 					this.getItem();
-					document.getElementsByClassName('add-task')[0].value = '';
+					this.setState({taskToPost:''});
 				});
 		}
 	};
@@ -65,7 +67,7 @@ export default class App extends Component {
 		axios
 			.put(`http://localhost:3001/task/put`, {
 				id: this.state.editingTask._id,
-				title: document.getElementsByClassName('put-task')[0].value,
+				title: this.state.taskToPut,
 				color: this.state.selectedColor,
 			})
 			.then(() => {
@@ -76,6 +78,14 @@ export default class App extends Component {
 
 	deleteItem = e => {
 		axios.delete(`http://localhost:3001/task/delete`, { data: { id: e.target.id } }).then(() => this.getItem());
+	};
+
+	handleInputPostTask = e => {
+		this.setState({ taskToPost: e.target.value });
+	};
+
+	handleInputPutTask = e => {
+		this.setState({ taskToPut: e.target.value });
 	};
 
 	minus = async () => {
@@ -153,7 +163,7 @@ export default class App extends Component {
 					this.setState({ editingTask: task });
 				}
 			});
-			document.getElementsByClassName('put-task')[0].value = this.state.editingTask.title;
+			this.setState({ taskToPut: this.state.editingTask.title });
 			for (var element of document.getElementsByClassName('colors-area')[0].childNodes)
 				if (element.style.color === this.state.editingTask.color) {
 					element.style.fontSize = '1.2rem';
@@ -189,7 +199,12 @@ export default class App extends Component {
 							<br />
 							<h4>Edit your task</h4>
 							<br />
-							<input type="text" className="put-task w-75" />
+							<input
+								type="text"
+								className="put-task w-75"
+								onChange={this.handleInputPutTask}
+								value={this.state.taskToPut}
+							/>
 							<br />
 							<p className="colors-area text-left pl-5" onChange={null}>
 								<span className="pr-2">Color:</span>
@@ -241,6 +256,8 @@ export default class App extends Component {
 							type="text"
 							className="add-task"
 							placeholder="Add new task"
+							onChange={this.handleInputPostTask}
+							value={this.state.taskToPost}
 							style={{
 								visibility: this.state.turnTodayVisibility === 'hidden' ? 'visible' : 'hidden',
 							}}
