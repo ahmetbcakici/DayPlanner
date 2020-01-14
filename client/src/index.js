@@ -10,7 +10,6 @@ import Footer from './components/Footer';
 
 render(
 	<Router>
-		<Navbar />
 		<Switch>
 			<Route exact path="/" component={Homepage} />
 			<Route exact path="/tasks" component={App} />

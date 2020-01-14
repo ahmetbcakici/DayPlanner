@@ -4,12 +4,16 @@ import Register from './components/Register';
 import './Homepage.css';
 
 export default class Homepage extends Component {
-	state = {
-		formToRender: <Login/>,
-	};
-
 	constructor(props) {
 		super(props);
+	}
+
+	state = {
+		isLoginPage : false,
+	};
+
+	changePage = () => {
+		this.state.isLoginPage ? this.setState({isLoginPage : false}) : this.setState({isLoginPage : true})
 	}
 
 	componentDidMount() {
@@ -22,16 +26,11 @@ export default class Homepage extends Component {
         `;
 	}
 
-	loginFormHandle = () => {
-		alert('d');
-		this.setState({ formToRender: <Register /> });
-	};
-
 	render() {
 		return (
 			<div>
 				<div className="row mt-5">
-					<div onClick={this.loginFormHandle}
+					<div
 						className="col-6 justify-content-center d-flex"
 						style={{ 'border-right': '.1rem solid rgba(255, 255, 255, 0.5)' }}>
 						<h1
@@ -48,7 +47,7 @@ export default class Homepage extends Component {
 					<div
 						className="col-6 justify-content-center d-flex"
 						style={{ 'border-left': '.1rem solid rgba(255, 255, 255, 0.5)' }}>
-						{this.state.formToRender}
+						{this.state.isLoginPage ? <Login func={this.changePage}/> : <Register func={this.changePage}/>}
 					</div>
 				</div>
 			</div>
