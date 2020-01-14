@@ -13,6 +13,7 @@ const TaskSchema = new Schema({
 
 const UserSchema = new Schema({
     username: String,
+    mail: String,
     password: String,
     tasks: [TaskSchema]
 });

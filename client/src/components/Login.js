@@ -55,6 +55,7 @@ export default class Login extends Component {
 						placeholder="Username"
 						onChange={this.usernameChange}
 						value={this.state.username}
+						required
 					/>
 				</div>
 				<div class="form-group">
@@ -66,6 +67,7 @@ export default class Login extends Component {
 						placeholder="Password"
 						onChange={this.passwordChange}
 						value={this.state.password}
+						required
 					/>
 				</div>
 				<div class="form-group form-check">

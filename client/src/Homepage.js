@@ -29,7 +29,7 @@ export default class Homepage extends Component {
 	render() {
 		return (
 			<div>
-				<div className="row mt-5">
+				<div className="row" style={{'margin-top': '7rem'}}>
 					<div
 						className="col-6 justify-content-center d-flex"
 						style={{ 'border-right': '.1rem solid rgba(255, 255, 255, 0.5)' }}>
