@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
+var session;
 
 router.post('/login', (req, res) => {
 	User.findOne({ username: req.body.username, password: req.body.password }).then(docs => {
