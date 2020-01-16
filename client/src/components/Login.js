@@ -33,7 +33,8 @@ export default class Login extends Component {
 		axios
 			.post('http://localhost:3001/user/login', { username: this.state.username, password: this.state.password })
 			.then(response => {
-				this.setState({ redirect: true });
+				localStorage.setItem("key","value");
+				this.setState({ redirect: true });				
 			})
 			.catch(err => {
 				this.setState({ ErrorAlert: true });

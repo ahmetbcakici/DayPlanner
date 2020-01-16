@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
 // Middleware
 app.use(session({ secret: `ARaC](NlFW%W{f:~@6:q$:j}Y+'c%D`,saveUninitialized: true, resave: true,cookie:{expires:new Date(Date.now() + (60000 * 60 * 24 * 7))}}));//session expires one week later
