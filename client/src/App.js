@@ -194,7 +194,7 @@ export default class App extends Component {
 	};
 
 	setTimerScreen = e => {
-		this.setState({ isTimerScreen: <Timer id={e.target.id} /> });
+		this.setState({ isTimerScreen: <Timer id={e.target.id} tasks={this.state.usertasks}/> });
 	};
 
 	render() {
@@ -269,6 +269,7 @@ export default class App extends Component {
 								value={this.state.taskToPost}
 								style={
 									{
+										visibility : this.state.isTimerScreen ? 'hidden' : 'visible'
 										// visibility: this.state.turnTodayVisibility === 'hidden' ? 'visible' : 'hidden',
 									}
 								}

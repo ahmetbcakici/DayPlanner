@@ -2,20 +2,23 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const TaskSchema = new Schema({
-    title: String,
-    color: String,
-    status: {
-        type: String,
-        default: "uncompleted"
-    },
-    date: Date
+	title: String,
+	color: String,
+	status: {
+		type: String,
+		default: 'uncompleted',
+	},
+	date: Date,
 });
 
 const UserSchema = new Schema({
-    username: String,
-    mail: String,
-    password: String,
-    tasks: [TaskSchema]
+	username: String,
+	mail: String,
+	password: {
+		type: String,
+		select: false,
+	},
+	tasks: [TaskSchema],
 });
 
 module.exports = mongoose.model('user', UserSchema);
