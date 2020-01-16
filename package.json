@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start":"node server.js"
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -15,5 +15,6 @@
   "bugs": {
     "url": "https://github.com/ahmetbcakici/DayPlanner/issues"
   },
-  "homepage": "https://github.com/ahmetbcakici/DayPlanner#readme"
+  "homepage": "https://github.com/ahmetbcakici/DayPlanner#readme",
+  "dependencies": {}
 }

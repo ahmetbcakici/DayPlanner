@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect, Link } from 'react-router-dom';
 import axios from 'axios';
 
 export default class Register extends Component {
@@ -10,6 +11,7 @@ export default class Register extends Component {
 		username: '',
 		mail: '',
 		password: '',
+		redirect: false,
 	};
 
 	usernameChange = e => {
@@ -24,7 +26,8 @@ export default class Register extends Component {
 		this.setState({ password: e.target.value });
 	};
 
-	registerSubmitHandle = () => {
+	registerSubmitHandle = e => {
+		e.preventDefault();
 		axios
 			.post('http://localhost:3001/user/register', {
 				mail: this.state.mail,
@@ -40,8 +43,9 @@ export default class Register extends Component {
 	};
 
 	render() {
+		if (this.state.redirect) return <Redirect to="/tasks" />;
 		return (
-			<form className="w-75" action="#" onSubmit={this.registerSubmitHandle}>
+			<form className="w-75" onSubmit={this.registerSubmitHandle}>
 				<h4 className="text-center">Register Form</h4>
 				<hr />
 				<div class="form-group">
