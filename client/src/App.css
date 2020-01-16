@@ -1,18 +1,9 @@
 /* For Elements */
 
-
-/* body {
-    background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1053&q=80');
-    height: 100vh;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-} */
-
 span>i:hover {
     cursor: pointer;
-    color: black;
-    /* color: rgba(255, 255, 255, 0.5); */
+    /* color: black; */
+    color: rgba(255, 255, 255, 0.5);
 }
 
 
@@ -44,7 +35,8 @@ span>i:hover {
 /* Tasks Card */
 
 ul.tasks {
-    max-height: 23rem !important;
+    /* max-height: 23em !important; rem */
+    max-height: 50vh !important;
     overflow: hidden !important;
     scrollbar-width: none;
     overflow-y: scroll !important;

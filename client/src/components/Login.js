@@ -13,6 +13,7 @@ export default class Login extends Component {
 		password: '',
 		redirect: false,
 		ErrorAlert: false,
+		ErrorMsg: '',
 	};
 
 	usernameChange = e => {
@@ -33,11 +34,15 @@ export default class Login extends Component {
 		axios
 			.post('http://localhost:3001/user/login', { username: this.state.username, password: this.state.password })
 			.then(response => {
-				localStorage.setItem("key","value");
-				this.setState({ redirect: true });				
+				localStorage.setItem('key', 'value');
+				this.setState({ redirect: true });
 			})
 			.catch(err => {
-				this.setState({ ErrorAlert: true });
+				let temp_errormsg;
+				if (err.response.status === 400) temp_errormsg = 'Username or password are incorrect.';
+				else if (err.response.status === 404) temp_errormsg = 'User can not found.';
+				else temp_errormsg = 'Something went wrong.';
+				this.setState({ ErrorAlert: true, ErrorMsg: temp_errormsg });
 			});
 	};
 
@@ -89,7 +94,7 @@ export default class Login extends Component {
 					<ErrorAlert
 						msg={
 							<span>
-								<strong>Error!</strong> Username or password are not correct!
+								<strong>Attention !</strong> {this.state.ErrorMsg}
 							</span>
 						}
 					/>

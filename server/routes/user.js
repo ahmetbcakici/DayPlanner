@@ -4,42 +4,39 @@ const bcrypt = require('bcryptjs');
 const router = express.Router();
 const User = require('../models/User');
 
-var hashPass = new Promise(function(res, rej) {
-	bcrypt.genSalt(10, (err, salt) => {
-		if (err) throw err;
-		bcrypt.hash('123', salt, async (err, hash) => {
+const hashPass = purepass => {
+	return new Promise(function(res, rej) {
+		bcrypt.genSalt(10, (err, salt) => {
 			if (err) throw err;
-			res(hash);
+			bcrypt.hash(purepass, salt, async (err, hash) => {
+				if (err) throw err;
+				res(hash);
+			});
 		});
 	});
-});
+};
 
 router.post('/login', (req, res) => {
 	User.findOne({ username: req.body.username })
 		.then(async docs => {
 			if (docs) {
-				//if there is an user with username entered
 				if (await bcrypt.compare(req.body.password, docs.password)) {
-					res.status(200).send();
-				}
-			} else {
-				//there is no an user with username entered
-				//404 user not found
-				console.log('b');
-			}
+					res.status(200).send(); // successfully login process
+				} else res.status(400).send(); // 400 incorrect username or password
+			} else res.status(404).send(); // 404 user not found
 		})
-		.catch(err => console.log(err));
+		.catch(err => res.end(err));
 });
 
 router.post('/register', async (req, res) => {
 	const isRegistered = await User.findOne({ $or: [{ username: req.body.username }, { mail: req.body.mail }] });
 
 	if (isRegistered) {
-	    res.status(400).end();
-	    return;
+		res.status(400).end();
+		return;
 	}
-	
-	hashPass.then(response => {
+
+	hashPass(req.body.password).then(response => {
 		var newrecord = new User({
 			username: req.body.username,
 			mail: req.body.mail,
@@ -47,8 +44,7 @@ router.post('/register', async (req, res) => {
 		});
 
 		newrecord.save(err => {
-			if (err) res.status(404).send();
-			console.log('saved');
+			if (err) res.status(400).send();
 			res.status(200).send();
 		});
 	});

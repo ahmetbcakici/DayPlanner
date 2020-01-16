@@ -88,7 +88,7 @@ export default class Register extends Component {
 				<div className="form-group">
 					<label>
 						<a href="#" onClick={this.props.func}>
-							Do you have an account? Then let's login!
+							Do you have an account?
 						</a>
 					</label>
 				</div>

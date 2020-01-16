@@ -3,6 +3,7 @@ import axios from 'axios';
 import './App.css';
 import Sidebar from 'react-sidebar';
 import Navbar from './components/Navbar';
+import Timer from './components/Timer';
 
 export default class App extends Component {
 	state = {
@@ -15,6 +16,7 @@ export default class App extends Component {
 		editingTask: '',
 		taskToPost: '',
 		taskToPut: '',
+		isTimerScreen: false,
 	};
 
 	componentDidMount() {
@@ -191,6 +193,10 @@ export default class App extends Component {
 		axios.put(`http://localhost:3001/task/put`, { id }).then(() => this.getItem());
 	};
 
+	setTimerScreen = e => {
+		this.setState({ isTimerScreen: <Timer id={e.target.id} /> });
+	};
+
 	render() {
 		return (
 			<div>
@@ -261,51 +267,63 @@ export default class App extends Component {
 								placeholder="Add new task"
 								onChange={this.handleInputPostTask}
 								value={this.state.taskToPost}
-								style={{
-									visibility: this.state.turnTodayVisibility === 'hidden' ? 'visible' : 'hidden',
-								}}
+								style={
+									{
+										// visibility: this.state.turnTodayVisibility === 'hidden' ? 'visible' : 'hidden',
+									}
+								}
 								onKeyPress={this.postItem}
 							/>
-							<ul className="tasks">
-								{this.state.usertasks.map(task => {
-									this.selectedDate();
-									if (task.date.substring(0, 10) === this.selectedDate()) {
-										return (
-											<li key={task._id}>
-												<span>
-													<i
+							{this.state.isTimerScreen ? (
+								this.state.isTimerScreen
+							) : (
+								<ul className="tasks">
+									{this.state.usertasks.map(task => {
+										this.selectedDate();
+										if (task.date.substring(0, 10) === this.selectedDate()) {
+											return (
+												<li key={task._id}>
+													<span>
+														<i
+															className={
+																task.status === 'completed'
+																	? 'far fa-check-circle'
+																	: 'far fa-circle'
+															}
+															style={{
+																color: task.color,
+															}}
+															onMouseEnter={null}
+															onMouseLeave={null}
+															onClick={() => this.completedStatus(task._id)}></i>{' '}
+													</span>
+													<span
 														className={
 															task.status === 'completed'
-																? 'far fa-check-circle'
-																: 'far fa-circle'
-														}
-														style={{
-															color: task.color,
-														}}
-														onMouseEnter={null}
-														onMouseLeave={null}
-														onClick={() => this.completedStatus(task._id)}></i>{' '}
-												</span>
-												<span
-													className={
-														task.status === 'completed' ? 'text-decoration text-muted' : ''
-													}>
-													{task.title}
-												</span>
-												<span className="float-right">
-													<i
-														className="fas fa-pen mr-2"
-														onClick={() => this.onSetSidebarOpen(true, task._id)}></i>
-													<i
-														className="fas fa-trash-alt"
-														id={task._id}
-														onClick={this.deleteItem}></i>
-												</span>
-											</li>
-										);
-									}
-								})}
-							</ul>
+																? 'text-decoration text-muted'
+																: ''
+														}>
+														{task.title}
+													</span>
+													<span className="float-right">
+														<i
+															class="fas fa-hourglass-start mr-2"
+															id={task._id}
+															onClick={this.setTimerScreen}></i>
+														<i
+															className="fas fa-pen mr-2"
+															onClick={() => this.onSetSidebarOpen(true, task._id)}></i>
+														<i
+															className="fas fa-trash-alt"
+															id={task._id}
+															onClick={this.deleteItem}></i>
+													</span>
+												</li>
+											);
+										}
+									})}
+								</ul>
+							)}
 						</div>
 					</div>
 				</div>
