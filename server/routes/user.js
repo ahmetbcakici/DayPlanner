@@ -17,15 +17,14 @@ const hashPass = purepass => {
 };
 
 router.post('/login', (req, res) => {
-	User.findOne({ username: req.body.username })
-		.then(async docs => {
-			if (docs) {
-				if (await bcrypt.compare(req.body.password, docs.password)) {
-					res.status(200).send(); // successfully login process
-				} else res.status(400).send(); // 400 incorrect username or password
-			} else res.status(404).send(); // 404 user not found
-		})
-		.catch(err => res.end(err));
+	User.findOne({ username: req.body.username }).then(async docs => {
+		if (docs) {
+			if (await bcrypt.compare(req.body.password, docs.password)) {
+				res.status(200).send(); // successfully login process
+			} else res.status(400).send(); // 400 incorrect username or password
+		} else res.status(404).send(); // 404 user not found
+	});
+	// .catch(err => );
 });
 
 router.post('/register', async (req, res) => {

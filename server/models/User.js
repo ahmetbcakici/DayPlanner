@@ -16,7 +16,7 @@ const UserSchema = new Schema({
 	mail: String,
 	password: {
 		type: String,
-		select: false,
+		// select: false,
 	},
 	tasks: [TaskSchema],
 });

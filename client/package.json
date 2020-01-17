@@ -7,9 +7,12 @@
         "@testing-library/react": "^9.3.2",
         "@testing-library/user-event": "^7.1.2",
         "axios": "^0.19.1",
+        "d3-ease": "^1.0.6",
         "jsonwebtoken": "^8.5.1",
         "react": "^16.12.0",
+        "react-circular-progressbar": "^2.0.3",
         "react-dom": "^16.12.0",
+        "react-move": "^6.1.0",
         "react-router-dom": "^5.1.2",
         "react-scripts": "3.3.0",
         "react-sidebar": "^3.0.2"

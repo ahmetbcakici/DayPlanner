@@ -10,7 +10,7 @@ export default class App extends Component {
 		userdata: [],
 		usertasks: [],
 		minusPlus: 0,
-		turnTodayVisibility: 'hidden',
+		turnTodayDisplay: 'none',
 		sidebarOpen: false,
 		selectedColor: '',
 		editingTask: '',
@@ -104,12 +104,12 @@ export default class App extends Component {
 	};
 
 	checkIsToday = () => {
-		if (this.state.minusPlus !== 0) this.setState({ turnTodayVisibility: 'visible' });
-		else this.setState({ turnTodayVisibility: 'hidden' });
+		if (this.state.minusPlus !== 0) this.setState({ turnTodayDisplay: 'inline' });
+		else this.setState({ turnTodayDisplay: 'none' });
 	};
 
 	handleTurnToday = async () => {
-		await this.setState({ minusPlus: 0, turnTodayVisibility: 'hidden' });
+		await this.setState({ minusPlus: 0, turnTodayDisplay: 'none' });
 		this.getDate();
 	};
 
@@ -194,7 +194,7 @@ export default class App extends Component {
 	};
 
 	setTimerScreen = e => {
-		this.setState({ isTimerScreen: <Timer id={e.target.id} tasks={this.state.usertasks}/> });
+		this.setState({ isTimerScreen: <Timer id={e.target.id} tasks={this.state.usertasks} /> });
 	};
 
 	render() {
@@ -248,7 +248,7 @@ export default class App extends Component {
 					<div className="card text-center transparent-bg" style={{ width: '30%' }}>
 						<div className="card-header">
 							<h3>{this.getDate()}</h3>
-							<span className="text-center" style={{ visibility: this.state.turnTodayVisibility }}>
+							<span className="text-center" style={{ display: this.state.turnTodayDisplay }}>
 								<a href="#" className="turn-today" onClick={this.handleTurnToday}>
 									Turn Today
 								</a>
@@ -267,12 +267,12 @@ export default class App extends Component {
 								placeholder="Add new task"
 								onChange={this.handleInputPostTask}
 								value={this.state.taskToPost}
-								style={
-									{
-										visibility : this.state.isTimerScreen ? 'hidden' : 'visible'
-										// visibility: this.state.turnTodayVisibility === 'hidden' ? 'visible' : 'hidden',
-									}
-								}
+								style={{
+									display: this.state.isTimerScreen ? 'none' : null,
+									display: this.state.turnTodayDisplay === 'none' ? 'inline' : 'none',
+									// visibility : this.state.isTimerScreen ? 'hidden' : 'visible'
+									// visibility: this.state.turnTodayDisplay === 'none' ? 'inline' : 'none',
+								}}
 								onKeyPress={this.postItem}
 							/>
 							{this.state.isTimerScreen ? (

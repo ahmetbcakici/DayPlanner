@@ -35,9 +35,11 @@ export default class Login extends Component {
 			.post('http://localhost:3001/user/login', { username: this.state.username, password: this.state.password })
 			.then(response => {
 				localStorage.setItem('key', 'value');
+				console.log(response)
 				this.setState({ redirect: true });
 			})
 			.catch(err => {
+				console.log(err)
 				let temp_errormsg;
 				if (err.response.status === 400) temp_errormsg = 'Username or password are incorrect.';
 				else if (err.response.status === 404) temp_errormsg = 'User can not found.';
