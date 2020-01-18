@@ -4,6 +4,7 @@ const User = require('../models/User');
 
 router.get('/get', (req, res) => {
 	User.findOne({ username: 'ahmet' }).then(docs => {
+		console.log(docs.tasks)
 		res.send(docs);
 	});
 });

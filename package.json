@@ -1,20 +1,25 @@
 {
-  "name": "Day Planner",
-  "version": "1.0.0",
-  "description": "",
-  "main": "server.js",
-  "scripts": {
-    "start": "node server.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ahmetbcakici/DayPlanner.git"
-  },
-  "author": "Ahmet Buğra Çakıcı",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/ahmetbcakici/DayPlanner/issues"
-  },
-  "homepage": "https://github.com/ahmetbcakici/DayPlanner#readme",
-  "dependencies": {}
+    "name": "DayPlanner",
+    "version": "1.0.0",
+    "description": "",
+    "main": "server.js",
+    "scripts": {
+        "start": "node server.js",
+        "server": "cd server && npm run server",
+        "client": "cd client && npm start",
+        "dev": "concurrently \"npm run server\" \"npm run client\""
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/ahmetbcakici/DayPlanner.git"
+    },
+    "author": "Ahmet Buğra Çakıcı",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/ahmetbcakici/DayPlanner/issues"
+    },
+    "homepage": "https://github.com/ahmetbcakici/DayPlanner#readme",
+    "dependencies": {
+        "concurrently": "^5.0.2"
+    }
 }
