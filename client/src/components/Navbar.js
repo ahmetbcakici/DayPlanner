@@ -43,7 +43,7 @@ export default class Navbar extends Component {
 									Another action
 								</a>
 								<a class="dropdown-item" href="#">
-									Something else here
+									Logout
 								</a>
 							</div>
 						</li>
