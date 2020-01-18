@@ -13,7 +13,7 @@ import AnimatedProgressProvider from './AnimatedProgressProvider';
 
 var remainMinute = 24,
 	remainSecond = 59;
-var testtimer = () => {
+var pomodoroSession = () => {
 	setInterval(function() {
 		// this.setState({ remainSecond: this.state.remainSecond - 1 });
 		if (remainSecond-- === 0) {
@@ -30,8 +30,6 @@ export default class Timer extends Component {
 
 	state = {
 		taskInTimer: '',
-		remainMinute: 25,
-		remainSecond: 59,
 	};
 
 	findTaskById = () => {
@@ -42,21 +40,20 @@ export default class Timer extends Component {
 
 	componentDidMount() {
 		this.findTaskById();
-		testtimer();
+		pomodoroSession();
 	}
-
-	pomodoroSession = () => {};
 
 	render() {
 		return (
 			<div>
-				<h4 className="text-center">{this.state.taskInTimer.title}</h4>
-				<div className="mx-auto mt-3" style={{ width: '60%' }}>
-					<AnimatedProgressProvider
-						valueStart={0}
-						valueEnd={100}
-						duration={60.0 * 10}
-						easingFunction={easeSin}>
+				<div className="text-center">
+					<span className="float-left">
+						<i className="fas fa-arrow-left" onClick={this.props.func}></i>
+					</span>
+					<h4 className="d-inline-block">{this.state.taskInTimer.title}</h4>
+				</div>
+				<div className="mx-auto mt-3" style={{ width: '20%' }}>
+					<AnimatedProgressProvider valueStart={0} valueEnd={100} duration={60.0} easingFunction={easeSin}>
 						{value => {
 							const roundedValue = Math.round(value);
 							return (

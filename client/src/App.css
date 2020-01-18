@@ -1,9 +1,12 @@
 /* For Elements */
 
+span>i:not(.fa-circle):hover {
+    cursor: pointer;
+    color: rgba(32, 30, 30, .6);
+}
+
 span>i:hover {
     cursor: pointer;
-    /* color: black; */
-    color: rgba(255, 255, 255, 0.5);
 }
 
 
@@ -61,8 +64,6 @@ ul.tasks>li {
 }
 
 ul.tasks>li:hover {
-    /* border: 1px solid; */
-    /* padding: 10px; */
     box-shadow: 3px 3px 3px 3px #888888;
 }
 

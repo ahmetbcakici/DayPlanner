@@ -1,0 +1,1 @@
+User should not go to back days from their registered date in daily view

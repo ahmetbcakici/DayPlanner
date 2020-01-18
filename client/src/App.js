@@ -17,6 +17,7 @@ export default class App extends Component {
 		taskToPost: '',
 		taskToPut: '',
 		isTimerScreen: false,
+		taskIdInTimer: '',
 	};
 
 	componentDidMount() {
@@ -194,7 +195,19 @@ export default class App extends Component {
 	};
 
 	setTimerScreen = e => {
-		this.setState({ isTimerScreen: <Timer id={e.target.id} tasks={this.state.usertasks} /> });
+		this.setState({ isTimerScreen: this.state.isTimerScreen === true ? false : true, taskIdInTimer: e.target.id });
+	};
+
+	onHover = e => {
+		e.target.className == 'far fa-check-circle'
+			? (e.target.className = 'far fa-circle')
+			: (e.target.className = 'far fa-check-circle');
+	};
+
+	inHover = e => {
+		e.target.className == 'far fa-check-circle'
+			? (e.target.className = 'far fa-circle')
+			: (e.target.className = 'far fa-check-circle');
 	};
 
 	render() {
@@ -255,10 +268,18 @@ export default class App extends Component {
 							</span>
 						</div>
 						<div className="card-body text-left" style={{ height: '100%' }}>
-							<a href="#" className="arrow arrow-right transparent-color" onClick={this.minus}>
+							<a
+								href="#"
+								className="arrow arrow-right transparent-color"
+								onClick={this.minus}
+								style={{ visibility: this.state.isTimerScreen ? 'hidden' : 'visible' }}>
 								<i className="fas fa-chevron-right"></i>
 							</a>
-							<a href="#" className="arrow arrow-left transparent-color" onClick={this.plus}>
+							<a
+								href="#"
+								className="arrow arrow-left transparent-color"
+								onClick={this.plus}
+								style={{ visibility: this.state.isTimerScreen ? 'hidden' : 'visible' }}>
 								<i className="fas fa-chevron-left"></i>
 							</a>
 							<input
@@ -268,15 +289,19 @@ export default class App extends Component {
 								onChange={this.handleInputPostTask}
 								value={this.state.taskToPost}
 								style={{
-									display: this.state.isTimerScreen ? 'none' : null,
-									display: this.state.turnTodayDisplay === 'none' ? 'inline' : 'none',
-									// visibility : this.state.isTimerScreen ? 'hidden' : 'visible'
-									// visibility: this.state.turnTodayDisplay === 'none' ? 'inline' : 'none',
+									display:
+										this.state.isTimerScreen || this.state.turnTodayDisplay === 'inline'
+											? 'none'
+											: 'inline',
 								}}
 								onKeyPress={this.postItem}
 							/>
-							{this.state.isTimerScreen ? (
-								this.state.isTimerScreen
+							{this.state.isTimerScreen === true ? (
+								<Timer
+									id={this.state.taskIdInTimer}
+									tasks={this.state.usertasks}
+									func={this.setTimerScreen}
+								/>
 							) : (
 								<ul className="tasks">
 									{this.state.usertasks.map(task => {
@@ -294,8 +319,8 @@ export default class App extends Component {
 															style={{
 																color: task.color,
 															}}
-															onMouseEnter={null}
-															onMouseLeave={null}
+															onMouseEnter={this.onHover}
+															onMouseLeave={this.inHover}
 															onClick={() => this.completedStatus(task._id)}></i>{' '}
 													</span>
 													<span
