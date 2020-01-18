@@ -199,15 +199,13 @@ export default class App extends Component {
 	};
 
 	onHover = e => {
-		e.target.className == 'far fa-check-circle'
+		e.target.className === 'far fa-check-circle'
 			? (e.target.className = 'far fa-circle')
 			: (e.target.className = 'far fa-check-circle');
 	};
 
-	inHover = e => {
-		e.target.className == 'far fa-check-circle'
-			? (e.target.className = 'far fa-circle')
-			: (e.target.className = 'far fa-check-circle');
+	inHover = (e, x) => {
+		x === 'completed' ? (e.target.className = 'far fa-check-circle') : (e.target.className = 'far fa-circle');
 	};
 
 	render() {
@@ -320,7 +318,7 @@ export default class App extends Component {
 																color: task.color,
 															}}
 															onMouseEnter={this.onHover}
-															onMouseLeave={this.inHover}
+															onMouseLeave={e => this.inHover(e, task.status)}
 															onClick={() => this.completedStatus(task._id)}></i>{' '}
 													</span>
 													<span

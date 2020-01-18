@@ -1,13 +1,20 @@
 /* For Elements */
 
-span>i:not(.fa-circle):hover {
-    cursor: pointer;
-    color: rgba(32, 30, 30, .6);
-}
-
 span>i:hover {
     cursor: pointer;
+    color: rgba(32, 30, 30, 0.6);
 }
+
+.far.fa-circle:hover,
+.far.fa-check-circle:hover {
+    /* color: rgba(207, 40, 40, 0.6) !important; */
+    color: inherit;
+}
+
+
+/* span>i:hover {
+    cursor: pointer;
+} */
 
 
 /* For Elements */

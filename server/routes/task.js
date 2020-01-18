@@ -23,7 +23,7 @@ router.put('/put', (req, res) => {
 		User.findOne({ username: 'ahmet' }).then(doc => {
 			doc.tasks.map(task => {
 				if (task.id === req.body.id) {
-					task.status = task.status == 'uncompleted' ? 'completed' : 'uncompleted';
+					task.status = task.status == 'incompleted' ? 'completed' : 'incompleted';
 				}
 			});
 			doc.save().then(() => res.end());

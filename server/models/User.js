@@ -6,7 +6,7 @@ const TaskSchema = new Schema({
 	color: String,
 	status: {
 		type: String,
-		default: 'uncompleted',
+		default: 'incompleted',
 	},
 	date: Date,
 });

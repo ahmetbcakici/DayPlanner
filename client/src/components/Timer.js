@@ -30,6 +30,7 @@ export default class Timer extends Component {
 
 	state = {
 		taskInTimer: '',
+		progressEnd: 0,
 	};
 
 	findTaskById = () => {
@@ -43,17 +44,25 @@ export default class Timer extends Component {
 		pomodoroSession();
 	}
 
+	trigger = () => {
+		this.setState({progressEnd:100})
+	}
+
 	render() {
 		return (
 			<div>
 				<div className="text-center">
-					<span className="float-left">
+					<span style={{ position: 'absolute', left: '1rem' }}>
 						<i className="fas fa-arrow-left" onClick={this.props.func}></i>
 					</span>
 					<h4 className="d-inline-block">{this.state.taskInTimer.title}</h4>
 				</div>
-				<div className="mx-auto mt-3" style={{ width: '20%' }}>
-					<AnimatedProgressProvider valueStart={0} valueEnd={100} duration={60.0} easingFunction={easeSin}>
+				<div className="mx-auto mt-3" style={{ width: '30%' }} onClick={this.trigger}>
+					<AnimatedProgressProvider
+						valueStart={0}
+						valueEnd={this.state.progressEnd}
+						duration={10.0}
+						easingFunction={easeSin}>
 						{value => {
 							const roundedValue = Math.round(value);
 							return (
