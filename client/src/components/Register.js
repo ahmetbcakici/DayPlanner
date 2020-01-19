@@ -43,6 +43,13 @@ export default class Register extends Component {
 	};
 
 	render() {
+		// return (
+		// 	<UserConsumer>
+		// 		{value => {
+		// 			console.log(value);
+		// 		}}
+		// 	</UserConsumer>
+		// );
 		if (this.state.redirect) return <Redirect to="/dashboard" />;
 		return (
 			<form className="w-75" onSubmit={this.registerSubmitHandle}>
