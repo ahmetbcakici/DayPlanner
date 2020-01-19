@@ -1,17 +1,23 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch , Redirect } from 'react-router-dom';
 
-import App from './App';
+import Dashboard from './Dashboard';
 import Homepage from './Homepage';
-import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+
+const PrivateRoute = ({ component: Component, ...rest }) => (
+	<Route
+		{...rest}
+		render={props => (false ? <Component {...props} /> : <Redirect to={{ pathname: '/' }} />)}
+	/>
+);
 
 render(
 	<Router>
 		<Switch>
 			<Route exact path="/" component={Homepage} />
-			<Route exact path="/tasks" component={App} />
+			<PrivateRoute exact path="/dashboard" component={Dashboard} />
 		</Switch>
 		<Footer />
 	</Router>,

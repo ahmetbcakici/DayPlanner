@@ -34,24 +34,31 @@ export default class Login extends Component {
 		axios
 			.post('http://localhost:3001/user/login', { username: this.state.username, password: this.state.password })
 			.then(response => {
-				localStorage.setItem('key', 'value');
-				console.log(response)
+				localStorage.setItem('token', response.data.token);
 				this.setState({ redirect: true });
 			})
 			.catch(err => {
-				console.log(err)
 				let temp_errormsg;
 				if (err.response.status === 400) temp_errormsg = 'Username or password are incorrect.';
+				else if (err.response.status === 403) temp_errormsg = 'Username and password fields can not be empty.';
 				else if (err.response.status === 404) temp_errormsg = 'User can not found.';
 				else temp_errormsg = 'Something went wrong.';
 				this.setState({ ErrorAlert: true, ErrorMsg: temp_errormsg });
 			});
 	};
 
+	test = async () => {
+		const token = await localStorage.getItem('token');
+		axios
+			.get('http://localhost:3001/user/jwt', { headers: { Authorization: 'Bearer ' + token } })
+			.then(respon => console.log(respon))
+			.catch(er => console.log(er.message));
+	};
+
 	render() {
-		if (this.state.redirect) return <Redirect to="/tasks" />;
+		if (this.state.redirect) return <Redirect to="/dashboard" />;
 		return (
-			<form className="w-75" action="#" onSubmit={this.loginSubmitHandle}>
+			<form className="w-75" action="#" onSubmit={this.loginSubmitHandle} onClick={this.test}>
 				<h4 className="text-center">Login Form</h4>
 				<hr />
 				<div class="form-group">

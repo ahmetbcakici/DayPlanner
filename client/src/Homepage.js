@@ -33,7 +33,7 @@ export default class Homepage extends Component {
 					<div
 						className="col-6 justify-content-center d-flex"
 						style={{ 'border-right': '.1rem solid rgba(255, 255, 255, 0.5)' }}>
-						<h1
+						<h2
 							className="text-center text-white font-weight-bold pl-5 pr-3 mt-5"
 							style={{ fontFamily: 'sans-serif', fontSize: '4rem' }}>
 							Plan your day
@@ -42,7 +42,7 @@ export default class Homepage extends Component {
 							<span className="text-light" style={{ 'text-decoration': 'underline' }}>
 								Day Planner
 							</span>
-						</h1>
+						</h2>
 					</div>
 					<div
 						className="col-6 justify-content-center d-flex"

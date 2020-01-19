@@ -1,4 +1,6 @@
 User should not go to back days from their registered date in daily view
+Check null inputs backend side (form validation in backend)
+Remove # form action, a href
 
 User settings:{
     Transfer incompleted tasks to tomorrow

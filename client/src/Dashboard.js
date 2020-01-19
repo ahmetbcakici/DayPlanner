@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import './App.css';
+import './Dashboard.css';
 import Sidebar from 'react-sidebar';
 import Navbar from './components/Navbar';
 import Timer from './components/Timer';
 
-export default class App extends Component {
+export default class Dashboard extends Component {
 	state = {
-		userdata: [],
 		usertasks: [],
 		minusPlus: 0,
 		turnTodayDisplay: 'none',
@@ -49,10 +48,9 @@ export default class App extends Component {
 
 	getItem = () => {
 		axios.get(`http://localhost:3001/task/get`).then(res => {
-			const userdata = res.data;
-			const usertasks = userdata.tasks;
+			const usertasks = res.data;
 			usertasks.reverse(); // For that : Users should be see task on top whichever is new
-			this.setState({ userdata, usertasks });
+			this.setState({ usertasks });
 		});
 	};
 
@@ -204,8 +202,8 @@ export default class App extends Component {
 			: (e.target.className = 'far fa-check-circle');
 	};
 
-	inHover = (e, x) => {
-		x === 'completed' ? (e.target.className = 'far fa-check-circle') : (e.target.className = 'far fa-circle');
+	inHover = (e, task_statu) => {
+		task_statu === 'completed' ? (e.target.className = 'far fa-check-circle') : (e.target.className = 'far fa-circle');
 	};
 
 	render() {
