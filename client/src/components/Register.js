@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect, Link } from 'react-router-dom';
 import axios from 'axios';
+import UserConsumer from '../context';
 
 export default class Register extends Component {
 	constructor(props) {
@@ -43,13 +44,13 @@ export default class Register extends Component {
 	};
 
 	render() {
-		// return (
-		// 	<UserConsumer>
-		// 		{value => {
-		// 			console.log(value);
-		// 		}}
-		// 	</UserConsumer>
-		// );
+		return (
+			<UserConsumer>
+				{value => {
+					console.log(value);
+				}}
+			</UserConsumer>
+		);
 		if (this.state.redirect) return <Redirect to="/dashboard" />;
 		return (
 			<form className="w-75" onSubmit={this.registerSubmitHandle}>

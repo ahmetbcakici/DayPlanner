@@ -15,13 +15,15 @@ render(
 	<Router>
 		<Switch>
 			<UserProvider>
-				{value => {
+				{/* {value => {
 					console.log(value);
-				}}
+				}} */}
+
 				<Route exact path="/" component={Homepage} />
-				<Route exact path="/dashboard" component={Dashboard} />
-				{/* <PrivateRoute exact path="/dashboard" component={Dashboard} /> */}
+				<Route exact path="/dashboard" component={Homepage} />
+				{/* <Route exact path="/dashboard" component={Dashboard} /> */}
 			</UserProvider>
+			{/* <PrivateRoute exact path="/dashboard" component={Dashboard} /> */}
 		</Switch>
 		<Footer />
 	</Router>,
