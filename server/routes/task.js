@@ -3,6 +3,7 @@ const router = express.Router();
 const User = require('../models/User');
 
 router.get('/get', (req, res) => {
+	// JSON.parse(req.query.loggedUser).username
 	User.findOne({ username: 'ahmet' }).then(docs => {
 		res.send(docs.tasks);
 	});

@@ -33,8 +33,7 @@ export default class Homepage extends Component {
 			axios
 				.get('http://localhost:3001/user/jwt', { headers: { Authorization: 'Bearer ' + token } })
 				.then(response => {
-					console.log(response.data);
-					this.setState({ isLogged: true });
+					this.setState({ isLogged: true, loggedUser: response.data });
 				})
 				.catch(er => console.log(er.message));
 		})();
@@ -46,7 +45,7 @@ export default class Homepage extends Component {
 				<Redirect
 					to={{
 						pathname: '/dashboard',
-						state: { test: '123' },
+						state: { loggedUser: this.state.loggedUser },
 					}}
 				/>
 			);

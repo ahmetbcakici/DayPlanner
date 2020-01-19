@@ -32,7 +32,6 @@ export default class Dashboard extends Component {
 		background-size: cover;
 	`;
 		this.getItem();
-		console.log(this.props.location.state);
 	}
 
 	getDate = () => {
@@ -52,7 +51,7 @@ export default class Dashboard extends Component {
 	};
 
 	getItem = () => {
-		axios.get(`http://localhost:3001/task/get`).then(res => {
+		axios.get(`http://localhost:3001/task/get`, { params: { loggedUser: this.props.location.state.loggedUser } }).then(res => {
 			const usertasks = res.data;
 			usertasks.reverse(); // For that : Users should be see task on top whichever is new
 			this.setState({ usertasks });
