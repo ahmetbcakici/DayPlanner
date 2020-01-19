@@ -51,17 +51,23 @@ export default class Dashboard extends Component {
 	};
 
 	getItem = () => {
-		axios.get(`http://localhost:3001/task/get`, { params: { loggedUser: this.props.location.state.loggedUser } }).then(res => {
-			const usertasks = res.data;
-			usertasks.reverse(); // For that : Users should be see task on top whichever is new
-			this.setState({ usertasks });
-		});
+		axios
+			.get(`http://localhost:3001/task/get`, { params: { loggedUser: this.props.location.state.loggedUser } })
+			.then(res => {
+				const usertasks = res.data;
+				usertasks.reverse(); // For that : Users should be see task on top whichever is new
+				this.setState({ usertasks });
+			});
 	};
 
 	postItem = e => {
 		if (e.key === 'Enter' && e.target.value !== '') {
 			axios
-				.post(`http://localhost:3001/task/post`, { title: e.target.value, date: this.selectedDate() })
+				.post(
+					`http://localhost:3001/task/post`,
+					{ title: e.target.value, date: this.selectedDate() },
+					{ params: { loggedUser: this.props.location.state.loggedUser } }
+				)
 				.then(() => {
 					this.getItem();
 					this.setState({ taskToPost: '' });

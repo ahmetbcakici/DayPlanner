@@ -3,14 +3,15 @@ const router = express.Router();
 const User = require('../models/User');
 
 router.get('/get', (req, res) => {
-	// JSON.parse(req.query.loggedUser).username
-	User.findOne({ username: 'ahmet' }).then(docs => {
+	const username = JSON.parse(req.query.loggedUser).username;
+	User.findOne({ username }).then(docs => {
 		res.send(docs.tasks);
 	});
 });
 
 router.post('/post', (req, res) => {
-	User.findOne({ username: 'ahmet' }).then(doc => {
+	const username = JSON.parse(req.query.loggedUser).username;
+	User.findOne({ username }).then(doc => {
 		doc.tasks.push({
 			title: req.body.title,
 			date: req.body.date,
@@ -20,8 +21,9 @@ router.post('/post', (req, res) => {
 });
 
 router.put('/put', (req, res) => {
+	const username = JSON.parse(req.query.loggedUser).username;
 	if (Object.keys(req.body).length < 2) {
-		User.findOne({ username: 'ahmet' }).then(doc => {
+		User.findOne({ username }).then(doc => {
 			doc.tasks.map(task => {
 				if (task.id === req.body.id) {
 					task.status = task.status == 'incompleted' ? 'completed' : 'incompleted';
@@ -30,7 +32,7 @@ router.put('/put', (req, res) => {
 			doc.save().then(() => res.end());
 		});
 	} else {
-		User.findOne({ username: 'ahmet' }).then(doc => {
+		User.findOne({ username }).then(doc => {
 			doc.tasks.map(task => {
 				if (task.id === req.body.id) {
 					if (req.body.color) task.color = req.body.color;
@@ -43,7 +45,8 @@ router.put('/put', (req, res) => {
 });
 
 router.delete('/delete', (req, res) => {
-	User.findOne({ username: 'ahmet' }).then(doc => {
+	const username = JSON.parse(req.query.loggedUser).username;
+	User.findOne({ username }).then(doc => {
 		doc.tasks.map(task => {
 			if (task.id === req.body.id) task.remove();
 		});
