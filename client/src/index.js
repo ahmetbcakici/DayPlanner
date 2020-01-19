@@ -17,7 +17,8 @@ render(
 	<Router>
 		<Switch>
 			<Route exact path="/" component={Homepage} />
-			<PrivateRoute exact path="/dashboard" component={Dashboard} />
+			<Route exact path="/dashboard" component={Dashboard} />
+			{/* <PrivateRoute exact path="/dashboard" component={Dashboard} /> */}
 		</Switch>
 		<Footer />
 	</Router>,

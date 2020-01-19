@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
+import axios from 'axios';
 import Login from './components/Login';
 import Register from './components/Register';
 import './Homepage.css';
@@ -9,12 +11,13 @@ export default class Homepage extends Component {
 	}
 
 	state = {
-		isLoginPage : false,
+		isLoginPage: false,
+		isLogged: false,
 	};
 
 	changePage = () => {
-		this.state.isLoginPage ? this.setState({isLoginPage : false}) : this.setState({isLoginPage : true})
-	}
+		this.state.isLoginPage ? this.setState({ isLoginPage: false }) : this.setState({ isLoginPage: true });
+	};
 
 	componentDidMount() {
 		document.body.style = `
@@ -23,13 +26,33 @@ export default class Homepage extends Component {
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
-        `;
+		`;
+
+		(() => {
+			const token = localStorage.getItem('token');
+			axios
+				.get('http://localhost:3001/user/jwt', { headers: { Authorization: 'Bearer ' + token } })
+				.then(response => {
+					console.log(response.data);
+					this.setState({ isLogged: true });
+				})
+				.catch(er => console.log(er.message));
+		})();
 	}
 
 	render() {
+		if (this.state.isLogged)
+			return (
+				<Redirect
+					to={{
+						pathname: '/dashboard',
+						state: { test: '123' },
+					}}
+				/>
+			);
 		return (
 			<div>
-				<div className="row" style={{'margin-top': '7rem'}}>
+				<div className="row" style={{ 'margin-top': '7rem' }}>
 					<div
 						className="col-6 justify-content-center d-flex"
 						style={{ 'border-right': '.1rem solid rgba(255, 255, 255, 0.5)' }}>
@@ -47,7 +70,11 @@ export default class Homepage extends Component {
 					<div
 						className="col-6 justify-content-center d-flex"
 						style={{ 'border-left': '.1rem solid rgba(255, 255, 255, 0.5)' }}>
-						{this.state.isLoginPage ? <Login func={this.changePage}/> : <Register func={this.changePage}/>}
+						{this.state.isLoginPage ? (
+							<Login func={this.changePage} />
+						) : (
+							<Register func={this.changePage} />
+						)}
 					</div>
 				</div>
 			</div>

@@ -47,18 +47,10 @@ export default class Login extends Component {
 			});
 	};
 
-	test = async () => {
-		const token = await localStorage.getItem('token');
-		axios
-			.get('http://localhost:3001/user/jwt', { headers: { Authorization: 'Bearer ' + token } })
-			.then(respon => console.log(respon))
-			.catch(er => console.log(er.message));
-	};
-
 	render() {
 		if (this.state.redirect) return <Redirect to="/dashboard" />;
 		return (
-			<form className="w-75" action="#" onSubmit={this.loginSubmitHandle} onClick={this.test}>
+			<form className="w-75" action="#" onSubmit={this.loginSubmitHandle}>
 				<h4 className="text-center">Login Form</h4>
 				<hr />
 				<div class="form-group">

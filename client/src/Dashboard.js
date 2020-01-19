@@ -6,6 +6,10 @@ import Navbar from './components/Navbar';
 import Timer from './components/Timer';
 
 export default class Dashboard extends Component {
+	constructor(props) {
+		super(props);
+	}
+
 	state = {
 		usertasks: [],
 		minusPlus: 0,
@@ -28,6 +32,7 @@ export default class Dashboard extends Component {
 		background-size: cover;
 	`;
 		this.getItem();
+		console.log(this.props.location.state);
 	}
 
 	getDate = () => {
@@ -203,7 +208,9 @@ export default class Dashboard extends Component {
 	};
 
 	inHover = (e, task_statu) => {
-		task_statu === 'completed' ? (e.target.className = 'far fa-check-circle') : (e.target.className = 'far fa-circle');
+		task_statu === 'completed'
+			? (e.target.className = 'far fa-check-circle')
+			: (e.target.className = 'far fa-circle');
 	};
 
 	render() {

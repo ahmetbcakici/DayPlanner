@@ -19,8 +19,9 @@ const hashPass = purepass => {
 };
 
 router.get("/jwt",checkAuth,(req,res) => {
-	// console.log(req.headers.authorization)
-	res.send("test");
+	// console.log()
+	res.send(req.userData);
+	res.end();
 })
 
 router.post('/login', (req, res) => {
