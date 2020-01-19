@@ -5,7 +5,6 @@ import './Dashboard.css';
 import Sidebar from 'react-sidebar';
 import Navbar from './components/Navbar';
 import Timer from './components/Timer';
-import UserConsumer, { userContext } from './context';
 
 export default class Dashboard extends Component {
 	constructor(props) {
@@ -27,8 +26,6 @@ export default class Dashboard extends Component {
 		directlyDashboard: false,
 	};
 
-	static contextType = userContext;
-
 	componentDidMount() {
 		document.body.style = `
 		background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1053&q=80');
@@ -37,8 +34,7 @@ export default class Dashboard extends Component {
 		background-repeat: no-repeat;
 		background-size: cover;
 	`;
-
-		this.currentUser(); //asynchronus station
+		this.currentUser();
 	}
 
 	currentUser = async () => {

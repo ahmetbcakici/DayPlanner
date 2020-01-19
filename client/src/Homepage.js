@@ -4,7 +4,6 @@ import axios from 'axios';
 import Login from './components/Login';
 import Register from './components/Register';
 import './Homepage.css';
-import  { userContext } from './context';
 
 export default class Homepage extends Component {
 	constructor(props) {
@@ -15,8 +14,6 @@ export default class Homepage extends Component {
 		isLoginPage: false,
 		isLogged: false,
 	};
-
-	static contextType = userContext;
 
 	changePage = () => {
 		this.setState({ isLoginPage: !this.state.isLoginPage });
@@ -42,10 +39,7 @@ export default class Homepage extends Component {
 	}
 
 	render() {
-		const {currentUser, setCurrentUser } = this.context;
 		if (this.state.isLogged) {
-			// console.log(currentUser); sample code
-			setCurrentUser(this.state.loggedUser);
 			return (
 				<Redirect
 					to={{
@@ -59,8 +53,7 @@ export default class Homepage extends Component {
 			<div>
 				<div
 					className="row"
-					style={{ 'margin-top': '7rem' }}
-					onClick={() => setCurrentUser(this.state.loggedUser)}>
+					style={{ 'margin-top': '7rem' }}>
 					<div
 						className="col-6 justify-content-center d-flex"
 						style={{ 'border-right': '.1rem solid rgba(255, 255, 255, 0.5)' }}>

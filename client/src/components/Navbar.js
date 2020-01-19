@@ -1,28 +1,38 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 export default class Navbar extends Component {
+	state = {
+		logout: false,
+	};
+
+	destroyToken = () => {
+		localStorage.removeItem('token');
+		this.setState({ logout: true });		
+	};
+
 	render() {
+		if (this.state.logout) return <Redirect to="/" />;
 		return (
 			<nav className="navbar navbar-expand-sm bg-dark navbar-dark" style={{ zIndex: '1' }}>
-				<Link to="/">
-					<a className="navbar-brand">
-						Day Planner
-					</a>
+				<Link to="/dashboard">
+					<a className="navbar-brand">Day Planner</a>
 				</Link>
-				<button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+				<button
+					className="navbar-toggler"
+					type="button"
+					data-toggle="collapse"
+					data-target="#collapsibleNavbar">
 					<span className="navbar-toggler-icon"></span>
 				</button>
 				<div className="collapse navbar-collapse" id="collapsibleNavbar">
-					<ul className="navbar-nav mr-auto">
+					{/* <ul className="navbar-nav mr-auto">
 						<Link to="/dashboard">
 							<li className="nav-item">
-								<a className="nav-link">
-									Tasks
-								</a>
+								<a className="nav-link">Tasks</a>
 							</li>
 						</Link>
-					</ul>
+					</ul> */}
 					<ul className="navbar-nav ml-auto">
 						<li className="nav-item dropdown">
 							<a
@@ -35,14 +45,17 @@ export default class Navbar extends Component {
 								style={{ fontSize: '1.2rem', padding: '0' }}>
 								<i className="fas fa-user"></i>
 							</a>
-							<div className="dropdown-menu" style={{left:'auto',right:'0'}} aria-labelledby="navbarDropdownMenuLink">
+							<div
+								className="dropdown-menu"
+								style={{ left: 'auto', right: '0' }}
+								aria-labelledby="navbarDropdownMenuLink">
 								<a className="dropdown-item" href="#">
 									Action
 								</a>
 								<a className="dropdown-item" href="#">
 									Another action
 								</a>
-								<a className="dropdown-item" href="#">
+								<a className="dropdown-item" onClick={this.destroyToken}>
 									Logout
 								</a>
 							</div>
