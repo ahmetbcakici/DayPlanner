@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { Redirect, Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import axios from 'axios';
-import UserConsumer from '../context';
 
 export default class Register extends Component {
 	constructor(props) {
@@ -44,23 +43,16 @@ export default class Register extends Component {
 	};
 
 	render() {
-		return (
-			<UserConsumer>
-				{value => {
-					console.log(value);
-				}}
-			</UserConsumer>
-		);
 		if (this.state.redirect) return <Redirect to="/dashboard" />;
 		return (
 			<form className="w-75" onSubmit={this.registerSubmitHandle}>
 				<h4 className="text-center">Register Form</h4>
 				<hr />
-				<div class="form-group">
+				<div className="form-group">
 					<label for="exampleInputEmail1">Email address</label>
 					<input
 						type="email"
-						class="form-control"
+						className="form-control"
 						id="exampleInputEmail1"
 						aria-describedby="emailHelp"
 						placeholder="Enter email"
@@ -69,11 +61,11 @@ export default class Register extends Component {
 						required
 					/>
 				</div>
-				<div class="form-group">
+				<div className="form-group">
 					<label for="exampleInputText">Username</label>
 					<input
 						type="text"
-						class="form-control username"
+						className="form-control username"
 						id="exampleInputText"
 						placeholder="Username"
 						onChange={this.usernameChange}
@@ -81,11 +73,11 @@ export default class Register extends Component {
 						required
 					/>
 				</div>
-				<div class="form-group">
+				<div className="form-group">
 					<label for="exampleInputPassword1">Password</label>
 					<input
 						type="password"
-						class="form-control"
+						className="form-control"
 						id="exampleInputPassword1"
 						placeholder="Password"
 						onChange={this.passwordChange}

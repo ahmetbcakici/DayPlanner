@@ -341,7 +341,7 @@ export default class Dashboard extends Component {
 													</span>
 													<span className="float-right">
 														<i
-															class="fas fa-hourglass-start mr-2"
+															className="fas fa-hourglass-start mr-2"
 															id={task._id}
 															onClick={this.setTimerScreen}></i>
 														<i

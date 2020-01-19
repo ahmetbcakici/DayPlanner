@@ -1,15 +1,11 @@
 import React, { Component } from 'react';
-import { CircularProgressbar, CircularProgressbarWithChildren, buildStyles } from 'react-circular-progressbar';
+import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
-import { easeQuadInOut, easeSinOut, easeSinInOut, easeSin } from 'd3-ease';
+import { easeSin } from 'd3-ease';
 
 // Animation
 // import { easeQuadInOut } from 'd3-ease';
 import AnimatedProgressProvider from './AnimatedProgressProvider';
-// import ChangingProgressProvider from './ChangingProgressProvider';
-
-// Radial separators
-// import RadialSeparators from './RadialSeparators';
 
 var remainMinute = 24,
 	remainSecond = 59;
@@ -44,9 +40,9 @@ export default class Timer extends Component {
 		pomodoroSession();
 	}
 
-	trigger = () => {
-		this.setState({progressEnd:100})
-	}
+	startTimer = () => {
+		this.setState({ progressEnd: 100 });
+	};
 
 	render() {
 		return (
@@ -57,7 +53,7 @@ export default class Timer extends Component {
 					</span>
 					<h4 className="d-inline-block">{this.state.taskInTimer.title}</h4>
 				</div>
-				<div className="mx-auto mt-3" style={{ width: '30%' }} onClick={this.trigger}>
+				<div className="mx-auto mt-3" style={{ width: '30%' }} onClick={this.startTimer}>
 					<AnimatedProgressProvider
 						valueStart={0}
 						valueEnd={this.state.progressEnd}

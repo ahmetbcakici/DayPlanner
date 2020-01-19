@@ -4,6 +4,14 @@ import axios from 'axios';
 import Login from './components/Login';
 import Register from './components/Register';
 import './Homepage.css';
+import UserConsumer, { userContext } from './context';
+// return (
+// 	<UserConsumer>
+// 		{value => {
+// 			console.log(value);
+// 		}}
+// 	</UserConsumer>
+// );
 
 export default class Homepage extends Component {
 	constructor(props) {
@@ -15,8 +23,10 @@ export default class Homepage extends Component {
 		isLogged: false,
 	};
 
+	static contextType = userContext;
+
 	changePage = () => {
-		this.state.isLoginPage ? this.setState({ isLoginPage: false }) : this.setState({ isLoginPage: true });
+		this.setState({ isLoginPage: !this.state.isLoginPage });
 	};
 
 	componentDidMount() {
@@ -34,13 +44,14 @@ export default class Homepage extends Component {
 				.get('http://localhost:3001/user/jwt', { headers: { Authorization: 'Bearer ' + token } })
 				.then(response => {
 					this.setState({ isLogged: true, loggedUser: response.data });
-				})
-				.catch(er => console.log(er.message));
+				});
 		})();
 	}
 
 	render() {
-		if (this.state.isLogged)
+		const { setCurrentUser } = this.context;
+		if (this.state.isLogged) {
+			setCurrentUser(this.state.loggedUser);
 			return (
 				<Redirect
 					to={{
@@ -49,9 +60,13 @@ export default class Homepage extends Component {
 					}}
 				/>
 			);
+		}
 		return (
 			<div>
-				<div className="row" style={{ 'margin-top': '7rem' }}>
+				<div
+					className="row"
+					style={{ 'margin-top': '7rem' }}
+					onClick={() => setCurrentUser(this.state.loggedUser)}>
 					<div
 						className="col-6 justify-content-center d-flex"
 						style={{ 'border-right': '.1rem solid rgba(255, 255, 255, 0.5)' }}>

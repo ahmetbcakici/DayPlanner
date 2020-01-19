@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
-import UserConsumer, { UserProvider } from './context';
+import { UserProvider } from './context';
 
 import Dashboard from './Dashboard';
 import Homepage from './Homepage';
@@ -15,15 +15,10 @@ render(
 	<Router>
 		<Switch>
 			<UserProvider>
-				{/* {value => {
-					console.log(value);
-				}} */}
-
 				<Route exact path="/" component={Homepage} />
-				<Route exact path="/dashboard" component={Homepage} />
-				{/* <Route exact path="/dashboard" component={Dashboard} /> */}
-			</UserProvider>
-			{/* <PrivateRoute exact path="/dashboard" component={Dashboard} /> */}
+				<Route exact path="/dashboard" component={Dashboard} />
+				{/* <PrivateRoute exact path="/dashboard" component={Dashboard} /> */}
+			</UserProvider>			
 		</Switch>
 		<Footer />
 	</Router>,

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Redirect, Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import ErrorAlert from './ErrorAlert';
 import axios from 'axios';
 
@@ -53,11 +53,11 @@ export default class Login extends Component {
 			<form className="w-75" action="#" onSubmit={this.loginSubmitHandle}>
 				<h4 className="text-center">Login Form</h4>
 				<hr />
-				<div class="form-group">
+				<div className="form-group">
 					<label for="exampleInputText">Username</label>
 					<input
 						type="text"
-						class="form-control username"
+						className="form-control username"
 						id="exampleInputText"
 						placeholder="Username"
 						onChange={this.usernameChange}
@@ -65,11 +65,11 @@ export default class Login extends Component {
 						required
 					/>
 				</div>
-				<div class="form-group">
+				<div className="form-group">
 					<label for="exampleInputPassword2">Password</label>
 					<input
 						type="password"
-						class="form-control password"
+						className="form-control password"
 						id="exampleInputPassword2"
 						placeholder="Password"
 						onChange={this.passwordChange}
@@ -77,9 +77,9 @@ export default class Login extends Component {
 						required
 					/>
 				</div>
-				<div class="form-group form-check">
-					<input type="checkbox" class="form-check-input" id="exampleCheck2" />
-					<label class="form-check-label" for="exampleCheck2">
+				<div className="form-group form-check">
+					<input type="checkbox" className="form-check-input" id="exampleCheck2" />
+					<label className="form-check-label" for="exampleCheck2">
 						Remember me
 					</label>
 				</div>
@@ -90,7 +90,7 @@ export default class Login extends Component {
 						</a>
 					</label>
 				</div>
-				<button class="btn btn-primary w-100">Submit</button>
+				<button className="btn btn-primary w-100">Submit</button>
 				{this.state.ErrorAlert ? (
 					<ErrorAlert
 						msg={

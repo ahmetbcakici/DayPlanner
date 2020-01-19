@@ -4,45 +4,45 @@ import { Link } from 'react-router-dom';
 export default class Navbar extends Component {
 	render() {
 		return (
-			<nav class="navbar navbar-expand-sm bg-dark navbar-dark" style={{ zIndex: '1' }}>
+			<nav className="navbar navbar-expand-sm bg-dark navbar-dark" style={{ zIndex: '1' }}>
 				<Link to="/">
-					<a class="navbar-brand">
+					<a className="navbar-brand">
 						Day Planner
 					</a>
 				</Link>
-				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-					<span class="navbar-toggler-icon"></span>
+				<button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+					<span className="navbar-toggler-icon"></span>
 				</button>
-				<div class="collapse navbar-collapse" id="collapsibleNavbar">
-					<ul class="navbar-nav mr-auto">
+				<div className="collapse navbar-collapse" id="collapsibleNavbar">
+					<ul className="navbar-nav mr-auto">
 						<Link to="/dashboard">
-							<li class="nav-item">
-								<a class="nav-link">
+							<li className="nav-item">
+								<a className="nav-link">
 									Tasks
 								</a>
 							</li>
 						</Link>
 					</ul>
-					<ul class="navbar-nav ml-auto">
-						<li class="nav-item dropdown">
+					<ul className="navbar-nav ml-auto">
+						<li className="nav-item dropdown">
 							<a
-								class="nav-link dropdown-toggle"
+								className="nav-link dropdown-toggle"
 								href="#"
 								id="navbarDropdownMenuLink"
 								data-toggle="dropdown"
 								aria-haspopup="true"
 								aria-expanded="false"
 								style={{ fontSize: '1.2rem', padding: '0' }}>
-								<i class="fas fa-user"></i>
+								<i className="fas fa-user"></i>
 							</a>
-							<div class="dropdown-menu" style={{left:'auto',right:'0'}} aria-labelledby="navbarDropdownMenuLink">
-								<a class="dropdown-item" href="#">
+							<div className="dropdown-menu" style={{left:'auto',right:'0'}} aria-labelledby="navbarDropdownMenuLink">
+								<a className="dropdown-item" href="#">
 									Action
 								</a>
-								<a class="dropdown-item" href="#">
+								<a className="dropdown-item" href="#">
 									Another action
 								</a>
-								<a class="dropdown-item" href="#">
+								<a className="dropdown-item" href="#">
 									Logout
 								</a>
 							</div>
