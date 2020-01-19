@@ -5,3 +5,8 @@ Remove # form action, a href
 User settings:{
     Transfer incompleted tasks to tomorrow
 }    
+
+Bugs:{
+    Homepage seems a moment when i redirect to dashboard page fix this (directly direct from index.js)
+    Dashboard page is just running when request comes from homepage
+}
