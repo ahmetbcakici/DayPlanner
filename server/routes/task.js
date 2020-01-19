@@ -3,10 +3,14 @@ const router = express.Router();
 const User = require('../models/User');
 
 router.get('/get', (req, res) => {
-	const username = JSON.parse(req.query.loggedUser).username;
-	User.findOne({ username }).then(docs => {
-		res.send(docs.tasks);
-	});
+	try {
+		const username = JSON.parse(req.query.loggedUser).username;
+		User.findOne({ username }).then(docs => {
+			res.send(docs.tasks);
+		});
+	} catch {
+		res.status(401).json({ message: 'There is no token!' });
+	}
 });
 
 router.post('/post', (req, res) => {

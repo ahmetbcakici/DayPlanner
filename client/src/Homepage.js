@@ -4,14 +4,7 @@ import axios from 'axios';
 import Login from './components/Login';
 import Register from './components/Register';
 import './Homepage.css';
-import UserConsumer, { userContext } from './context';
-// return (
-// 	<UserConsumer>
-// 		{value => {
-// 			console.log(value);
-// 		}}
-// 	</UserConsumer>
-// );
+import  { userContext } from './context';
 
 export default class Homepage extends Component {
 	constructor(props) {
@@ -49,8 +42,9 @@ export default class Homepage extends Component {
 	}
 
 	render() {
-		const { setCurrentUser } = this.context;
+		const {currentUser, setCurrentUser } = this.context;
 		if (this.state.isLogged) {
+			// console.log(currentUser); sample code
 			setCurrentUser(this.state.loggedUser);
 			return (
 				<Redirect

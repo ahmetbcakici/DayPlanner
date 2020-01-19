@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 import './Dashboard.css';
 import Sidebar from 'react-sidebar';
 import Navbar from './components/Navbar';
 import Timer from './components/Timer';
+import UserConsumer, { userContext } from './context';
 
 export default class Dashboard extends Component {
 	constructor(props) {
@@ -21,7 +23,11 @@ export default class Dashboard extends Component {
 		taskToPut: '',
 		isTimerScreen: false,
 		taskIdInTimer: '',
+		loggedUser: '',
+		directlyDashboard: false,
 	};
+
+	static contextType = userContext;
 
 	componentDidMount() {
 		document.body.style = `
@@ -31,8 +37,18 @@ export default class Dashboard extends Component {
 		background-repeat: no-repeat;
 		background-size: cover;
 	`;
-		this.getItem();
+
+		this.currentUser(); //asynchronus station
 	}
+
+	currentUser = async () => {
+		try {
+			await this.setState({ loggedUser: this.props.location.state.loggedUser });
+			this.getItem();
+		} catch {
+			await this.setState({ directlyDashboard: true });
+		}
+	};
 
 	getDate = () => {
 		var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -51,13 +67,11 @@ export default class Dashboard extends Component {
 	};
 
 	getItem = () => {
-		axios
-			.get(`http://localhost:3001/task/get`, { params: { loggedUser: this.props.location.state.loggedUser } })
-			.then(res => {
-				const usertasks = res.data;
-				usertasks.reverse(); // For that : Users should be see task on top whichever is new
-				this.setState({ usertasks });
-			});
+		axios.get(`http://localhost:3001/task/get`, { params: { loggedUser: this.state.loggedUser } }).then(res => {
+			const usertasks = res.data;
+			usertasks.reverse(); // For that : Users should be see task on top whichever is new
+			this.setState({ usertasks });
+		});
 	};
 
 	postItem = e => {
@@ -66,7 +80,7 @@ export default class Dashboard extends Component {
 				.post(
 					`http://localhost:3001/task/post`,
 					{ title: e.target.value, date: this.selectedDate() },
-					{ params: { loggedUser: this.props.location.state.loggedUser } }
+					{ params: { loggedUser: this.state.loggedUser } }
 				)
 				.then(() => {
 					this.getItem();
@@ -77,11 +91,15 @@ export default class Dashboard extends Component {
 
 	putItem = () => {
 		axios
-			.put(`http://localhost:3001/task/put`, {
-				id: this.state.editingTask._id,
-				title: this.state.taskToPut,
-				color: this.state.selectedColor,
-			})
+			.put(
+				`http://localhost:3001/task/put`,
+				{
+					id: this.state.editingTask._id,
+					title: this.state.taskToPut,
+					color: this.state.selectedColor,
+				},
+				{ params: { loggedUser: this.state.loggedUser } }
+			)
 			.then(() => {
 				this.getItem();
 				this.setState({ selectedColor: '' });
@@ -89,7 +107,12 @@ export default class Dashboard extends Component {
 	};
 
 	deleteItem = e => {
-		axios.delete(`http://localhost:3001/task/delete`, { data: { id: e.target.id } }).then(() => this.getItem());
+		axios
+			.delete(`http://localhost:3001/task/delete`, {
+				data: { id: e.target.id },
+				params: { loggedUser: this.state.loggedUser },
+			})
+			.then(() => this.getItem());
 	};
 
 	handleInputPostTask = e => {
@@ -199,7 +222,9 @@ export default class Dashboard extends Component {
 	};
 
 	completedStatus = id => {
-		axios.put(`http://localhost:3001/task/put`, { id }).then(() => this.getItem());
+		axios
+			.put(`http://localhost:3001/task/put`, { id }, { params: { loggedUser: this.state.loggedUser } })
+			.then(() => this.getItem());
 	};
 
 	setTimerScreen = e => {
@@ -219,6 +244,7 @@ export default class Dashboard extends Component {
 	};
 
 	render() {
+		if (this.state.directlyDashboard) return <Redirect to="/" />;
 		return (
 			<div>
 				<Navbar />

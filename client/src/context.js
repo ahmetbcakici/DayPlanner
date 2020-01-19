@@ -4,15 +4,20 @@ export const userContext = React.createContext();
 
 export class UserProvider extends Component {
 	state = {
-		currentUser: '',
+		currentUser: 'initial',
 	};
 
-	setCurrentUser = (currentUser) => {
+	setCurrentUser = currentUser => {
+		// console.log(currentUser);
 		this.setState({ currentUser });
 	};
 
 	render() {
-		return <userContext.Provider value={this.state,{setCurrentUser:this.setCurrentUser}}>{this.props.children}</userContext.Provider>;
+		return (
+			<userContext.Provider value={{ ...this.state, setCurrentUser: this.setCurrentUser }}>
+				{this.props.children}
+			</userContext.Provider>
+		);
 	}
 }
 
