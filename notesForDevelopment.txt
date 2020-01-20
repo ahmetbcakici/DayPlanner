@@ -1,6 +1,8 @@
 User should not go to back days from their registered date in daily view
 Check null inputs backend side (form validation in backend)
 Remove # form action, a href
+Move secret key to process.env
+Make middleware Hashpass func
 
 User settings:{
     Transfer incompleted tasks to tomorrow
@@ -8,5 +10,8 @@ User settings:{
 
 Bugs:{
     Homepage seems a moment when i redirect to dashboard page fix this (directly direct from index.js)
-    Dashboard page is just running when request comes from homepage
+}
+
+Improvements:{
+    keep me logged in (scenario : if user check keep me logged in (login screen or in him/her settings page) jwt will not has expires)
 }

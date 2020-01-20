@@ -1,6 +1,7 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 const router = express.Router();
 const User = require('../models/User');
@@ -18,10 +19,10 @@ const hashPass = purepass => {
 	});
 };
 
-router.get("/jwt",checkAuth,(req,res) => {
+router.get('/jwt', checkAuth, (req, res) => {
 	res.send(req.userData);
 	res.end();
-})
+});
 
 router.post('/login', (req, res) => {
 	if (!req.body.username || !req.body.password) return res.status(403).send();
@@ -35,7 +36,7 @@ router.post('/login', (req, res) => {
 							mail: docs.mail,
 							_id: docs._id,
 						},
-						'secret_key', // keep and call this from process.ENV
+						process.env.JWT_SECRETKEY,
 						{
 							expiresIn: '30d',
 						}
