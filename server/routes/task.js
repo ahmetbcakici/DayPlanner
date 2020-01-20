@@ -37,6 +37,10 @@ router.put('/put', (req, res) => {
 		});
 	} else {
 		User.findOne({ username }).then(doc => {
+			if(req.body.title.length < 1 || req.body.title === " "){
+				return res.end();
+			}
+
 			doc.tasks.map(task => {
 				if (task.id === req.body.id) {
 					if (req.body.color) task.color = req.body.color;

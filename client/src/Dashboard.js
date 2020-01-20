@@ -243,7 +243,7 @@ export default class Dashboard extends Component {
 		if (this.state.directlyDashboard) return <Redirect to="/" />;
 		return (
 			<div>
-				<Navbar />
+				<Navbar currentUser={this.state.loggedUser} />
 				<div className="justify-content-center d-flex mt-5">
 					<Sidebar
 						sidebar={
@@ -365,7 +365,13 @@ export default class Dashboard extends Component {
 														<i
 															className="fas fa-hourglass-start mr-2"
 															id={task._id}
-															onClick={this.setTimerScreen}></i>
+															onClick={this.setTimerScreen}
+															style={{
+																display:
+																	this.state.turnTodayDisplay === 'inline'
+																		? 'none'
+																		: 'inline',
+															}}></i>
 														<i
 															className="fas fa-pen mr-2"
 															onClick={() => this.onSetSidebarOpen(true, task._id)}></i>

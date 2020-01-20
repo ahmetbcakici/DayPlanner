@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 
 export default class Navbar extends Component {
+	constructor(props) {
+		super(props);
+	}
+
 	state = {
 		logout: false,
 	};
@@ -42,8 +46,8 @@ export default class Navbar extends Component {
 								data-toggle="dropdown"
 								aria-haspopup="true"
 								aria-expanded="false"
-								style={{ fontSize: '1.2rem', padding: '0' }}>
-								<i className="fas fa-user"></i>
+								style={{ fontSize: '1.2rem', padding: '0' }}>								
+								<i className="fas fa-user"></i><span className="ml-2">{this.props.currentUser.username}</span>
 							</a>
 							<div
 								className="dropdown-menu"
@@ -55,7 +59,7 @@ export default class Navbar extends Component {
 								<a className="dropdown-item" href="#">
 									Another action
 								</a>
-								<a className="dropdown-item" onClick={this.destroyToken}>
+								<a className="dropdown-item" href="#" onClick={this.destroyToken}>
 									Logout
 								</a>
 							</div>

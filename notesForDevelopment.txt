@@ -1,11 +1,8 @@
-User should not go to back days from their registered date in daily view
-Check null inputs backend side (form validation in backend)
-Remove # form action, a href
-Move secret key to process.env
-Make middleware Hashpass func
-
 User settings:{
     Transfer incompleted tasks to tomorrow
+    keep me logged in (scenario : if user check keep me logged in (login screen or in him/her settings page) jwt will not has expires)
+    User should has an option that make him/her daily routine (and this routine list will be in every day) (also user can select a list for just one day etc:Monday tasks list , ...)
+    Auto categorize by tasks colors
 }    
 
 Bugs:{
@@ -13,5 +10,11 @@ Bugs:{
 }
 
 Improvements:{
-    keep me logged in (scenario : if user check keep me logged in (login screen or in him/her settings page) jwt will not has expires)
+    User should not go to back days from their registered date in daily view
+    Check null inputs backend side (form validation in backend)
+    Remove # form action, a href
+    Make middleware Hashpass func
+    Sortable list
+    Mail verification
+    Forgot my pass
 }

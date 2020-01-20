@@ -24,6 +24,17 @@ router.get('/jwt', checkAuth, (req, res) => {
 	res.end();
 });
 
+router.get('/get', (req, res) => {
+	User.findOne({ username: 'tester' }).then(docs => {
+		const { username, mail, registeredDate } = docs;
+		res.json({
+			username,
+			mail,
+			registeredDate,
+		});
+	});
+});
+
 router.post('/login', (req, res) => {
 	if (!req.body.username || !req.body.password) return res.status(403).send();
 	User.findOne({ username: req.body.username })
@@ -45,7 +56,7 @@ router.post('/login', (req, res) => {
 				} else res.status(400).send(); // 400 incorrect username or password
 			} else res.status(404).send(); // 404 user not found
 		})
-		.catch(() => res.status(403).send());
+		.catch(() => res.status(403).send()); // forbidden : something went wrong
 });
 
 router.post('/register', async (req, res) => {
