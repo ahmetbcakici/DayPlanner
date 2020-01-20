@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
+import ErrorAlert from './ErrorAlert';
 import axios from 'axios';
 
 export default class Register extends Component {
@@ -12,6 +13,8 @@ export default class Register extends Component {
 		mail: '',
 		password: '',
 		redirect: false,
+		ErrorAlert: false,
+		ErrorMsg: '',
 	};
 
 	getDate = () => {
@@ -93,13 +96,25 @@ export default class Register extends Component {
 				mail: this.state.mail,
 				username: this.state.username,
 				password: this.state.password,
-				registeredDate:this.selectedDate()
+				registeredDate: this.selectedDate(),
 			})
 			.then(response => {
-				this.setState({ redirect: true });
+				axios
+					.post('http://localhost:3001/user/login', {
+						username: this.state.username,
+						password: this.state.password,
+					})
+					.then(response => {
+						localStorage.setItem('token', response.data.token);
+						this.setState({ redirect: true });
+					});
 			})
 			.catch(err => {
-				this.setState({ ErrorAlert: true });
+				let temp_errormsg;
+				if (err.response.status === 400) temp_errormsg = 'This username or email address are already registered.';
+				else if (err.response.status === 404) temp_errormsg = 'Username and password fields can not be empty.';
+				else temp_errormsg = 'Something went wrong.';
+				this.setState({ ErrorAlert: true, ErrorMsg: temp_errormsg });
 			});
 	};
 
@@ -156,6 +171,15 @@ export default class Register extends Component {
 				<button type="submit" class="btn btn-primary">
 					Submit
 				</button>
+				{this.state.ErrorAlert ? (
+					<ErrorAlert
+						msg={
+							<span>
+								<strong>Attention !</strong> {this.state.ErrorMsg}
+							</span>
+						}
+					/>
+				) : null}
 			</form>
 		);
 	}

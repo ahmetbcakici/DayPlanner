@@ -42,7 +42,7 @@ router.put('/put', (req, res) => {
 			});
 		} else {
 			User.findOne({ username }).then(doc => {
-				if (req.body.title.length < 1 || req.body.title === ' ') {
+				if (!req.body.title) {
 					return res.end();
 				}
 

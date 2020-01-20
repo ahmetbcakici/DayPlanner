@@ -5,18 +5,7 @@ const jwt = require('jsonwebtoken');
 const router = express.Router();
 const User = require('../models/User');
 const checkAuth = require('../middleware/checkauth');
-
-const hashPass = purepass => {
-	return new Promise(function(res, rej) {
-		bcrypt.genSalt(10, (err, salt) => {
-			if (err) throw err;
-			bcrypt.hash(purepass, salt, async (err, hash) => {
-				if (err) throw err;
-				res(hash);
-			});
-		});
-	});
-};
+const hashPass = require('../middleware/hashpass');
 
 router.get('/jwt', checkAuth, (req, res) => {
 	res.send(req.userData);
@@ -25,6 +14,7 @@ router.get('/jwt', checkAuth, (req, res) => {
 
 router.get('/get', (req, res) => {
 	User.findOne({ username: 'tester' }).then(docs => {
+		// username should be dynamic
 		const { username, mail, registeredDate } = docs;
 		res.json({
 			username,
@@ -58,8 +48,8 @@ router.post('/login', (req, res) => {
 		.catch(() => res.status(403).send()); // forbidden : something went wrong
 });
 
-router.post('/register', async (req, res) => {
-	if (!req.body.username || !req.body.password || !req.body.mail) return res.status(403).send();
+router.post('/register', hashPass, async (req, res) => {
+	if (!req.body.username || !req.body.password || !req.body.mail) return res.status(404).send();
 
 	const isRegistered = await User.findOne({ $or: [{ username: req.body.username }, { mail: req.body.mail }] });
 
@@ -68,18 +58,16 @@ router.post('/register', async (req, res) => {
 		return;
 	}
 
-	hashPass(req.body.password).then(response => {
-		var newrecord = new User({
-			username: req.body.username,
-			mail: req.body.mail,
-			password: response,
-			registeredDate: req.body.date,
-		});
+	var newrecord = new User({
+		username: req.body.username,
+		mail: req.body.mail,
+		password: req.hashedPass,
+		registeredDate: req.body.date,
+	});
 
-		newrecord.save(err => {
-			if (err) res.status(400).send();
-			res.status(200).send();
-		});
+	newrecord.save(err => {
+		if (err) res.status(403).send();
+		res.status(200).send();
 	});
 });
 
