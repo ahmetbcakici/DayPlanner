@@ -1,7 +1,6 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-require('dotenv').config();
 
 const router = express.Router();
 const User = require('../models/User');
@@ -74,6 +73,7 @@ router.post('/register', async (req, res) => {
 			username: req.body.username,
 			mail: req.body.mail,
 			password: response,
+			registeredDate: req.body.date,
 		});
 
 		newrecord.save(err => {

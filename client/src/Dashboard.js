@@ -239,6 +239,10 @@ export default class Dashboard extends Component {
 			: (e.target.className = 'far fa-circle');
 	};
 
+	firstDate = () => {
+
+	}
+
 	render() {
 		if (this.state.directlyDashboard) return <Redirect to="/" />;
 		return (
