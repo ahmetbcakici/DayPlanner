@@ -24,6 +24,7 @@ export default class Dashboard extends Component {
 		taskIdInTimer: '',
 		loggedUser: '',
 		directlyDashboard: false,
+		minDate: false,
 	};
 
 	componentDidMount() {
@@ -47,19 +48,11 @@ export default class Dashboard extends Component {
 	};
 
 	getDate = () => {
-		var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-		var d = new Date(new Date().setDate(new Date().getDate() - this.state.minusPlus));
-		var dayName = days[d.getDay()];
-
-		return (
-			dayName +
-			' ' +
-			new Date(new Date().setDate(new Date().getDate() - this.state.minusPlus))
-				.toString()
-				.split(' ')
-				.splice(1, 3)
-				.join(' ')
-		);
+		return new Date(new Date().setDate(new Date().getDate() - this.state.minusPlus))
+			.toString()
+			.split(' ')
+			.splice(0, 4)
+			.join(' ');
 	};
 
 	getItem = () => {
@@ -182,7 +175,13 @@ export default class Dashboard extends Component {
 				monthNumber = '12';
 				break;
 		}
-		return selectedDate[3] + '-' + monthNumber + '-' + selectedDate[2];
+		selectedDate = selectedDate[3] + '-' + monthNumber + '-' + selectedDate[2];
+		const { registeredDate } = this.state.loggedUser;
+		if (selectedDate == registeredDate.substring(0, 10)) {
+			console.log('ya');
+		// 	// await this.setState({ minDate: true });
+		}
+		return selectedDate;
 	};
 
 	onSetSidebarOpen = async (open, id) => {
@@ -224,7 +223,7 @@ export default class Dashboard extends Component {
 	};
 
 	setTimerScreen = e => {
-		this.setState({ isTimerScreen: this.state.isTimerScreen === true ? false : true, taskIdInTimer: e.target.id });
+		this.setState({ isTimerScreen: !this.state.isTimerScreen, taskIdInTimer: e.target.id });
 	};
 
 	onHover = e => {
@@ -238,10 +237,6 @@ export default class Dashboard extends Component {
 			? (e.target.className = 'far fa-check-circle')
 			: (e.target.className = 'far fa-circle');
 	};
-
-	firstDate = () => {
-
-	}
 
 	render() {
 		if (this.state.directlyDashboard) return <Redirect to="/" />;
@@ -306,14 +301,18 @@ export default class Dashboard extends Component {
 								href="#"
 								className="arrow arrow-right transparent-color"
 								onClick={this.minus}
-								style={{ visibility: this.state.isTimerScreen ? 'hidden' : 'visible' }}>
+								style={{
+									visibility: this.state.isTimerScreen ? 'hidden' : 'visible',
+								}}>
 								<i className="fas fa-chevron-right"></i>
 							</a>
 							<a
 								href="#"
 								className="arrow arrow-left transparent-color"
 								onClick={this.plus}
-								style={{ visibility: this.state.isTimerScreen ? 'hidden' : 'visible' }}>
+								style={{
+									visibility: this.state.isTimerScreen ? 'hidden' : 'visible',
+								}}>
 								<i className="fas fa-chevron-left"></i>
 							</a>
 							<input

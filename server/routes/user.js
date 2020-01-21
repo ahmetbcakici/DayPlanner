@@ -12,17 +12,17 @@ router.get('/jwt', checkAuth, (req, res) => {
 	res.end();
 });
 
-router.get('/get', (req, res) => {
-	User.findOne({ username: 'tester' }).then(docs => {
-		// username should be dynamic
-		const { username, mail, registeredDate } = docs;
-		res.json({
-			username,
-			mail,
-			registeredDate,
-		});
-	});
-});
+// router.get('/get', (req, res) => { DEPRECATED
+// 	User.findOne({ username: 'tester' }).then(docs => {
+// 		// username should be dynamic
+// 		const { username, mail, registeredDate } = docs;
+// 		res.json({
+// 			username,
+// 			mail,
+// 			registeredDate,
+// 		});
+// 	});
+// });
 
 router.post('/login', (req, res) => {
 	if (!req.body.username || !req.body.password) return res.status(403).send();
@@ -34,6 +34,7 @@ router.post('/login', (req, res) => {
 						{
 							username: docs.username,
 							mail: docs.mail,
+							registeredDate: docs.registeredDate,
 							_id: docs._id,
 						},
 						process.env.JWT_SECRETKEY,
