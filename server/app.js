@@ -13,7 +13,7 @@ app.use(bodyParser.json());
 app.use('/task', require('./routes/task'));
 app.use('/user', require('./routes/user'));
 
-mongoose.connect('mongodb://localhost:27017/DayPlanner', { useNewUrlParser: true, useUnifiedTopology: true }, err => {
+mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true }, err => {
 	if (err) throw err;
 	console.log('Mongoose connected!');
 });

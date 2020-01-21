@@ -116,12 +116,14 @@ export default class Dashboard extends Component {
 		await this.setState({ minusPlus: this.state.minusPlus - 1 });
 		this.getDate();
 		this.checkIsToday();
+		this.minDateControl();
 	};
 
 	plus = async () => {
 		await this.setState({ minusPlus: this.state.minusPlus + 1 });
 		this.getDate();
 		this.checkIsToday();
+		this.minDateControl();
 	};
 
 	checkIsToday = () => {
@@ -132,6 +134,17 @@ export default class Dashboard extends Component {
 	handleTurnToday = async () => {
 		await this.setState({ minusPlus: 0, turnTodayDisplay: 'none' });
 		this.getDate();
+		this.minDateControl();
+	};
+
+	minDateControl = () => {
+		const { registeredDate } = this.state.loggedUser;
+		if (this.selectedDate() !== registeredDate.substring(0, 10)) {
+			this.setState({ minDate: false });
+			return;
+		}
+
+		this.setState({ minDate: true });
 	};
 
 	selectedDate = () => {
@@ -176,11 +189,7 @@ export default class Dashboard extends Component {
 				break;
 		}
 		selectedDate = selectedDate[3] + '-' + monthNumber + '-' + selectedDate[2];
-		const { registeredDate } = this.state.loggedUser;
-		if (selectedDate == registeredDate.substring(0, 10)) {
-			console.log('ya');
-		// 	// await this.setState({ minDate: true });
-		}
+
 		return selectedDate;
 	};
 
@@ -311,7 +320,7 @@ export default class Dashboard extends Component {
 								className="arrow arrow-left transparent-color"
 								onClick={this.plus}
 								style={{
-									visibility: this.state.isTimerScreen ? 'hidden' : 'visible',
+									visibility: this.state.isTimerScreen || this.state.minDate ? 'hidden' : 'visible',
 								}}>
 								<i className="fas fa-chevron-left"></i>
 							</a>
