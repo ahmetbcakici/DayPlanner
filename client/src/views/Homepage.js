@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
-import Login from './components/Login';
-import Register from './components/Register';
-import './Homepage.css';
+import Login from '../components/Login';
+import Register from '../components/Register';
+import '../style/Homepage.css';
 
 export default class Homepage extends Component {
 	constructor(props) {

@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
-import './Dashboard.css';
+import '../style/Dashboard.css';
 import Sidebar from 'react-sidebar';
-import Navbar from './components/Navbar';
-import Timer from './components/Timer';
+import Navbar from '../components/Navbar';
+import Timer from '../components/Timer';
 
 export default class Dashboard extends Component {
 	constructor(props) {
@@ -42,6 +42,7 @@ export default class Dashboard extends Component {
 		try {
 			await this.setState({ loggedUser: this.props.location.state.loggedUser });
 			this.getItem();
+			this.minDateControl();
 		} catch {
 			await this.setState({ directlyDashboard: true });
 		}

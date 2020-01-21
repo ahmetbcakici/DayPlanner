@@ -3,18 +3,16 @@ User settings:{
     keep me logged in (scenario : if user check keep me logged in (login screen or in him/her settings page) jwt will not has expires)
     User should has an option that make him/her daily routine (and this routine list will be in every day) (also user can select a list for just one day etc:Monday tasks list , ...)
     Auto categorize by tasks colors
+    Change background image
 }    
 
 Bugs:{
-    Homepage seems a moment when i redirect to dashboard page fix this (directly direct from index.js)
+    Homepage seems for a moment while i am redirecting user to dashboard page
 }
 
 Improvements:{
-    User should not go to back days from their registered date in daily view
-    Check null inputs backend side (form validation in backend)
     Remove # form action, a href
-    Make middleware Hashpass func
-    Sortable list
+    Sortable task list
     Mail verification
     Forgot my pass
 }
@@ -24,4 +22,5 @@ Code quality:{
     your server and your client should be different repos
     save your project from nested and useless if-else structures (in axios, mongoose)
     you can also use async-await alternative for then (then will be complicated your code for more than one queries)
+    use import-export keyword with ESM (write modern JS)
 }

@@ -12,7 +12,7 @@ export default class Navbar extends Component {
 
 	destroyToken = () => {
 		localStorage.removeItem('token');
-		this.setState({ logout: true });		
+		this.setState({ logout: true });
 	};
 
 	render() {
@@ -46,16 +46,19 @@ export default class Navbar extends Component {
 								data-toggle="dropdown"
 								aria-haspopup="true"
 								aria-expanded="false"
-								style={{ fontSize: '1.2rem', padding: '0' }}>								
-								<i className="fas fa-user"></i><span className="ml-2">{this.props.currentUser.username}</span>
+								style={{ fontSize: '1.2rem', padding: '0' }}>
+								<i className="fas fa-user"></i>
+								<span className="ml-2">{this.props.currentUser.username}</span>
 							</a>
 							<div
 								className="dropdown-menu"
 								style={{ left: 'auto', right: '0' }}
 								aria-labelledby="navbarDropdownMenuLink">
-								<a className="dropdown-item" href="#">
-									Action
-								</a>
+								<Link to="/settings">
+									<a className="dropdown-item" href="#">
+										Settings
+									</a>
+								</Link>
 								<a className="dropdown-item" href="#">
 									Another action
 								</a>
