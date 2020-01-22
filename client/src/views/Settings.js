@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Navbar from '../components/Navbar';
 import SettingsSidebar from '../components/SettingsSidebar';
 import '../style/Settings.css';
+import SecuritySettings from '../components/SecuritySettings';
 
 export default class Settings extends Component {
 	state = {
@@ -22,13 +23,13 @@ export default class Settings extends Component {
 		return (
 			<div>
 				<Navbar currentUser={this.state.loggedUser} />
-				<div className="container">
+				<div className="container mt-3">
 					<div className="row">
 						<div className="col-2 border-right">
 							<SettingsSidebar />
 						</div>
 						<div className="col-10">
-
+							<SecuritySettings />
 						</div>
 					</div>
 				</div>

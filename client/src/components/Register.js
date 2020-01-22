@@ -121,7 +121,7 @@ export default class Register extends Component {
 	render() {
 		if (this.state.redirect) return <Redirect to="/dashboard" />;
 		return (
-			<form className="w-75" onSubmit={this.registerSubmitHandle}>
+			<form className="w-75 register-form" onSubmit={this.registerSubmitHandle}>
 				<h4 className="text-center">Register Form</h4>
 				<hr />
 				<div className="form-group">

@@ -50,7 +50,7 @@ export default class Login extends Component {
 	render() {
 		if (this.state.redirect) return <Redirect to="/dashboard" />;
 		return (
-			<form className="w-75" action="#" onSubmit={this.loginSubmitHandle}>
+			<form className="w-75 login-form" action="#" onSubmit={this.loginSubmitHandle}>
 				<h4 className="text-center">Login Form</h4>
 				<hr />
 				<div className="form-group">
