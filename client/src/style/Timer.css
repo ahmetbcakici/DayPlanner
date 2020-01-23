@@ -1,0 +1,39 @@
+#progressBar {
+    width: 90%;
+    margin: 10px auto;
+    height: 22px;
+    background-color: #0a5f44;
+}
+
+#progressBar div {
+    height: 100%;
+    text-align: right;
+    padding: 0 10px;
+    line-height: 22px;
+    /* same as #progressBar height if we want text middle aligned */
+    width: 0;
+    background-color: #cbea00;
+    box-sizing: border-box;
+}
+
+a.solink {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    text-align: center;
+    background: #f3f5f6;
+    color: #cfd6d9;
+    border: 1px solid #cfd6d9;
+    line-height: 30px;
+    text-decoration: none;
+    transition: all 0.3s;
+    z-index: 999;
+}
+
+a.solink::first-letter {
+    text-transform: capitalize;
+}
+
+a.solink:hover {
+    color: #428bca;
+}

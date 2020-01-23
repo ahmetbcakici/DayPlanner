@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
+import '../style/Timer.css';
 import { easeSin } from 'd3-ease';
 
 // Animation
@@ -38,12 +39,13 @@ export default class Timer extends Component {
 	componentDidMount() {
 		this.findTaskById();
 		pomodoroSession();
+		this.progress(600, 600, document.getElementById('progressBar'));
 	}
 
 	startTimer = () => {
 		this.setState({ progressEnd: 100 });
 	};
-
+	
 	render() {
 		return (
 			<div>
@@ -53,7 +55,7 @@ export default class Timer extends Component {
 					</span>
 					<h4 className="d-inline-block">{this.state.taskInTimer.title}</h4>
 				</div>
-				<div className="mx-auto mt-3" style={{ width: '30%' }} onClick={this.startTimer}>
+				<div className="d-inline-block mr-2" style={{ width: '25%' }} onClick={this.startTimer}>
 					<AnimatedProgressProvider
 						valueStart={0}
 						valueEnd={this.state.progressEnd}
@@ -65,7 +67,6 @@ export default class Timer extends Component {
 								<CircularProgressbar
 									value={value}
 									text={`${roundedValue}%`}
-									// text={`${remainMinute} m\n${remainSecond} s`}
 									styles={buildStyles({
 										pathTransition: 'none',
 										trailColor: '#e8e8e8',
@@ -76,6 +77,11 @@ export default class Timer extends Component {
 							);
 						}}
 					</AnimatedProgressProvider>
+				</div>
+				<div className="d-inline-block">
+					<div id="progressBar">
+						<div class="bar"></div>
+					</div>
 				</div>
 			</div>
 		);

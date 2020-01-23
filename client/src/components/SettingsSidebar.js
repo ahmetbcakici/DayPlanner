@@ -4,35 +4,23 @@ export default class SettingsSidebar extends Component {
 	render() {
 		return (
 			<div>
-				<ul class="sidebar navbar-nav">
-					<li class="nav-item active">
-						<a class="nav-link" href="/admin">
-							<i class="fas fa-fw fas fa-home"></i>
+				<ul className="sidebar navbar-nav text-success">
+					<li className="nav-item active border-bottom">
+						<a className="nav-link" href="/admin">
+							<i className="fas fa-fw fas fa-home"></i>
 							<span>Home Page</span>
 						</a>
 					</li>
-					<li class="nav-item active">
-						<a class="nav-link" href="/admin/experience">
-							<i class="fab fa-fw fas fa-dice-d20"></i>
+					<li className="nav-item active border-bottom">
+						<a className="nav-link" href="/admin/experience">
+							<i className="fab fa-fw fas fa-dice-d20"></i>
 							<span>Experience</span>
 						</a>
 					</li>
-					<li class="nav-item active">
-						<a class="nav-link" href="/admin/skill">
-							<i class="fab fa-fw fab fa-bandcamp"></i>
-							<span>Skill</span>
-						</a>
-					</li>
-					<li class="nav-item active">
-						<a class="nav-link" href="/admin/portfolio">
-							<i class="fab fa-fw fab fa-artstation"></i>
-							<span>Portfolio</span>
-						</a>
-					</li>
-					<li class="nav-item active">
-						<a class="nav-link" href="/admin/blog">
-							<i class="fas fa-fw fas fa-blog"></i>
-							<span>Blog</span>
+					<li className="nav-item active border-bottom">
+						<a className="nav-link" href="/admin/experience">
+							<i className="fab fa-fw fas fa-dice-d20"></i>
+							<span>Experience</span>
 						</a>
 					</li>
 				</ul>
