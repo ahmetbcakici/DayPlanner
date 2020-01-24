@@ -1,6 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Homepage from './views/Homepage';
 import Dashboard from './views/Dashboard';
