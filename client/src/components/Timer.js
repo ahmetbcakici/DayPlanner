@@ -4,32 +4,38 @@ import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import '../style/Timer.css';
 import { easeSin } from 'd3-ease';
-
-// Animation
-// import { easeQuadInOut } from 'd3-ease';
 import AnimatedProgressProvider from './AnimatedProgressProvider';
 
-var remainMinute = 24,
-	remainSecond = 59;
-var pomodoroSession = () => {
-	setInterval(function() {
-		// this.setState({ remainSecond: this.state.remainSecond - 1 });
-		if (remainSecond-- === 0) {
-			remainSecond = 59;
-			remainMinute--;
-		}
-	}, 1000);
-};
+// var remainMinute = 24,
+// 	remainSecond = 3;
+// var pomodoroSession = () => {
+// 	setInterval(function() {
+// 		console.log(remainMinute);
+// 		console.log(remainSecond);
+
+// 		remainSecond--;
+// 		if (remainSecond === 0) {
+// 			remainSecond = 3;
+// 			remainMinute--;
+// 		}
+// 	}, 1000);
+// };
 
 export default class Timer extends Component {
 	constructor(props) {
 		super(props);
+		this.test = this.test.bind(this);
 	}
 
 	state = {
+		remainMinute: 24,
+		remainSecond: 3,
 		taskInTimer: '',
-		progressEnd: 0,
-		test: 0,
+		circularProgressEnd: 0,
+		progressAnimated: false,
+		progressLabel: 'Click here to start your work session',
+		progressNow: false,
+		progressVariant: 'primary',
 	};
 
 	findTaskById = () => {
@@ -40,17 +46,57 @@ export default class Timer extends Component {
 
 	componentDidMount() {
 		this.findTaskById();
-		pomodoroSession();
+
 		// this.progress(600, 600, document.getElementById('progressBar'));
 	}
 
-	startTimer = () => {
-		this.setState({ progressEnd: 100 });
+	workSession = () => {
+		var remainMinute = 24,
+			remainSecond = 3;
+		setInterval(function() {
+			console.log(remainMinute);
+			console.log(remainSecond);
+
+			this.setStates(remainMinute, remainSecond);
+			if (remainSecond === 0) {
+				remainSecond = 3;
+				// remainMinute--;
+			}
+		}, 1000);
 	};
 
-	test = () => {
-		this.setState({ test: this.state.test + 5 });
+	setStates = (rM, rS) => {
+		console.log('a');
+		// this.setState({ remainMinute: rM, remainSecond: rS });
 	};
+
+	startSession = () => {
+		this.setState({
+			circularProgressEnd: 100,
+			progressAnimated: true,
+			progressLabel: '',
+			progressVariant: 'success',
+		});
+		// pomodoroSession();
+		// this.workSession();
+		this.test();
+	};
+
+	test() {
+		let x = () =>
+			this.setState({ remainSecond: this.state.remainSecond - 1 }, () => {
+				if (this.state.remainSecond < 1) {
+					this.setState({ remainSecond: 3, remainMinute: this.state.remainMinute - 1 });
+				}
+			});
+		function testingo() {
+			console.log('z');
+			x();
+
+			// this.setState({ remainSecond: this.state.remainSecond - 1 });
+		}
+		let abc = setInterval(testingo, 1000);
+	}
 
 	render() {
 		return (
@@ -61,88 +107,49 @@ export default class Timer extends Component {
 					</span>
 					<h4 className="d-inline-block">{this.state.taskInTimer.title}</h4>
 				</div>
-				{/* <div>
-					<div style={{ width: '25%', float: 'left' }} onClick={this.startTimer}>
-						<AnimatedProgressProvider
-							valueStart={0}
-							valueEnd={this.state.progressEnd}
-							duration={10.0}
-							easingFunction={easeSin}>
-							{value => {
-								const roundedValue = Math.round(value);
-								return (
-									<CircularProgressbar
-										value={value}
-										text={`${roundedValue}%`}
-										styles={buildStyles({
-											pathTransition: 'none',
-											trailColor: '#e8e8e8',
-											textColor: '#28A745',
-											pathColor: '#28A745',
-										})}
-									/>
-								);
-							}}
-						</AnimatedProgressProvider>
-					</div>
-					<div className="d-flex justify-content-center" onClick={this.test}>
-						<div className="mt-5">a</div>
-						<div className="mt-4">
-							<small>sada</small>
-							<small>sada</small>
-						</div>
-						<ProgressBar
-							animated={false}
-							now={25}
-							min={0}
-							max={25}
-							style={{ width: '75%', float: 'left' }}
-							label={'Click here to start your work session'}
-							className="mt-5"
-						/>
-					</div>
-				</div> */}
 				<div className="row">
-					<div className="col-4" onClick={this.startTimer}>
-						<div style={{width:'90%'}}>
-						<AnimatedProgressProvider
-							valueStart={0}
-							valueEnd={this.state.progressEnd}
-							duration={10.0}
-							easingFunction={easeSin}>
-							{value => {
-								const roundedValue = Math.round(value);
-								return (
-									<CircularProgressbar
-										value={value}
-										text={`${roundedValue}%`}
-										styles={buildStyles({
-											pathTransition: 'none',
-											trailColor: '#e8e8e8',
-											textColor: '#28A745',
-											pathColor: '#28A745',
-										})}
-									/>
-								);
-							}}
-						</AnimatedProgressProvider>
+					<div className="col-4">
+						<div style={{ width: '90%' }}>
+							<AnimatedProgressProvider
+								valueStart={0}
+								valueEnd={this.state.circularProgressEnd}
+								duration={10.0}
+								easingFunction={easeSin}>
+								{value => {
+									const roundedValue = Math.round(value);
+									return (
+										<CircularProgressbar
+											value={value}
+											text={`${roundedValue}%`}
+											styles={buildStyles({
+												pathTransition: 'none',
+												trailColor: '#e8e8e8',
+												textColor: '#28A745',
+												pathColor: '#28A745',
+											})}
+										/>
+									);
+								}}
+							</AnimatedProgressProvider>
 						</div>
 					</div>
 					<div className="col-8 mt-4">
 						<div className="row">
 							<div className="col-6">
-								<small>00:00</small>
+								<small>{this.state.remainMinute}:{this.state.remainSecond}</small>
 							</div>
-							<div className="col-6">
-							</div>
+							<div className="col-6"></div>
 						</div>
+						<p>{Math.abs(this.state.remainMinute - 24)}</p>
 						<ProgressBar
-							animated={false}
-							now={25}
+							variant={this.state.progressVariant}
+							animated={this.state.progressAnimated}
+							now={Math.abs(this.state.remainMinute - 24) === 0 ? 100 : Math.abs(this.state.remainMinute - 24)}
 							min={0}
 							max={25}
-							label={'Click here to start your work session'}
-							onClick={null}
+							// label={'Click here to start your work session'}
+							label={this.state.progressLabel}
+							onClick={this.startSession}
 						/>
 					</div>
 				</div>
