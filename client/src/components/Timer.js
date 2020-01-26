@@ -3,7 +3,7 @@ import { ProgressBar } from 'react-bootstrap';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import '../style/Timer.css';
-import { easeSin } from 'd3-ease';
+import { easeQuadInOut } from 'd3-ease';
 import AnimatedProgressProvider from './AnimatedProgressProvider';
 
 // var remainMinute = 24,
@@ -110,13 +110,15 @@ export default class Timer extends Component {
 				<div className="row">
 					<div className="col-4">
 						<div style={{ width: '90%' }}>
-							<AnimatedProgressProvider
+							{/* Deprecated because there is a bug */}
+							{/* <AnimatedProgressProvider
 								valueStart={0}
 								valueEnd={this.state.circularProgressEnd}
-								duration={10.0}
-								easingFunction={easeSin}>
+								duration={25.0}
+								easingFunction={easeQuadInOut}
+							>
 								{value => {
-									const roundedValue = Math.round(value);
+									let roundedValue = Math.round(value);
 									return (
 										<CircularProgressbar
 											value={value}
@@ -130,13 +132,15 @@ export default class Timer extends Component {
 										/>
 									);
 								}}
-							</AnimatedProgressProvider>
+							</AnimatedProgressProvider> */}
 						</div>
 					</div>
 					<div className="col-8 mt-4">
 						<div className="row">
 							<div className="col-6">
-								<small>{this.state.remainMinute}:{this.state.remainSecond}</small>
+								<small>
+									{this.state.remainMinute}:{this.state.remainSecond}
+								</small>
 							</div>
 							<div className="col-6"></div>
 						</div>
@@ -144,7 +148,11 @@ export default class Timer extends Component {
 						<ProgressBar
 							variant={this.state.progressVariant}
 							animated={this.state.progressAnimated}
-							now={Math.abs(this.state.remainMinute - 24) === 0 ? 100 : Math.abs(this.state.remainMinute - 24)}
+							now={
+								Math.abs(this.state.remainMinute - 24) === 0
+									? 100
+									: Math.abs(this.state.remainMinute - 24)
+							}
 							min={0}
 							max={25}
 							// label={'Click here to start your work session'}
