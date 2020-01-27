@@ -6,21 +6,6 @@ import '../style/Timer.css';
 import { easeQuadInOut } from 'd3-ease';
 import AnimatedProgressProvider from './AnimatedProgressProvider';
 
-// var remainMinute = 24,
-// 	remainSecond = 3;
-// var pomodoroSession = () => {
-// 	setInterval(function() {
-// 		console.log(remainMinute);
-// 		console.log(remainSecond);
-
-// 		remainSecond--;
-// 		if (remainSecond === 0) {
-// 			remainSecond = 3;
-// 			remainMinute--;
-// 		}
-// 	}, 1000);
-// };
-
 export default class Timer extends Component {
 	constructor(props) {
 		super(props);
@@ -28,8 +13,9 @@ export default class Timer extends Component {
 	}
 
 	state = {
-		remainMinute: 24,
-		remainSecond: 3,
+		remainMinute: 25,
+		remainSecond: 0,
+		secondCounter: 0,
 		taskInTimer: '',
 		circularProgressEnd: 0,
 		progressAnimated: false,
@@ -46,29 +32,7 @@ export default class Timer extends Component {
 
 	componentDidMount() {
 		this.findTaskById();
-
-		// this.progress(600, 600, document.getElementById('progressBar'));
 	}
-
-	workSession = () => {
-		var remainMinute = 24,
-			remainSecond = 3;
-		setInterval(function() {
-			console.log(remainMinute);
-			console.log(remainSecond);
-
-			this.setStates(remainMinute, remainSecond);
-			if (remainSecond === 0) {
-				remainSecond = 3;
-				// remainMinute--;
-			}
-		}, 1000);
-	};
-
-	setStates = (rM, rS) => {
-		console.log('a');
-		// this.setState({ remainMinute: rM, remainSecond: rS });
-	};
 
 	startSession = () => {
 		this.setState({
@@ -77,25 +41,26 @@ export default class Timer extends Component {
 			progressLabel: '',
 			progressVariant: 'success',
 		});
-		// pomodoroSession();
-		// this.workSession();
 		this.test();
 	};
 
 	test() {
-		let x = () =>
-			this.setState({ remainSecond: this.state.remainSecond - 1 }, () => {
-				if (this.state.remainSecond < 1) {
-					this.setState({ remainSecond: 3, remainMinute: this.state.remainMinute - 1 });
+		let x = () => {
+			this.setState(
+				{ remainSecond: this.state.remainSecond - 1, secondCounter: this.state.secondCounter + 1 },
+				() => {
+					if (this.state.remainSecond < 1) {
+						this.setState({
+							remainSecond: 59,
+							remainMinute: this.state.remainMinute - 1,
+							secondCounter: this.state.secondCounter + 1,
+						});
+					}
 				}
-			});
-		function testingo() {
-			console.log('z');
-			x();
-
-			// this.setState({ remainSecond: this.state.remainSecond - 1 });
-		}
-		let abc = setInterval(testingo, 1000);
+			);
+		};
+		x();
+		let abc = setInterval(x, 1000);
 	}
 
 	render() {
@@ -137,25 +102,21 @@ export default class Timer extends Component {
 					</div>
 					<div className="col-8 mt-4">
 						<div className="row">
+							<div className="col-6"></div>
 							<div className="col-6">
-								<small>
-									{this.state.remainMinute}:{this.state.remainSecond}
+								<small className="float-right">
+									{this.state.remainMinute}:{this.state.remainSecond.toString().length < 2 ? `0${this.state.remainSecond}` : this.state.remainSecond}
 								</small>
 							</div>
-							<div className="col-6"></div>
 						</div>
-						<p>{Math.abs(this.state.remainMinute - 24)}</p>
+						{/* <p>{Math.abs(this.state.remainMinute - 24)}</p> */}
+						{console.log(this.state.secondCounter)}
 						<ProgressBar
 							variant={this.state.progressVariant}
 							animated={this.state.progressAnimated}
-							now={
-								Math.abs(this.state.remainMinute - 24) === 0
-									? 100
-									: Math.abs(this.state.remainMinute - 24)
-							}
+							now={this.state.remainMinute === 25 ? 1500 : this.state.secondCounter}
 							min={0}
-							max={25}
-							// label={'Click here to start your work session'}
+							max={1500}
 							label={this.state.progressLabel}
 							onClick={this.startSession}
 						/>
