@@ -8,6 +8,7 @@ const TaskSchema = new Schema({
 		type: String,
 		default: 'incompleted',
 	},
+	note: String,
 	date: Date,
 });
 
@@ -19,7 +20,9 @@ const UserSchema = new Schema({
 	},
 	registeredDate: {
 		type: Date,
-		default: `${new Date().getFullYear()}-${String(new Date().getMonth() + 1).padStart(2, '0')}-${String(new Date().getDate()).padStart(2, '0')}`,
+		default: `${new Date().getFullYear()}-${String(new Date().getMonth() + 1).padStart(2, '0')}-${String(
+			new Date().getDate()
+		).padStart(2, '0')}`,
 	},
 	tasks: [TaskSchema],
 });

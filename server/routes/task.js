@@ -50,6 +50,7 @@ router.put('/put', (req, res) => {
 					if (task.id === req.body.id) {
 						if (req.body.color) task.color = req.body.color;
 						task.title = req.body.title;
+						task.note = req.body.note;
 					}
 				});
 				doc.save().then(() => res.end());

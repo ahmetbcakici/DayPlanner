@@ -17,6 +17,7 @@ export default class Dashboard extends Component {
 		turnTodayDisplay: 'none',
 		sidebarOpen: false,
 		selectedColor: '',
+		taskNote: '',
 		editingTask: '',
 		taskToPost: '',
 		taskToPut: '',
@@ -87,6 +88,7 @@ export default class Dashboard extends Component {
 					id: this.state.editingTask._id,
 					title: this.state.taskToPut,
 					color: this.state.selectedColor,
+					note: this.state.taskNote,
 				},
 				{ params: { loggedUser: this.state.loggedUser } }
 			)
@@ -111,6 +113,10 @@ export default class Dashboard extends Component {
 
 	handleInputPutTask = e => {
 		this.setState({ taskToPut: e.target.value });
+	};
+
+	handleTaskNote = e => {
+		this.setState({ taskNote: e.target.value });
 	};
 
 	minus = async () => {
@@ -196,14 +202,16 @@ export default class Dashboard extends Component {
 
 	onSetSidebarOpen = async (open, id) => {
 		this.setState({ sidebarOpen: open });
-		if (!open) this.clearColors();
-		else {
+		if (!open) {
+			this.clearColors();
+			this.setState({ taskNote: '' });
+		} else {
 			await this.state.usertasks.map(task => {
 				if (task._id === id) {
 					this.setState({ editingTask: task });
 				}
 			});
-			this.setState({ taskToPut: this.state.editingTask.title });
+			this.setState({ taskToPut: this.state.editingTask.title, taskNote: this.state.editingTask.note });
 			for (var element of document.getElementsByClassName('colors-area')[0].childNodes)
 				if (element.style.color === this.state.editingTask.color) {
 					element.style.fontSize = '1.2rem';
@@ -286,7 +294,16 @@ export default class Dashboard extends Component {
 										style={{ color: 'DarkOrange' }}
 										onClick={this.handleColorSelect}></i>
 								</p>
-								<button className="btn btn-success w-75" onClick={this.putItem}>
+								<textarea
+									className="transparent-bg-full border-0 pl-3"
+									placeholder="Enter your task's notes"
+									name=""
+									id=""
+									cols="30"
+									rows="17"
+									onChange={this.handleTaskNote}
+									value={this.state.taskNote}></textarea>
+								<button className="btn btn-success w-75 mt-2" onClick={this.putItem}>
 									Save Changes
 								</button>
 							</div>

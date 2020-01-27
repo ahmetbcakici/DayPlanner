@@ -26,6 +26,10 @@ span>i:hover {
     background: rgba(255, 255, 255, 0.5);
 }
 
+.transparent-bg-full {
+    background: rgba(255, 255, 255, 0);
+}
+
 .transparent-color {
     color: rgba(255, 255, 255, 0.5);
 }

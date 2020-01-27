@@ -7,11 +7,6 @@ import { easeQuadInOut } from 'd3-ease';
 import AnimatedProgressProvider from './AnimatedProgressProvider';
 
 export default class Timer extends Component {
-	constructor(props) {
-		super(props);
-		this.test = this.test.bind(this);
-	}
-
 	state = {
 		remainMinute: 25,
 		remainSecond: 0,
@@ -41,11 +36,11 @@ export default class Timer extends Component {
 			progressLabel: '',
 			progressVariant: 'success',
 		});
-		this.test();
+		this.runWorkTimer();
 	};
 
-	test() {
-		let x = () => {
+	runWorkTimer() {
+		let timerProcess = () => {
 			this.setState(
 				{ remainSecond: this.state.remainSecond - 1, secondCounter: this.state.secondCounter + 1 },
 				() => {
@@ -59,8 +54,8 @@ export default class Timer extends Component {
 				}
 			);
 		};
-		x();
-		let abc = setInterval(x, 1000);
+		timerProcess();
+		let abc = setInterval(timerProcess, 1000);
 	}
 
 	render() {
@@ -100,17 +95,18 @@ export default class Timer extends Component {
 							</AnimatedProgressProvider> */}
 						</div>
 					</div>
-					<div className="col-8 mt-4">
+					<div className="col-8">
 						<div className="row">
 							<div className="col-6"></div>
 							<div className="col-6">
 								<small className="float-right">
-									{this.state.remainMinute}:{this.state.remainSecond.toString().length < 2 ? `0${this.state.remainSecond}` : this.state.remainSecond}
+									{this.state.remainMinute}:
+									{this.state.remainSecond.toString().length < 2
+										? `0${this.state.remainSecond}`
+										: this.state.remainSecond}
 								</small>
 							</div>
 						</div>
-						{/* <p>{Math.abs(this.state.remainMinute - 24)}</p> */}
-						{console.log(this.state.secondCounter)}
 						<ProgressBar
 							variant={this.state.progressVariant}
 							animated={this.state.progressAnimated}
@@ -121,6 +117,7 @@ export default class Timer extends Component {
 							onClick={this.startSession}
 						/>
 					</div>
+					<p>{this.state.taskInTimer.note}</p>
 				</div>
 			</div>
 		);
