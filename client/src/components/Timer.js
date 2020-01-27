@@ -8,7 +8,9 @@ import AnimatedProgressProvider from './AnimatedProgressProvider';
 
 export default class Timer extends Component {
 	state = {
-		remainMinute: 25,
+		workTime: 5,
+		breakTime: 1,
+		remainMinute: 0,
 		remainSecond: 0,
 		secondCounter: 0,
 		taskInTimer: '',
@@ -17,6 +19,7 @@ export default class Timer extends Component {
 		progressLabel: 'Click here to start your work session',
 		progressNow: false,
 		progressVariant: 'primary',
+		isInactive: false,
 	};
 
 	findTaskById = () => {
@@ -27,6 +30,7 @@ export default class Timer extends Component {
 
 	componentDidMount() {
 		this.findTaskById();
+		this.setState({ remainMinute: this.state.workTime });
 	}
 
 	startSession = () => {
@@ -41,6 +45,13 @@ export default class Timer extends Component {
 
 	runWorkTimer() {
 		let timerProcess = () => {
+			if (!document.hidden) {
+				console.log('if');
+				this.setState({ isInactive: false });
+			} else {
+				console.log("else")
+				this.setState({ isInactive: true });
+			}
 			this.setState(
 				{ remainSecond: this.state.remainSecond - 1, secondCounter: this.state.secondCounter + 1 },
 				() => {
@@ -55,7 +66,7 @@ export default class Timer extends Component {
 			);
 		};
 		timerProcess();
-		let abc = setInterval(timerProcess, 1000);
+		let abc = setInterval(timerProcess, this.state.isInactive ? 100 : 1000);
 	}
 
 	render() {
@@ -110,14 +121,18 @@ export default class Timer extends Component {
 						<ProgressBar
 							variant={this.state.progressVariant}
 							animated={this.state.progressAnimated}
-							now={this.state.remainMinute === 25 ? 1500 : this.state.secondCounter}
+							now={
+								this.state.remainMinute === this.state.workTime
+									? this.state.workTime * 60
+									: this.state.secondCounter
+							}
 							min={0}
-							max={1500}
+							max={this.state.workTime * 60}
 							label={this.state.progressLabel}
 							onClick={this.startSession}
 						/>
 					</div>
-					<p>{this.state.taskInTimer.note}</p>
+					<p className="p-3">{this.state.taskInTimer.note}</p>
 				</div>
 			</div>
 		);
