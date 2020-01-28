@@ -96,6 +96,7 @@ export default class Dashboard extends Component {
 				this.getItem();
 				this.setState({ selectedColor: '' });
 			});
+			this.onSetSidebarOpen(false)
 	};
 
 	deleteItem = e => {

@@ -8,7 +8,7 @@ import AnimatedProgressProvider from './AnimatedProgressProvider';
 
 export default class Timer extends Component {
 	state = {
-		workTime: 5,
+		workTime: 1,
 		breakTime: 1,
 		remainMinute: 0,
 		remainSecond: 0,
@@ -34,6 +34,7 @@ export default class Timer extends Component {
 	}
 
 	startSession = () => {
+		if (this.state.progressVariant === 'success') return;
 		this.setState({
 			circularProgressEnd: 100,
 			progressAnimated: true,
@@ -45,17 +46,29 @@ export default class Timer extends Component {
 
 	runWorkTimer() {
 		let timerProcess = () => {
-			if (!document.hidden) {
-				console.log('if');
-				this.setState({ isInactive: false });
-			} else {
-				console.log("else")
-				this.setState({ isInactive: true });
+			// if (!document.hidden) {
+			// 	console.log('if');
+			// 	this.setState({ isInactive: false });
+			// } else {
+			// 	console.log("else")
+			// 	this.setState({ isInactive: true });
+			// }
+
+			// if(this.state.remainMinute === 0) console.log("0 sa")
+
+			console.log(this.state.remainMinute)
+			console.log(this.state.remainSecond)
+			if (this.state.remainMinute < 1 && this.state.remainSecond < 1) {
+				console.log('pp');
+				clearInterval(abc)
+				abc();
+				return;
 			}
+
 			this.setState(
 				{ remainSecond: this.state.remainSecond - 1, secondCounter: this.state.secondCounter + 1 },
 				() => {
-					if (this.state.remainSecond < 1) {
+					if (this.state.remainSecond < 1 && this.state.remainMinute > 0) {
 						this.setState({
 							remainSecond: 59,
 							remainMinute: this.state.remainMinute - 1,
@@ -66,7 +79,7 @@ export default class Timer extends Component {
 			);
 		};
 		timerProcess();
-		let abc = setInterval(timerProcess, this.state.isInactive ? 100 : 1000);
+		let abc = setInterval(timerProcess, this.state.isInactive ? 100 : 250);
 	}
 
 	render() {
