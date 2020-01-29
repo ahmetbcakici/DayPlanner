@@ -141,9 +141,10 @@ p>.fa-circle:hover {
     text-shadow: 1px 1px rgba(0, 0, 0, 0.4) !important;
 }
 
-span>.fa-circle:hover {
-    /* font-weight: 700 !important; */
-}
+
+/* span>.fa-circle:hover {
+     font-weight: 700 !important; 
+} */
 
 
 /* Sidebar */

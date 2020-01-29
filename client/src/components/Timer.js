@@ -29,9 +29,15 @@ export default class Timer extends Component {
 		});
 	};
 
-	componentDidMount() {
-		this.findTaskById();
-		this.setState({ remainMinute: this.state.workTime });
+	async componentDidMount() {
+		await this.findTaskById();
+		this.setState(
+			{
+				workTime: this.state.taskInTimer.workTime,
+				breakTime: this.state.taskInTimer.breakTime,
+			},
+			() => this.setState({ remainMinute: this.state.workTime })
+		);
 	}
 
 	startSession = () => {
@@ -46,7 +52,6 @@ export default class Timer extends Component {
 	};
 
 	runWorkTimer() {
-		let timer;
 		let timerProcess = () => {
 			// if (!document.hidden) {
 			// 	console.log('if');
@@ -85,7 +90,7 @@ export default class Timer extends Component {
 			);
 		};
 		timerProcess();
-		timer = setInterval(timerProcess, this.state.isInactive ? 100 : 11);
+		let timer = setInterval(timerProcess, this.state.isInactive ? 100 : 11);
 	}
 
 	render() {
