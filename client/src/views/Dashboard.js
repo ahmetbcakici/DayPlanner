@@ -15,9 +15,11 @@ export default class Dashboard extends Component {
 		usertasks: [],
 		minusPlus: 0,
 		turnTodayDisplay: 'none',
-		sidebarOpen: false,
+		sidebarOpen: false, // default : false
 		selectedColor: '',
 		taskNote: '',
+		workTime: 25,
+		breakTime: 5,
 		editingTask: '',
 		taskToPost: '',
 		taskToPut: '',
@@ -89,6 +91,8 @@ export default class Dashboard extends Component {
 					title: this.state.taskToPut,
 					color: this.state.selectedColor,
 					note: this.state.taskNote,
+					workTime: this.state.workTime,
+					breakTime: this.state.breakTime,
 				},
 				{ params: { loggedUser: this.state.loggedUser } }
 			)
@@ -96,7 +100,7 @@ export default class Dashboard extends Component {
 				this.getItem();
 				this.setState({ selectedColor: '' });
 			});
-			this.onSetSidebarOpen(false)
+		this.onSetSidebarOpen(false);
 	};
 
 	deleteItem = e => {
@@ -118,6 +122,14 @@ export default class Dashboard extends Component {
 
 	handleTaskNote = e => {
 		this.setState({ taskNote: e.target.value });
+	};
+
+	handleWorkTime = e => {
+		this.setState({ workTime: e.target.value });
+	};
+
+	handleBreakTime = e => {
+		this.setState({ breakTime: e.target.value });
 	};
 
 	minus = async () => {
@@ -212,7 +224,7 @@ export default class Dashboard extends Component {
 					this.setState({ editingTask: task });
 				}
 			});
-			this.setState({ taskToPut: this.state.editingTask.title, taskNote: this.state.editingTask.note });
+			this.setState({ taskToPut: this.state.editingTask.title, taskNote: this.state.editingTask.note,workTime:this.state.editingTask.workTime,breakTime:this.state.editingTask.breakTime });
 			for (var element of document.getElementsByClassName('colors-area')[0].childNodes)
 				if (element.style.color === this.state.editingTask.color) {
 					element.style.fontSize = '1.2rem';
@@ -295,16 +307,43 @@ export default class Dashboard extends Component {
 										style={{ color: 'DarkOrange' }}
 										onClick={this.handleColorSelect}></i>
 								</p>
+								<div className="pl-5 pr-5">
+									<label for="customRange3">Work Time ({this.state.workTime}min)</label>
+									<input
+										type="range"
+										class="custom-range"
+										min="10"
+										max="120"
+										step="5"
+										id="customRange3"
+										defaultValue="60"
+										value={this.state.workTime}
+										onChange={this.handleWorkTime}
+									/>
+
+									<label for="customRange4">Break Time ({this.state.breakTime}min)</label>
+									<input
+										type="range"
+										class="custom-range"
+										min="5"
+										max="30"
+										step="5"
+										id="customRange4"
+										defaultValue="15"
+										value={this.state.breakTime}
+										onChange={this.handleBreakTime}
+									/>
+								</div>
 								<textarea
 									className="transparent-bg-full border-0 pl-3"
 									placeholder="Enter your task's notes"
 									name=""
 									id=""
 									cols="30"
-									rows="17"
+									rows="13"
 									onChange={this.handleTaskNote}
 									value={this.state.taskNote}></textarea>
-								<button className="btn btn-success w-75 mt-2" onClick={this.putItem}>
+								<button className="btn btn-success w-75" onClick={this.putItem}>
 									Save Changes
 								</button>
 							</div>

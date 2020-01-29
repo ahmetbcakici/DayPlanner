@@ -10,6 +10,14 @@ const TaskSchema = new Schema({
 	},
 	note: String,
 	date: Date,
+	workTime: {
+		type: Number,
+		default: 25,
+	},
+	breakTime: {
+		type: Number,
+		default: 5,
+	},
 });
 
 const UserSchema = new Schema({

@@ -2,6 +2,7 @@ User settings:{
     Transfer incompleted tasks to tomorrow
     keep me logged in (scenario : if user check keep me logged in (login screen or in him/her settings page) jwt will not has expires)
     User should has an option that make him/her daily routine (and this routine list will be in every day) (also user can select a list for just one day etc:Monday tasks list , ...)
+    Also it should not be just daily routine. Improve it and make weekly, monthly routines and maybe just for spesific day tasks blabla..
     Auto categorize by tasks colors
     Change background image
 }    

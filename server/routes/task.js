@@ -51,6 +51,8 @@ router.put('/put', (req, res) => {
 						if (req.body.color) task.color = req.body.color;
 						task.title = req.body.title;
 						task.note = req.body.note;
+						task.workTime = req.body.workTime;
+						task.breakTime = req.body.breakTime;
 					}
 				});
 				doc.save().then(() => res.end());
