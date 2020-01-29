@@ -8,8 +8,9 @@ import AnimatedProgressProvider from './AnimatedProgressProvider';
 
 export default class Timer extends Component {
 	state = {
-		workTime: 1,
+		workTime: 5,
 		breakTime: 1,
+		isBreak: false,
 		remainMinute: 0,
 		remainSecond: 0,
 		secondCounter: 0,
@@ -45,6 +46,7 @@ export default class Timer extends Component {
 	};
 
 	runWorkTimer() {
+		let timer;
 		let timerProcess = () => {
 			// if (!document.hidden) {
 			// 	console.log('if');
@@ -56,13 +58,17 @@ export default class Timer extends Component {
 
 			// if(this.state.remainMinute === 0) console.log("0 sa")
 
-			console.log(this.state.remainMinute)
-			console.log(this.state.remainSecond)
 			if (this.state.remainMinute < 1 && this.state.remainSecond < 1) {
-				console.log('pp');
-				clearInterval(abc)
-				abc();
-				return;
+				this.setState({ isBreak: !this.state.isBreak }, () => {
+					if (this.state.isBreak) {
+						this.setState({ remainMinute: this.state.breakTime, remainSecond: 0, secondCounter: 0 });
+						return;
+					}
+					this.setState({ remainMinute: this.state.workTime, remainSecond: 0, secondCounter: 0 });
+				});
+				console.log('bitiş');
+				// clearInterval(timer);
+				// return;
 			}
 
 			this.setState(
@@ -79,7 +85,7 @@ export default class Timer extends Component {
 			);
 		};
 		timerProcess();
-		let abc = setInterval(timerProcess, this.state.isInactive ? 100 : 250);
+		timer = setInterval(timerProcess, this.state.isInactive ? 100 : 11);
 	}
 
 	render() {
@@ -135,12 +141,10 @@ export default class Timer extends Component {
 							variant={this.state.progressVariant}
 							animated={this.state.progressAnimated}
 							now={
-								this.state.remainMinute === this.state.workTime
-									? this.state.workTime * 60
-									: this.state.secondCounter
+								this.state.secondCounter < 1 ? 999 * 999 : this.state.secondCounter //temporary solve way
 							}
 							min={0}
-							max={this.state.workTime * 60}
+							max={this.state.isBreak ? this.state.breakTime * 60 : this.state.workTime * 60}
 							label={this.state.progressLabel}
 							onClick={this.startSession}
 						/>
