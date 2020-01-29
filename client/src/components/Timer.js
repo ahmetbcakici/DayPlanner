@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import { ProgressBar } from 'react-bootstrap';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
@@ -40,6 +41,20 @@ export default class Timer extends Component {
 		);
 	}
 
+	workSessionCompleted = async () => {
+		// let x = await this.state.taskInTimer.timeWorked;
+
+		axios.put(
+			`http://localhost:3001/task/put`,
+			{
+				id: this.state.taskInTimer._id,
+				// timeWorked: this.state.taskInTimer.timeWorked + 30,
+				a: 'b',
+			},
+			{ params: { loggedUser: this.props.currentUser } }
+		);
+	};
+
 	startSession = () => {
 		if (this.state.progressVariant === 'success') return;
 		this.setState({
@@ -66,12 +81,13 @@ export default class Timer extends Component {
 			if (this.state.remainMinute < 1 && this.state.remainSecond < 1) {
 				this.setState({ isBreak: !this.state.isBreak }, () => {
 					if (this.state.isBreak) {
+						this.workSessionCompleted();
 						this.setState({ remainMinute: this.state.breakTime, remainSecond: 0, secondCounter: 0 });
 						return;
 					}
 					this.setState({ remainMinute: this.state.workTime, remainSecond: 0, secondCounter: 0 });
 				});
-				console.log('bitiş');
+
 				// clearInterval(timer);
 				// return;
 			}
@@ -90,7 +106,7 @@ export default class Timer extends Component {
 			);
 		};
 		timerProcess();
-		let timer = setInterval(timerProcess, this.state.isInactive ? 100 : 11);
+		let timer = setInterval(timerProcess, this.state.isInactive ? 100 : 1);
 	}
 
 	render() {

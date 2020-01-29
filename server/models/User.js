@@ -18,6 +18,10 @@ const TaskSchema = new Schema({
 		type: Number,
 		default: 5,
 	},
+	timeWorked: {
+		type: Number,
+		default: 0,
+	},
 });
 
 const UserSchema = new Schema({

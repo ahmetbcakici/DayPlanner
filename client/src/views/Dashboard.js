@@ -401,6 +401,7 @@ export default class Dashboard extends Component {
 									id={this.state.taskIdInTimer}
 									tasks={this.state.usertasks}
 									func={this.setTimerScreen}
+									currentUser={this.state.loggedUser}
 								/>
 							) : (
 								<ul className="tasks">
