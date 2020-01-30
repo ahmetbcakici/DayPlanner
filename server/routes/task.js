@@ -45,7 +45,8 @@ router.put('/put', (req, res) => {
 			User.findOne({ username }).then(doc => {
 				doc.tasks.map(task => {
 					if (task.id === req.body.id) {
-						task.timeWorked += task.workTime;
+						if (req.body.timeWorked > 0) task.timeWorked += req.body.timeWorked;
+						else task.timeWorked += task.workTime;
 					}
 				});
 				doc.save().then(() => res.end());

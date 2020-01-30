@@ -37,3 +37,8 @@ a.solink::first-letter {
 a.solink:hover {
     color: #428bca;
 }
+
+i:hover {
+    cursor: pointer;
+    color: rgba(32, 30, 30, 0.6);
+}

@@ -22,6 +22,7 @@ export default class Timer extends Component {
 		progressNow: false,
 		progressVariant: 'primary',
 		isInactive: false,
+		timeWorked: 0,
 	};
 
 	findTaskById = () => {
@@ -42,17 +43,17 @@ export default class Timer extends Component {
 	}
 
 	workSessionCompleted = async () => {
-		// let x = await this.state.taskInTimer.timeWorked;
-
 		axios.put(
 			`http://localhost:3001/task/put`,
 			{
 				id: this.state.taskInTimer._id,
-				// timeWorked: this.state.taskInTimer.timeWorked + 30,
-				a: 'b',
+				timeWorked: this.state.timeWorked,
 			},
 			{ params: { loggedUser: this.props.currentUser } }
 		);
+		// .then(() => {
+		// 	this.setState({ timeWorked: 0 });
+		// });
 	};
 
 	startSession = () => {
@@ -64,6 +65,15 @@ export default class Timer extends Component {
 			progressVariant: 'success',
 		});
 		this.runWorkTimer();
+	};
+
+	endSession = () => {
+		if (this.state.isBreak) {
+			return;
+		}
+		this.setState({ timeWorked: this.state.workTime - this.state.remainMinute }, () => {
+			this.workSessionCompleted();
+		});
 	};
 
 	runWorkTimer() {
@@ -148,7 +158,14 @@ export default class Timer extends Component {
 					</div>
 					<div className="col-8">
 						<div className="row">
-							<div className="col-6"></div>
+							<div className="col-6">
+								<small>
+									<i class="fas fa-check" onClick={this.endSession}></i>
+								</small>
+								<small>
+									<i class="fas fa-check-double"></i>
+								</small>
+							</div>
 							<div className="col-6">
 								<small className="float-right">
 									{this.state.remainMinute}:
