@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
+import ReactTooltip from 'react-tooltip';
 import axios from 'axios';
 import '../style/Dashboard.css';
 import Sidebar from 'react-sidebar';
@@ -426,12 +427,18 @@ export default class Dashboard extends Component {
 										if (task.date.substring(0, 10) === this.selectedDate()) {
 											return (
 												<li key={task._id}>
+													<ReactTooltip />
 													<span>
 														<i
 															className={
 																task.status === 'completed'
 																	? 'far fa-check-circle'
 																	: 'far fa-circle'
+															}
+															data-tip={
+																task.status === 'completed' 
+																? 'Incomplete the task'
+																: 'Complete the task'
 															}
 															style={{
 																color: task.color,
@@ -451,6 +458,7 @@ export default class Dashboard extends Component {
 													<span className="float-right">
 														<i
 															className="fas fa-hourglass-start mr-2"
+															data-tip="Let's start to work"
 															id={task._id}
 															onClick={this.setTimerScreen}
 															style={{
@@ -461,9 +469,11 @@ export default class Dashboard extends Component {
 															}}></i>
 														<i
 															className="fas fa-pen mr-2"
+															data-tip="Edit the task"
 															onClick={() => this.onSetSidebarOpen(true, task._id)}></i>
 														<i
 															className="fas fa-trash-alt"
+															data-tip="Delete the task"
 															id={task._id}
 															onClick={this.deleteItem}></i>
 													</span>

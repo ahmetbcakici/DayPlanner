@@ -6,6 +6,7 @@ import 'react-circular-progressbar/dist/styles.css';
 import '../style/Timer.css';
 import { easeQuadInOut } from 'd3-ease';
 import AnimatedProgressProvider from './AnimatedProgressProvider';
+import ReactTooltip from 'react-tooltip';
 
 export default class Timer extends Component {
 	state = {
@@ -82,9 +83,7 @@ export default class Timer extends Component {
 
 	runWorkTimer() {
 		let timerProcess = () => {
-			console.log('lll');
 			if (this.state.isBack) {
-				console.log('ppp');
 				clearInterval(timer);
 				return;
 			}
@@ -131,12 +130,17 @@ export default class Timer extends Component {
 		this.props.func();
 	};
 
+	skipBreak = () => {
+		this.setState({ isBreak: false,remainMinute: this.state.workTime, remainSecond: 0, secondCounter: 0 });
+	};
+
 	render() {
 		return (
 			<div>
+				<ReactTooltip />
 				<div className="text-center">
 					<span style={{ position: 'absolute', left: '1rem' }}>
-						<i className="fas fa-arrow-left" onClick={this.handleBack}></i>
+						<i className="fas fa-arrow-left" data-tip="Back to tasks page" onClick={this.handleBack}></i>
 					</span>
 					<h4 className="d-inline-block">{this.state.taskInTimer.title}</h4>
 				</div>
@@ -170,12 +174,23 @@ export default class Timer extends Component {
 					</div>
 					<div className="col-8">
 						<div className="row">
-							<div className="col-6">
+							<div className="col-6" style={{display:this.state.progressVariant === 'primary' ? '' : 'none'}}></div>
+							<div className="col-6" style={{ display: this.state.isBreak || this.state.progressVariant === 'primary' ? 'none' : '' }}>
 								<small>
-									<i class="fas fa-check" onClick={this.endSession}></i>
+									<i
+										className="fas fa-check"
+										data-tip="End the session"
+										onClick={this.endSession}></i>
 								</small>
 								<small>
-									<i class="fas fa-check-double"></i>
+									<i
+										className="fas fa-check-double"
+										data-tip="End the session & complete the task"></i>
+								</small>
+							</div>
+							<div className="col-6" style={{ display: !this.state.isBreak || this.state.progressVariant === 'primary' ? 'none' : '' }}>
+								<small>
+									<i className="fas fa-forward" data-tip="Skip break" onClick={this.skipBreak}></i>
 								</small>
 							</div>
 							<div className="col-6">
