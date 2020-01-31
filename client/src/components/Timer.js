@@ -43,17 +43,18 @@ export default class Timer extends Component {
 	}
 
 	workSessionCompleted = async () => {
-		axios.put(
-			`http://localhost:3001/task/put`,
-			{
-				id: this.state.taskInTimer._id,
-				timeWorked: this.state.timeWorked,
-			},
-			{ params: { loggedUser: this.props.currentUser } }
-		);
-		// .then(() => {
-		// 	this.setState({ timeWorked: 0 });
-		// });
+		axios
+			.put(
+				`http://localhost:3001/task/put`,
+				{
+					id: this.state.taskInTimer._id,
+					timeWorked: this.state.timeWorked,
+				},
+				{ params: { loggedUser: this.props.currentUser } }
+			)
+			.then(() => {
+				this.setState({ timeWorked: 0 });
+			});
 	};
 
 	startSession = () => {
@@ -71,9 +72,11 @@ export default class Timer extends Component {
 		if (this.state.isBreak) {
 			return;
 		}
-		this.setState({ timeWorked: this.state.workTime - this.state.remainMinute }, () => {
-			this.workSessionCompleted();
+		this.setState({ timeWorked: this.state.workTime - this.state.remainMinute }, async () => {
+			await this.workSessionCompleted();
+			this.setState({ remainMinute: this.state.breakTime, remainSecond: 0, secondCounter: 0, isBreak: true });
 		});
+		//
 	};
 
 	runWorkTimer() {
@@ -97,9 +100,6 @@ export default class Timer extends Component {
 					}
 					this.setState({ remainMinute: this.state.workTime, remainSecond: 0, secondCounter: 0 });
 				});
-
-				// clearInterval(timer);
-				// return;
 			}
 
 			this.setState(
@@ -116,7 +116,7 @@ export default class Timer extends Component {
 			);
 		};
 		timerProcess();
-		let timer = setInterval(timerProcess, this.state.isInactive ? 100 : 1);
+		let timer = setInterval(timerProcess, this.state.isInactive ? 100 : 20);
 	}
 
 	render() {
