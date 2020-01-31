@@ -23,6 +23,7 @@ export default class Timer extends Component {
 		progressVariant: 'primary',
 		isInactive: false,
 		timeWorked: 0,
+		isBack: false,
 	};
 
 	findTaskById = () => {
@@ -81,6 +82,12 @@ export default class Timer extends Component {
 
 	runWorkTimer() {
 		let timerProcess = () => {
+			console.log('lll');
+			if (this.state.isBack) {
+				console.log('ppp');
+				clearInterval(timer);
+				return;
+			}
 			// if (!document.hidden) {
 			// 	console.log('if');
 			// 	this.setState({ isInactive: false });
@@ -119,12 +126,17 @@ export default class Timer extends Component {
 		let timer = setInterval(timerProcess, this.state.isInactive ? 100 : 20);
 	}
 
+	handleBack = async e => {
+		await this.setState({ isBack: true });
+		this.props.func();
+	};
+
 	render() {
 		return (
 			<div>
 				<div className="text-center">
 					<span style={{ position: 'absolute', left: '1rem' }}>
-						<i className="fas fa-arrow-left" onClick={this.props.func}></i>
+						<i className="fas fa-arrow-left" onClick={this.handleBack}></i>
 					</span>
 					<h4 className="d-inline-block">{this.state.taskInTimer.title}</h4>
 				</div>

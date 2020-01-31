@@ -224,7 +224,12 @@ export default class Dashboard extends Component {
 					this.setState({ editingTask: task });
 				}
 			});
-			this.setState({ taskToPut: this.state.editingTask.title, taskNote: this.state.editingTask.note,workTime:this.state.editingTask.workTime,breakTime:this.state.editingTask.breakTime });
+			this.setState({
+				taskToPut: this.state.editingTask.title,
+				taskNote: this.state.editingTask.note,
+				workTime: this.state.editingTask.workTime,
+				breakTime: this.state.editingTask.breakTime,
+			});
 			for (var element of document.getElementsByClassName('colors-area')[0].childNodes)
 				if (element.style.color === this.state.editingTask.color) {
 					element.style.fontSize = '1.2rem';
@@ -254,7 +259,18 @@ export default class Dashboard extends Component {
 	};
 
 	setTimerScreen = e => {
-		this.setState({ isTimerScreen: !this.state.isTimerScreen, taskIdInTimer: e.target.id });
+		// if (e) {
+		// 	this.setState({ isTimerScreen: !this.state.isTimerScreen, taskIdInTimer: e.target.id });
+		// 	return;
+		// }
+		// this.setState({ isTimerScreen: !this.state.isTimerScreen });
+		try {
+			this.setState({ taskIdInTimer: e.target.id });
+		} catch {
+			//do nothing
+		} finally {
+			this.setState({ isTimerScreen: !this.state.isTimerScreen });
+		}
 	};
 
 	onHover = e => {
