@@ -260,11 +260,6 @@ export default class Dashboard extends Component {
 	};
 
 	setTimerScreen = e => {
-		// if (e) {
-		// 	this.setState({ isTimerScreen: !this.state.isTimerScreen, taskIdInTimer: e.target.id });
-		// 	return;
-		// }
-		// this.setState({ isTimerScreen: !this.state.isTimerScreen });
 		try {
 			this.setState({ taskIdInTimer: e.target.id });
 		} catch {
@@ -437,9 +432,9 @@ export default class Dashboard extends Component {
 																	: 'far fa-circle'
 															}
 															data-tip={
-																task.status === 'completed' 
-																? 'Incomplete the task'
-																: 'Complete the task'
+																task.status === 'completed'
+																	? 'Incomplete the task'
+																	: 'Complete the task'
 															}
 															style={{
 																color: task.color,
@@ -464,7 +459,8 @@ export default class Dashboard extends Component {
 															onClick={this.setTimerScreen}
 															style={{
 																display:
-																	this.state.turnTodayDisplay === 'inline'
+																	this.state.turnTodayDisplay === 'inline' ||
+																	task.status === 'completed'
 																		? 'none'
 																		: 'inline',
 															}}></i>

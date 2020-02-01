@@ -24,6 +24,7 @@ export default class Timer extends Component {
 		progressVariant: 'primary',
 		isInactive: false,
 		timeWorked: 0,
+		totalTimeWorked: 0,
 		isBack: false,
 	};
 
@@ -39,6 +40,7 @@ export default class Timer extends Component {
 			{
 				workTime: this.state.taskInTimer.workTime,
 				breakTime: this.state.taskInTimer.breakTime,
+				totalTimeWorked: this.state.taskInTimer.timeWorked,
 			},
 			() => this.setState({ remainMinute: this.state.workTime })
 		);
@@ -55,7 +57,15 @@ export default class Timer extends Component {
 				{ params: { loggedUser: this.props.currentUser } }
 			)
 			.then(() => {
+				if (this.state.timeWorked === 0) {
+					this.setState({ totalTimeWorked: this.state.totalTimeWorked + 25 });
+					return;
+				}
+				this.setState({ totalTimeWorked: this.state.totalTimeWorked + this.state.timeWorked });
+			})
+			.then(() => {
 				this.setState({ timeWorked: 0 });
+				this.findTaskById();
 			});
 	};
 
@@ -78,7 +88,6 @@ export default class Timer extends Component {
 			await this.workSessionCompleted();
 			this.setState({ remainMinute: this.state.breakTime, remainSecond: 0, secondCounter: 0, isBreak: true });
 		});
-		//
 	};
 
 	endAndCompleteSession = () => {
@@ -133,7 +142,7 @@ export default class Timer extends Component {
 			);
 		};
 		timerProcess();
-		let timer = setInterval(timerProcess, this.state.isInactive ? 100 : 20);
+		let timer = setInterval(timerProcess, this.state.isInactive ? 100 : 5);
 	}
 
 	handleBack = async () => {
@@ -153,7 +162,9 @@ export default class Timer extends Component {
 					<span style={{ position: 'absolute', left: '1rem' }}>
 						<i className="fas fa-arrow-left" data-tip="Back to tasks page" onClick={this.handleBack}></i>
 					</span>
-					<h4 className="d-inline-block">{this.state.taskInTimer.title}</h4>
+					<h4 className="d-inline-block">
+						{this.state.taskInTimer.title} | {this.state.totalTimeWorked}
+					</h4>
 				</div>
 				<div className="row">
 					<div className="col-4">
