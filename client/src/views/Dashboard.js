@@ -271,6 +271,7 @@ export default class Dashboard extends Component {
 			//do nothing
 		} finally {
 			this.setState({ isTimerScreen: !this.state.isTimerScreen });
+			this.getItem();
 		}
 	};
 

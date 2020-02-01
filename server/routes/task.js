@@ -32,7 +32,6 @@ router.put('/put', (req, res) => {
 	try {
 		const username = JSON.parse(req.query.loggedUser).username;
 		if (Object.keys(req.body).length < 2) {
-			console.log(req.body);
 			User.findOne({ username }).then(doc => {
 				doc.tasks.map(task => {
 					if (task.id === req.body.id) {

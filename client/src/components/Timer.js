@@ -81,6 +81,17 @@ export default class Timer extends Component {
 		//
 	};
 
+	endAndCompleteSession = () => {
+		axios
+			.put(
+				`http://localhost:3001/task/put`,
+				{ id: this.state.taskInTimer._id },
+				{ params: { loggedUser: this.props.currentUser } }
+			)
+			.then(() => this.endSession())
+			.then(() => this.handleBack());
+	};
+
 	runWorkTimer() {
 		let timerProcess = () => {
 			if (this.state.isBack) {
@@ -125,13 +136,13 @@ export default class Timer extends Component {
 		let timer = setInterval(timerProcess, this.state.isInactive ? 100 : 20);
 	}
 
-	handleBack = async e => {
+	handleBack = async () => {
 		await this.setState({ isBack: true });
 		this.props.func();
 	};
 
 	skipBreak = () => {
-		this.setState({ isBreak: false,remainMinute: this.state.workTime, remainSecond: 0, secondCounter: 0 });
+		this.setState({ isBreak: false, remainMinute: this.state.workTime, remainSecond: 0, secondCounter: 0 });
 	};
 
 	render() {
@@ -174,8 +185,15 @@ export default class Timer extends Component {
 					</div>
 					<div className="col-8">
 						<div className="row">
-							<div className="col-6" style={{display:this.state.progressVariant === 'primary' ? '' : 'none'}}></div>
-							<div className="col-6" style={{ display: this.state.isBreak || this.state.progressVariant === 'primary' ? 'none' : '' }}>
+							<div
+								className="col-6"
+								style={{ display: this.state.progressVariant === 'primary' ? '' : 'none' }}></div>
+							<div
+								className="col-6"
+								style={{
+									display:
+										this.state.isBreak || this.state.progressVariant === 'primary' ? 'none' : '',
+								}}>
 								<small>
 									<i
 										className="fas fa-check"
@@ -185,10 +203,16 @@ export default class Timer extends Component {
 								<small>
 									<i
 										className="fas fa-check-double"
-										data-tip="End the session & complete the task"></i>
+										data-tip="End the session & complete the task"
+										onClick={this.endAndCompleteSession}></i>
 								</small>
 							</div>
-							<div className="col-6" style={{ display: !this.state.isBreak || this.state.progressVariant === 'primary' ? 'none' : '' }}>
+							<div
+								className="col-6"
+								style={{
+									display:
+										!this.state.isBreak || this.state.progressVariant === 'primary' ? 'none' : '',
+								}}>
 								<small>
 									<i className="fas fa-forward" data-tip="Skip break" onClick={this.skipBreak}></i>
 								</small>
