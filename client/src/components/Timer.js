@@ -251,7 +251,13 @@ export default class Timer extends Component {
 							<small>{this.state.totalTimeWorked ? `${this.state.totalTimeWorked} min` : null}</small>
 						</p>
 					</div>
-					<p className="text-center mt-1 pr-3 pl-3">{this.state.taskInTimer.note}</p>
+					{/* <p className="text-center mt-1 pr-3 pl-3">
+						{this.state.taskInTimer.note ? this.state.taskInTimer.note : null}
+					</p> */}
+					{/* {this.state.taskInTimer.note ? <p className="text-center mt-1 pr-3 pl-3">{this.state.taskInTimer.note}</p> : null} */}
+					<div className="w-100">
+						<p className="text-center pr-3 pl-3">{this.state.taskInTimer.note}</p>
+					</div>
 				</div>
 			</div>
 		);

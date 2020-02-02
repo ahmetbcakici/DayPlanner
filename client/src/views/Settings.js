@@ -29,6 +29,7 @@ export default class Settings extends Component {
 							<SettingsSidebar />
 						</div>
 						<div className="col-10">
+							&time;
 							<SecuritySettings />
 						</div>
 					</div>
