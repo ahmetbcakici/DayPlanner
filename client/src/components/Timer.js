@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { ProgressBar } from 'react-bootstrap';
+import { ProgressBar, Modal, Button } from 'react-bootstrap';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import '../style/Timer.css';
@@ -26,6 +26,7 @@ export default class Timer extends Component {
 		timeWorked: 0,
 		totalTimeWorked: 0,
 		isBack: false,
+		backModalDisplay: 'none',
 	};
 
 	findTaskById = () => {
@@ -162,9 +163,7 @@ export default class Timer extends Component {
 					<span style={{ position: 'absolute', left: '1rem' }}>
 						<i className="fas fa-arrow-left" data-tip="Back to tasks page" onClick={this.handleBack}></i>
 					</span>
-					<h4 className="d-inline-block">
-						{this.state.taskInTimer.title} | {this.state.totalTimeWorked}
-					</h4>
+					<h4 className="d-inline-block">{this.state.taskInTimer.title}</h4>
 				</div>
 				<div className="row">
 					<div className="col-4">
@@ -172,8 +171,8 @@ export default class Timer extends Component {
 							{/* Deprecated because there is a bug */}
 							{/* <AnimatedProgressProvider
 								valueStart={0}
-								valueEnd={this.state.circularProgressEnd}
-								duration={25.0}
+								valueEnd={100}
+								duration={11.0}
 								easingFunction={easeQuadInOut}
 							>
 								{value => {
@@ -194,7 +193,7 @@ export default class Timer extends Component {
 							</AnimatedProgressProvider> */}
 						</div>
 					</div>
-					<div className="col-8">
+					<div className="col-12">
 						<div className="row">
 							<div
 								className="col-6"
@@ -248,8 +247,11 @@ export default class Timer extends Component {
 							label={this.state.progressLabel}
 							onClick={this.startSession}
 						/>
+						<p className="text-center text-muted">
+							<small>{this.state.totalTimeWorked ? `${this.state.totalTimeWorked} min` : null}</small>
+						</p>
 					</div>
-					<p className="p-3">{this.state.taskInTimer.note}</p>
+					<p className="text-center mt-1 pr-3 pl-3">{this.state.taskInTimer.note}</p>
 				</div>
 			</div>
 		);

@@ -286,7 +286,7 @@ export default class Dashboard extends Component {
 		if (this.state.directlyDashboard) return <Redirect to="/" />;
 		return (
 			<div>
-				<Navbar currentUser={this.state.loggedUser} />
+				<Navbar currentUser={this.state.loggedUser} />			
 				<div className="justify-content-center d-flex mt-5">
 					<Sidebar
 						sidebar={
@@ -452,6 +452,11 @@ export default class Dashboard extends Component {
 														{task.title}
 													</span>
 													<span className="float-right">
+														<small
+															className="text-muted mr-2"
+															data-tip="Time worked for the task">
+															{task.timeWorked ? `${task.timeWorked} min` : null}
+														</small>
 														<i
 															className="fas fa-hourglass-start mr-2"
 															data-tip="Let's start to work"
