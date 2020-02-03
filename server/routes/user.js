@@ -72,7 +72,11 @@ router.post('/register', hashPass, async (req, res) => {
 	});
 });
 
-router.put('/put', (req, res) => {});
+router.put('/put', (req, res) => {
+	console.log(req.body)
+	const username = JSON.parse(req.query.loggedUser).username;
+	console.log(username)
+});
 
 router.delete('/delete', (req, res) => {});
 

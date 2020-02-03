@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 export default class SecuritySettings extends Component {
 	state = {
@@ -7,6 +8,19 @@ export default class SecuritySettings extends Component {
 		newPasswordAgain: '',
 		newEmail: '',
 	};
+
+	constructor(props) {
+		super(props);
+		console.log(this.props.currentUser);
+	}
+
+	componentDidMount() {
+		console.log(this.props.currentUser);
+	}
+
+	componentWillMount() {
+		console.log(this.props.currentUser);
+	}
 
 	currentPasswordChange = e => {
 		this.setState({ currentPassword: e.target.value });
@@ -23,9 +37,18 @@ export default class SecuritySettings extends Component {
 	};
 
 	changePasswordSubmitHandle = () => {
-		console.log(this.state.currentPassword);
-		console.log(this.state.newPassword);
-		console.log(this.state.newPasswordAgain);
+		const { currentPassword, newPassword, newPasswordAgain } = this.state;
+		if (currentPassword && newPassword && newPasswordAgain && newPassword === newPasswordAgain) {
+			axios.put(
+				`http://localhost:3001/user/put`,
+				{
+					currentPassword,
+					newPassword,
+					newPasswordAgain,
+				},
+				{ params: { loggedUser: this.props.currentUser } }
+			);
+		}
 	};
 
 	render() {
@@ -34,7 +57,7 @@ export default class SecuritySettings extends Component {
 				<div className="row p-3">
 					<div className="col-6">
 						<form action="#" onSubmit={this.changePasswordSubmitHandle}>
-							<legend>Change your password</legend>
+							<legend>Change your password {this.props.currentUser.username}</legend>
 							<hr />
 							<div className="form-group">
 								<label for="exampleInputPassword1">Current password</label>

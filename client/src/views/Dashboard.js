@@ -12,6 +12,7 @@ import SecuritySettings from '../components/SecuritySettings';
 export default class Dashboard extends Component {
 	constructor(props) {
 		super(props);
+		// this.currentUser();
 	}
 
 	state = {
@@ -286,7 +287,7 @@ export default class Dashboard extends Component {
 
 	render() {
 		if (this.state.directlyDashboard) return <Redirect to="/" />;
-		if (true)
+		if (false)
 			return (
 				<div>
 					<Navbar currentUser={this.state.loggedUser} />
@@ -296,7 +297,7 @@ export default class Dashboard extends Component {
 								<SettingsSidebar />
 							</div>
 							<div className="col-10">
-								<SecuritySettings />
+								<SecuritySettings currentUser={this.state.loggedUser} />
 							</div>
 						</div>
 					</div>
