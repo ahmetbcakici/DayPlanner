@@ -17,6 +17,6 @@ render(
 			<Redirect to="/" />
 		</Switch>
 		<Footer />
-	</Router>,
+	</Router>, 
 	document.getElementById('root')
 );
