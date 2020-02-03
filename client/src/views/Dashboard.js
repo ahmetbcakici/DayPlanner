@@ -6,6 +6,8 @@ import '../style/Dashboard.css';
 import Sidebar from 'react-sidebar';
 import Navbar from '../components/Navbar';
 import Timer from '../components/Timer';
+import SettingsSidebar from '../components/SettingsSidebar';
+import SecuritySettings from '../components/SecuritySettings';
 
 export default class Dashboard extends Component {
 	constructor(props) {
@@ -284,9 +286,25 @@ export default class Dashboard extends Component {
 
 	render() {
 		if (this.state.directlyDashboard) return <Redirect to="/" />;
+		if (true)
+			return (
+				<div>
+					<Navbar currentUser={this.state.loggedUser} />
+					<div className="container mt-3">
+						<div className="row">
+							<div className="col-2 border-right">
+								<SettingsSidebar />
+							</div>
+							<div className="col-10">
+								<SecuritySettings />
+							</div>
+						</div>
+					</div>
+				</div>
+			);
 		return (
 			<div>
-				<Navbar currentUser={this.state.loggedUser} />			
+				<Navbar currentUser={this.state.loggedUser} />
 				<div className="justify-content-center d-flex mt-5">
 					<Sidebar
 						sidebar={

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import SettingsSidebar from '../components/SettingsSidebar';
 import '../style/Settings.css';
@@ -16,10 +17,12 @@ export default class Settings extends Component {
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
-        `;
+		`;
+		console.log(this.props)
 	}
 
 	render() {
+		if (false) return <Redirect to="/" />; // if condition is true, can not login here
 		return (
 			<div>
 				<Navbar currentUser={this.state.loggedUser} />
@@ -29,7 +32,6 @@ export default class Settings extends Component {
 							<SettingsSidebar />
 						</div>
 						<div className="col-10">
-							&time;
 							<SecuritySettings />
 						</div>
 					</div>

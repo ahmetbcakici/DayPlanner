@@ -15,10 +15,6 @@ export default class Navbar extends Component {
 		this.setState({ logout: true });
 	};
 
-	x = () => {
-		console.log("123")
-	}
-
 	render() {
 		if (this.state.logout) return <Redirect to="/" />;
 		return (
@@ -63,9 +59,6 @@ export default class Navbar extends Component {
 										Settings
 									</a>
 								</Link>
-								<a className="dropdown-item" href="#">
-									Another action
-								</a>
 								<a className="dropdown-item" href="#" onClick={this.destroyToken}>
 									Logout
 								</a>
