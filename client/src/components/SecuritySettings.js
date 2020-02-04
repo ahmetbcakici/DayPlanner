@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import ErrorAlert from '../components/ErrorAlert';
+import SuccessAlert from '../components/SuccessAlert';
 
 export default class SecuritySettings extends Component {
 	state = {
@@ -7,6 +9,10 @@ export default class SecuritySettings extends Component {
 		newPassword: '',
 		newPasswordAgain: '',
 		newEmail: '',
+		ErrorAlert: false,
+		ErrorMsg: '',
+		SuccessAlert: false,
+		SuccessMsg: '',
 	};
 
 	currentPasswordChange = e => {
@@ -25,8 +31,9 @@ export default class SecuritySettings extends Component {
 
 	changePasswordSubmitHandle = () => {
 		const { currentPassword, newPassword, newPasswordAgain } = this.state;
-		if (newPassword === newPasswordAgain) {
-			axios.put(
+
+		axios
+			.put(
 				`http://localhost:3001/user/put`,
 				{
 					currentPassword,
@@ -34,8 +41,24 @@ export default class SecuritySettings extends Component {
 					newPasswordAgain,
 				},
 				{ params: { loggedUser: this.props.currentUser } }
-			);
-		}
+			)
+			.then(res => {
+				this.setState({
+					ErrorAlert: false,
+					SuccessAlert: true,
+					currentPassword: '',
+					newPassword: '',
+					newPasswordAgain: '',
+				});
+			})
+			.catch(err => {
+				let temp_errormsg;
+				if (err.response.status === 400) temp_errormsg = 'New passwords does not match.';
+				else if (err.response.status === 401) temp_errormsg = 'Current password is incorrect.';
+				else if (err.response.status === 404) temp_errormsg = 'Fields can not be empty.';
+				else temp_errormsg = 'Something went wrong.';
+				this.setState({ SuccessAlert: false, ErrorAlert: true, ErrorMsg: temp_errormsg });
+			});
 	};
 
 	render() {
@@ -53,7 +76,7 @@ export default class SecuritySettings extends Component {
 									className="form-control"
 									id="exampleInputPassword1"
 									placeholder="Password"
-									required
+									
 									value={this.state.currentPassword}
 									onChange={this.currentPasswordChange}
 								/>
@@ -65,7 +88,7 @@ export default class SecuritySettings extends Component {
 									className="form-control"
 									id="exampleInputPassword2"
 									placeholder="New password"
-									required
+									
 									value={this.state.newPassword}
 									onChange={this.newPasswordChange}
 								/>
@@ -77,7 +100,7 @@ export default class SecuritySettings extends Component {
 									className="form-control"
 									id="exampleInputPassword3"
 									placeholder="New password again"
-									required
+									
 									value={this.state.newPasswordAgain}
 									onChange={this.newPasswordAgainChange}
 								/>
@@ -85,6 +108,24 @@ export default class SecuritySettings extends Component {
 							<button type="submit" className="btn btn-primary">
 								Submit
 							</button>
+							{this.state.ErrorAlert ? (
+								<ErrorAlert
+									msg={
+										<span>
+											<strong>Attention !</strong> {this.state.ErrorMsg}
+										</span>
+									}
+								/>
+							) : null}
+							{this.state.SuccessAlert ? (
+								<SuccessAlert
+									msg={
+										<span>
+											<strong>Operation Successfully !</strong>
+										</span>
+									}
+								/>
+							) : null}
 						</form>
 					</div>
 					<div className="col-6">

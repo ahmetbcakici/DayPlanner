@@ -83,14 +83,11 @@ router.put('/put', hashPass, async (req, res) => {
 	if (!currentPassword || !newPassword || !newPasswordAgain) return res.status(404).send();
 	if (newPassword !== newPasswordAgain) return res.status(400).send();
 
-	// User.findOneAndUpdate(user_id, { password: req.hashedPass }, err => {
-	// 	if (err) throw err;
-	// });
 	User.findOne({ _id: user_id }).then(async doc => {
 		if (await bcrypt.compare(currentPassword, doc.password)) {
 			doc.password = req.hashedPass;
 			doc.save();
-			return;
+			return res.status(200).send();
 		}
 		return res.status(401).send();
 	});

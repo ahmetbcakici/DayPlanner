@@ -54,11 +54,9 @@ export default class Navbar extends Component {
 								className="dropdown-menu"
 								style={{ left: 'auto', right: '0' }}
 								aria-labelledby="navbarDropdownMenuLink">
-								<Link to="/settings">
-									<a className="dropdown-item" href="#">
-										Settings
-									</a>
-								</Link>
+								<a className="dropdown-item" href="#" onClick={this.props.func}>
+									Settings
+								</a>
 								<a className="dropdown-item" href="#" onClick={this.destroyToken}>
 									Logout
 								</a>

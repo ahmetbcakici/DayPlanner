@@ -30,6 +30,7 @@ export default class Dashboard extends Component {
 			loggedUser: this.props.location.state.loggedUser, // ERROR you have to handle catch, see also line 47 currentUser func
 			directlyDashboard: false,
 			minDate: false,
+			isSetting: false,
 		};
 	}
 
@@ -294,13 +295,20 @@ export default class Dashboard extends Component {
 			: (e.target.className = 'far fa-circle');
 	};
 
+	setSettingsPage = () => {
+		this.setState({ isSetting: !this.state.isSetting });
+	};
+
 	render() {
 		if (this.state.directlyDashboard) return <Redirect to="/" />;
-		if (true)
+		if (this.state.isSetting)
 			return (
 				<div>
 					<Navbar currentUser={this.state.loggedUser} />
 					<div className="container mt-3">
+						<div className="float-right" onClick={this.setSettingsPage}>
+							<i class="fas fa-arrow-right"></i>
+						</div>
 						<div className="row">
 							<div className="col-2 border-right">
 								<SettingsSidebar />
@@ -323,7 +331,7 @@ export default class Dashboard extends Component {
 		} = this.state;
 		return (
 			<div>
-				<Navbar currentUser={loggedUser} />
+				<Navbar currentUser={loggedUser} func={this.setSettingsPage} />
 				<div className="justify-content-center d-flex mt-5">
 					<Sidebar
 						sidebar={
