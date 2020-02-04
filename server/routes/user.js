@@ -28,15 +28,15 @@ router.post('/login', (req, res) => {
 	const { username, password } = req.body;
 	if (!username || !password) return res.status(403).send();
 	User.findOne({ username })
-		.then(async docs => {
-			if (docs) {
-				if (await bcrypt.compare(password, docs.password)) {
+		.then(async doc => {
+			if (doc) {
+				if (await bcrypt.compare(password, doc.password)) {
 					const token = jwt.sign(
 						{
-							username: docs.username,
-							mail: docs.mail,
-							registeredDate: docs.registeredDate,
-							_id: docs._id,
+							username: doc.username,
+							mail: doc.mail,
+							registeredDate: doc.registeredDate,
+							_id: doc._id,
 						},
 						process.env.JWT_SECRETKEY,
 						{
@@ -76,13 +76,24 @@ router.post('/register', hashPass, async (req, res) => {
 	});
 });
 
-router.put('/put', (req, res) => {
+router.put('/put', hashPass, async (req, res) => {
 	const { currentPassword, newPassword, newPasswordAgain } = req.body;
-	const username = JSON.parse(req.query.loggedUser).username;
-	if (!currentPassword || !newPassword || newPasswordAgain) return res.status(404).send();
+	const user_id = JSON.parse(req.query.loggedUser)._id;
+
+	if (!currentPassword || !newPassword || !newPasswordAgain) return res.status(404).send();
 	if (newPassword !== newPasswordAgain) return res.status(400).send();
 
-	console.log(username);
+	// User.findOneAndUpdate(user_id, { password: req.hashedPass }, err => {
+	// 	if (err) throw err;
+	// });
+	User.findOne({ _id: user_id }).then(async doc => {
+		if (await bcrypt.compare(currentPassword, doc.password)) {
+			doc.password = req.hashedPass;
+			doc.save();
+			return;
+		}
+		return res.status(401).send();
+	});
 });
 
 router.delete('/delete', (req, res) => {});

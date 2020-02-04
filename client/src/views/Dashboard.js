@@ -27,7 +27,7 @@ export default class Dashboard extends Component {
 			taskToPut: '',
 			isTimerScreen: false,
 			taskIdInTimer: '',
-			loggedUser: '', // ERROR you have to handle catch, see also line 47 currentUser func
+			loggedUser: this.props.location.state.loggedUser, // ERROR you have to handle catch, see also line 47 currentUser func
 			directlyDashboard: false,
 			minDate: false,
 		};
@@ -91,18 +91,19 @@ export default class Dashboard extends Component {
 	};
 
 	putItem = () => {
+		const { editingTask, taskToPut, selectedColor, taskNote, workTime, breakTime, loggedUser } = this.state;
 		axios
 			.put(
 				`http://localhost:3001/task/put`,
 				{
-					id: this.state.editingTask._id,
-					title: this.state.taskToPut,
-					color: this.state.selectedColor,
-					note: this.state.taskNote,
-					workTime: this.state.workTime,
-					breakTime: this.state.breakTime,
+					id: editingTask._id,
+					title: taskToPut,
+					color: selectedColor,
+					note: taskNote,
+					workTime: workTime,
+					breakTime: breakTime,
 				},
-				{ params: { loggedUser: this.state.loggedUser } }
+				{ params: { loggedUser: loggedUser } }
 			)
 			.then(() => {
 				this.getItem();
@@ -112,10 +113,12 @@ export default class Dashboard extends Component {
 	};
 
 	deleteItem = e => {
+		const { loggedUser } = this.state;
+		const { id } = e.target;
 		axios
 			.delete(`http://localhost:3001/task/delete`, {
-				data: { id: e.target.id },
-				params: { loggedUser: this.state.loggedUser },
+				data: { id },
+				params: { loggedUser: loggedUser },
 			})
 			.then(() => this.getItem());
 	};
@@ -222,24 +225,26 @@ export default class Dashboard extends Component {
 	};
 
 	onSetSidebarOpen = async (open, id) => {
+		const { usertasks } = this.state;
 		this.setState({ sidebarOpen: open });
 		if (!open) {
 			this.clearColors();
 			this.setState({ taskNote: '' });
 		} else {
-			await this.state.usertasks.map(task => {
+			await usertasks.map(task => {
 				if (task._id === id) {
 					this.setState({ editingTask: task });
 				}
 			});
+			const { title, note, workTime, breakTime, color } = this.state.editingTask;
 			this.setState({
-				taskToPut: this.state.editingTask.title,
-				taskNote: this.state.editingTask.note,
-				workTime: this.state.editingTask.workTime,
-				breakTime: this.state.editingTask.breakTime,
+				taskToPut: title,
+				taskNote: note,
+				workTime,
+				breakTime,
 			});
 			for (var element of document.getElementsByClassName('colors-area')[0].childNodes)
-				if (element.style.color === this.state.editingTask.color) {
+				if (element.style.color === color) {
 					element.style.fontSize = '1.2rem';
 					element.style.textShadow = '1px 1px rgba(0, 0, 0, 0.4)';
 				}
@@ -307,9 +312,18 @@ export default class Dashboard extends Component {
 					</div>
 				</div>
 			);
+		const {
+			loggedUser,
+			turnTodayDisplay,
+			isTimerScreen,
+			minDate,
+			taskToPost,
+			taskIdInTimer,
+			usertasks,
+		} = this.state;
 		return (
 			<div>
-				<Navbar currentUser={this.state.loggedUser} />
+				<Navbar currentUser={loggedUser} />
 				<div className="justify-content-center d-flex mt-5">
 					<Sidebar
 						sidebar={
@@ -393,7 +407,7 @@ export default class Dashboard extends Component {
 					<div className="card text-center transparent-bg" style={{ width: '30%' }}>
 						<div className="card-header">
 							<h3>{this.getDate()}</h3>
-							<span className="text-center" style={{ display: this.state.turnTodayDisplay }}>
+							<span className="text-center" style={{ display: turnTodayDisplay }}>
 								<a href="#" className="turn-today" onClick={this.handleTurnToday}>
 									Turn Today
 								</a>
@@ -405,7 +419,7 @@ export default class Dashboard extends Component {
 								className="arrow arrow-right transparent-color"
 								onClick={this.minus}
 								style={{
-									visibility: this.state.isTimerScreen ? 'hidden' : 'visible',
+									visibility: isTimerScreen ? 'hidden' : 'visible',
 								}}>
 								<i className="fas fa-chevron-right"></i>
 							</a>
@@ -414,7 +428,7 @@ export default class Dashboard extends Component {
 								className="arrow arrow-left transparent-color"
 								onClick={this.plus}
 								style={{
-									visibility: this.state.isTimerScreen || this.state.minDate ? 'hidden' : 'visible',
+									visibility: isTimerScreen || minDate ? 'hidden' : 'visible',
 								}}>
 								<i className="fas fa-chevron-left"></i>
 							</a>
@@ -423,21 +437,18 @@ export default class Dashboard extends Component {
 								className="add-task"
 								placeholder="Add new task"
 								onChange={this.handleInputPostTask}
-								value={this.state.taskToPost}
+								value={taskToPost}
 								style={{
-									display:
-										this.state.isTimerScreen || this.state.turnTodayDisplay === 'inline'
-											? 'none'
-											: 'inline',
+									display: isTimerScreen || turnTodayDisplay === 'inline' ? 'none' : 'inline',
 								}}
 								onKeyPress={this.postItem}
 							/>
-							{this.state.isTimerScreen === true ? (
+							{isTimerScreen === true ? (
 								<Timer
-									id={this.state.taskIdInTimer}
-									tasks={this.state.usertasks}
+									id={taskIdInTimer}
+									tasks={usertasks}
 									func={this.setTimerScreen}
-									currentUser={this.state.loggedUser}
+									currentUser={loggedUser}
 								/>
 							) : (
 								<ul className="tasks">
@@ -487,7 +498,7 @@ export default class Dashboard extends Component {
 															onClick={this.setTimerScreen}
 															style={{
 																display:
-																	this.state.turnTodayDisplay === 'inline' ||
+																	turnTodayDisplay === 'inline' ||
 																	task.status === 'completed'
 																		? 'none'
 																		: 'inline',

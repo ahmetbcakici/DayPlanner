@@ -3,20 +3,20 @@ const router = express.Router();
 const User = require('../models/User');
 
 router.get('/get', (req, res) => {
-	try {
+	if (req.query.loggedUser) {
 		const username = JSON.parse(req.query.loggedUser).username;
 		User.findOne({ username }).then(docs => {
 			res.send(docs.tasks);
 		});
-	} catch {
-		res.status(401).json({ message: 'There is no token!' });
+		return;
 	}
+	res.status(401).json({ message: 'There is no token!' });
 });
 
 router.post('/post', (req, res) => {
-	try {
-		const { title, date } = req.body;
+	if (req.query.loggedUser) {
 		const username = JSON.parse(req.query.loggedUser).username;
+		const { title, date } = req.body;
 		User.findOne({ username }).then(doc => {
 			doc.tasks.push({
 				title: title,
@@ -24,15 +24,15 @@ router.post('/post', (req, res) => {
 			});
 			doc.save().then(() => res.end());
 		});
-	} catch {
-		res.status(401).json({ message: 'There is no token!' });
+		return;
 	}
+	res.status(401).json({ message: 'There is no token!' });
 });
 
 router.put('/put', (req, res) => {
-	try {
-		const { id, timeWorked, title, color, note, workTime, breakTime } = req.body;
+	if (req.query.loggedUser) {
 		const username = JSON.parse(req.query.loggedUser).username;
+		const { id, timeWorked, title, color, note, workTime, breakTime } = req.body;
 		if (Object.keys(req.body).length < 2) {
 			User.findOne({ username }).then(doc => {
 				doc.tasks.map(task => {
@@ -70,24 +70,24 @@ router.put('/put', (req, res) => {
 				doc.save().then(() => res.end());
 			});
 		}
-	} catch {
-		res.status(401).json({ message: 'There is no token!' });
+		return;
 	}
+	res.status(401).json({ message: 'There is no token!' });
 });
 
 router.delete('/delete', (req, res) => {
-	try {
-		const { id } = req.body;
+	if (req.query.loggedUser) {
 		const username = JSON.parse(req.query.loggedUser).username;
+		const { id } = req.body;
 		User.findOne({ username }).then(doc => {
 			doc.tasks.map(task => {
 				if (task.id === id) task.remove();
 			});
 			doc.save().then(() => res.end());
 		});
-	} catch {
-		res.status(401).json({ message: 'There is no token!' });
+		return;
 	}
+	res.status(401).json({ message: 'There is no token!' });
 });
 
 module.exports = router;

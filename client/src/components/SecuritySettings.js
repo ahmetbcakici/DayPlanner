@@ -25,7 +25,7 @@ export default class SecuritySettings extends Component {
 
 	changePasswordSubmitHandle = () => {
 		const { currentPassword, newPassword, newPasswordAgain } = this.state;
-		if (currentPassword && newPassword && newPasswordAgain && newPassword === newPasswordAgain) {
+		if (newPassword === newPasswordAgain) {
 			axios.put(
 				`http://localhost:3001/user/put`,
 				{
@@ -53,6 +53,7 @@ export default class SecuritySettings extends Component {
 									className="form-control"
 									id="exampleInputPassword1"
 									placeholder="Password"
+									required
 									value={this.state.currentPassword}
 									onChange={this.currentPasswordChange}
 								/>
@@ -64,6 +65,7 @@ export default class SecuritySettings extends Component {
 									className="form-control"
 									id="exampleInputPassword2"
 									placeholder="New password"
+									required
 									value={this.state.newPassword}
 									onChange={this.newPasswordChange}
 								/>
@@ -75,6 +77,7 @@ export default class SecuritySettings extends Component {
 									className="form-control"
 									id="exampleInputPassword3"
 									placeholder="New password again"
+									required
 									value={this.state.newPasswordAgain}
 									onChange={this.newPasswordAgainChange}
 								/>
