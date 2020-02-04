@@ -25,11 +25,12 @@ router.get('/jwt', checkAuth, (req, res) => {
 // });
 
 router.post('/login', (req, res) => {
-	if (!req.body.username || !req.body.password) return res.status(403).send();
-	User.findOne({ username: req.body.username })
+	const { username, password } = req.body;
+	if (!username || !password) return res.status(403).send();
+	User.findOne({ username })
 		.then(async docs => {
 			if (docs) {
-				if (await bcrypt.compare(req.body.password, docs.password)) {
+				if (await bcrypt.compare(password, docs.password)) {
 					const token = jwt.sign(
 						{
 							username: docs.username,
@@ -42,17 +43,20 @@ router.post('/login', (req, res) => {
 							expiresIn: '30d',
 						}
 					);
-					return res.status(200).send({ message: 'success', token: token });
-				} else res.status(400).send(); // 400 incorrect username or password
-			} else res.status(404).send(); // 404 user not found
+					return res.status(200).send({ message: 'success', token });
+				}
+				return res.status(400).send(); // 400 incorrect username or password
+			}
+			return res.status(404).send(); // 404 user not found
 		})
 		.catch(() => res.status(403).send()); // forbidden : something went wrong
 });
 
 router.post('/register', hashPass, async (req, res) => {
-	if (!req.body.username || !req.body.password || !req.body.mail) return res.status(404).send();
+	const { username, password, mail, date } = req.body;
+	if (!username || !password || !mail) return res.status(404).send();
 
-	const isRegistered = await User.findOne({ $or: [{ username: req.body.username }, { mail: req.body.mail }] });
+	const isRegistered = await User.findOne({ $or: [{ username }, { mail }] });
 
 	if (isRegistered) {
 		res.status(400).end();
@@ -60,10 +64,10 @@ router.post('/register', hashPass, async (req, res) => {
 	}
 
 	var newrecord = new User({
-		username: req.body.username,
-		mail: req.body.mail,
+		username,
+		mail,
 		password: req.hashedPass,
-		registeredDate: req.body.date,
+		registeredDate: date,
 	});
 
 	newrecord.save(err => {
@@ -73,9 +77,12 @@ router.post('/register', hashPass, async (req, res) => {
 });
 
 router.put('/put', (req, res) => {
-	console.log(req.body)
+	const { currentPassword, newPassword, newPasswordAgain } = req.body;
 	const username = JSON.parse(req.query.loggedUser).username;
-	console.log(username)
+	if (!currentPassword || !newPassword || newPasswordAgain) return res.status(404).send();
+	if (newPassword !== newPasswordAgain) return res.status(400).send();
+
+	console.log(username);
 });
 
 router.delete('/delete', (req, res) => {});

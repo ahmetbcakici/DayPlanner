@@ -9,19 +9,6 @@ export default class SecuritySettings extends Component {
 		newEmail: '',
 	};
 
-	constructor(props) {
-		super(props);
-		console.log(this.props.currentUser);
-	}
-
-	componentDidMount() {
-		console.log(this.props.currentUser);
-	}
-
-	componentWillMount() {
-		console.log(this.props.currentUser);
-	}
-
 	currentPasswordChange = e => {
 		this.setState({ currentPassword: e.target.value });
 	};
@@ -57,7 +44,7 @@ export default class SecuritySettings extends Component {
 				<div className="row p-3">
 					<div className="col-6">
 						<form action="#" onSubmit={this.changePasswordSubmitHandle}>
-							<legend>Change your password {this.props.currentUser.username}</legend>
+							<legend>Change your password</legend>
 							<hr />
 							<div className="form-group">
 								<label for="exampleInputPassword1">Current password</label>

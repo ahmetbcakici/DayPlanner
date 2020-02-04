@@ -13,26 +13,25 @@ export default class Dashboard extends Component {
 	constructor(props) {
 		super(props);
 		// this.currentUser();
+		this.state = {
+			usertasks: [],
+			minusPlus: 0,
+			turnTodayDisplay: 'none',
+			sidebarOpen: false, // default : false
+			selectedColor: '',
+			taskNote: '',
+			workTime: 25,
+			breakTime: 5,
+			editingTask: '',
+			taskToPost: '',
+			taskToPut: '',
+			isTimerScreen: false,
+			taskIdInTimer: '',
+			loggedUser: '', // ERROR you have to handle catch, see also line 47 currentUser func
+			directlyDashboard: false,
+			minDate: false,
+		};
 	}
-
-	state = {
-		usertasks: [],
-		minusPlus: 0,
-		turnTodayDisplay: 'none',
-		sidebarOpen: false, // default : false
-		selectedColor: '',
-		taskNote: '',
-		workTime: 25,
-		breakTime: 5,
-		editingTask: '',
-		taskToPost: '',
-		taskToPut: '',
-		isTimerScreen: false,
-		taskIdInTimer: '',
-		loggedUser: '',
-		directlyDashboard: false,
-		minDate: false,
-	};
 
 	componentDidMount() {
 		document.body.style = `
@@ -44,6 +43,11 @@ export default class Dashboard extends Component {
 	`;
 		this.currentUser();
 	}
+
+	// componentDidCatch(err){
+	// 	console.log("op")
+	// 	console.log(err)
+	// }
 
 	currentUser = async () => {
 		try {
@@ -287,7 +291,7 @@ export default class Dashboard extends Component {
 
 	render() {
 		if (this.state.directlyDashboard) return <Redirect to="/" />;
-		if (false)
+		if (true)
 			return (
 				<div>
 					<Navbar currentUser={this.state.loggedUser} />
