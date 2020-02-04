@@ -8,6 +8,7 @@ import Navbar from '../components/Navbar';
 import Timer from '../components/Timer';
 import SettingsSidebar from '../components/SettingsSidebar';
 import SecuritySettings from '../components/SecuritySettings';
+import PreferencesSettings from '../components/PreferencesSettings';
 
 export default class Dashboard extends Component {
 	constructor(props) {
@@ -27,7 +28,8 @@ export default class Dashboard extends Component {
 			taskToPut: '',
 			isTimerScreen: false,
 			taskIdInTimer: '',
-			loggedUser: this.props.location.state.loggedUser, // ERROR you have to handle catch, see also line 47 currentUser func
+			// loggedUser: this.props.location.state.loggedUser, // ERROR you have to handle catch, see also line 47 currentUser func
+			loggedUser: '', // ERROR you have to handle catch, see also line 47 currentUser func
 			directlyDashboard: false,
 			minDate: false,
 			isSetting: false,
@@ -119,7 +121,7 @@ export default class Dashboard extends Component {
 		axios
 			.delete(`http://localhost:3001/task/delete`, {
 				data: { id },
-				params: { loggedUser: loggedUser },
+				params: { loggedUser},
 			})
 			.then(() => this.getItem());
 	};
@@ -307,14 +309,15 @@ export default class Dashboard extends Component {
 					<Navbar currentUser={this.state.loggedUser} />
 					<div className="container mt-3">
 						<div className="float-right" onClick={this.setSettingsPage}>
-							<i class="fas fa-arrow-right"></i>
+							<i class="fas fa-times"></i>
 						</div>
 						<div className="row">
 							<div className="col-2 border-right">
 								<SettingsSidebar />
 							</div>
 							<div className="col-10">
-								<SecuritySettings currentUser={this.state.loggedUser} />
+								{true ? <SecuritySettings currentUser={this.state.loggedUser} /> : null}
+								{false ? <PreferencesSettings currentUser={this.state.loggedUser} /> : null}
 							</div>
 						</div>
 					</div>

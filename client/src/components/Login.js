@@ -77,12 +77,6 @@ export default class Login extends Component {
 						required
 					/>
 				</div>
-				<div className="form-group form-check">
-					<input type="checkbox" className="form-check-input" id="exampleCheck2" />
-					<label className="form-check-label" for="exampleCheck2">
-						Remember me
-					</label>
-				</div>
 				<div className="form-group">
 					<label>
 						<a href="#" onClick={this.props.func}>

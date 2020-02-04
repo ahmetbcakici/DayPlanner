@@ -61,6 +61,15 @@ export default class SecuritySettings extends Component {
 			});
 	};
 
+	deleteAccount = () => {
+		axios
+		.delete(`http://localhost:3001/user/delete`, {
+			data: { deneme:"a" },
+			params: { loggedUser: this.props.currentUser },
+		})
+		.then(() => 5);
+	}
+
 	render() {
 		return (
 			<div className="mt-3">
@@ -76,7 +85,6 @@ export default class SecuritySettings extends Component {
 									className="form-control"
 									id="exampleInputPassword1"
 									placeholder="Password"
-									
 									value={this.state.currentPassword}
 									onChange={this.currentPasswordChange}
 								/>
@@ -88,7 +96,6 @@ export default class SecuritySettings extends Component {
 									className="form-control"
 									id="exampleInputPassword2"
 									placeholder="New password"
-									
 									value={this.state.newPassword}
 									onChange={this.newPasswordChange}
 								/>
@@ -100,7 +107,6 @@ export default class SecuritySettings extends Component {
 									className="form-control"
 									id="exampleInputPassword3"
 									placeholder="New password again"
-									
 									value={this.state.newPasswordAgain}
 									onChange={this.newPasswordAgainChange}
 								/>
@@ -145,6 +151,15 @@ export default class SecuritySettings extends Component {
 								/>
 							</div>
 						</form>
+						<div>
+							<button
+								type="button"
+								className="btn btn-outline-danger"
+								style={{ position: 'absolute', bottom: '1rem',right:'1rem' }}
+								onClick={this.deleteAccount}>
+								Delete your account permanently.
+							</button>
+						</div>
 					</div>
 				</div>
 			</div>

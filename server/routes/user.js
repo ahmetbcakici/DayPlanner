@@ -93,6 +93,14 @@ router.put('/put', hashPass, async (req, res) => {
 	});
 });
 
-router.delete('/delete', (req, res) => {});
+router.delete('/delete', (req, res) => {
+	console.log("dlt")
+	console.log(req.body)
+	console.log(req.params)
+	console.log(req.query)
+	User.findByIdAndDelete({ _id: "5e20aa9fbd7a661c848e5ac4" }).then(() => {
+		console.log("l")
+	});
+});
 
 module.exports = router;
