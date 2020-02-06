@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import ErrorAlert from '../components/ErrorAlert';
 import SuccessAlert from '../components/SuccessAlert';
+import { Redirect } from 'react-router-dom';
 
 export default class SecuritySettings extends Component {
 	state = {
@@ -13,6 +14,7 @@ export default class SecuritySettings extends Component {
 		ErrorMsg: '',
 		SuccessAlert: false,
 		SuccessMsg: '',
+		logout: false,
 	};
 
 	currentPasswordChange = e => {
@@ -63,14 +65,17 @@ export default class SecuritySettings extends Component {
 
 	deleteAccount = () => {
 		axios
-		.delete(`http://localhost:3001/user/delete`, {
-			data: { deneme:"a" },
-			params: { loggedUser: this.props.currentUser },
-		})
-		.then(() => 5);
-	}
+			.delete(`http://localhost:3001/user/delete`, {
+				params: { loggedUser: this.props.currentUser },
+			})
+			.then(() => {
+				localStorage.removeItem('token');
+				this.setState({ logout: true });
+			});
+	};
 
 	render() {
+		if (this.state.logout) return <Redirect to="/" />;
 		return (
 			<div className="mt-3">
 				<div className="row p-3">
@@ -155,7 +160,7 @@ export default class SecuritySettings extends Component {
 							<button
 								type="button"
 								className="btn btn-outline-danger"
-								style={{ position: 'absolute', bottom: '1rem',right:'1rem' }}
+								style={{ position: 'absolute', bottom: '1rem', right: '1rem' }}
 								onClick={this.deleteAccount}>
 								Delete your account permanently.
 							</button>

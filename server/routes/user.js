@@ -94,9 +94,8 @@ router.put('/put', hashPass, async (req, res) => {
 });
 
 router.delete('/delete', (req, res) => {
-	console.log(JSON.parse(req.query.loggedUser.username))
-	User.findByIdAndDelete({ _id: "5e20aa9fbd7a661c848e5ac4" }).then(() => {
-		console.log("l")
+	User.findByIdAndDelete({ _id: JSON.parse(req.query.loggedUser)._id }).then(() => {
+		res.status(200).send();
 	});
 });
 
