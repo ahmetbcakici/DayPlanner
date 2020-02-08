@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
+import { Dropdown } from 'react-bootstrap';
 import ReactTooltip from 'react-tooltip';
 import axios from 'axios';
 import '../style/Dashboard.css';
@@ -33,6 +34,7 @@ export default class Dashboard extends Component {
 			directlyDashboard: false,
 			minDate: false,
 			isSetting: false,
+			colorToFilter: '',
 		};
 	}
 
@@ -121,7 +123,7 @@ export default class Dashboard extends Component {
 		axios
 			.delete(`http://localhost:3001/task/delete`, {
 				data: { id },
-				params: { loggedUser},
+				params: { loggedUser },
 			})
 			.then(() => this.getItem());
 	};
@@ -301,6 +303,75 @@ export default class Dashboard extends Component {
 		this.setState({ isSetting: !this.state.isSetting });
 	};
 
+	filterColor = e => {
+		this.setState({ colorToFilter: e.target.id });
+	};
+
+	x = color => {
+		//LimeGreen Crimson DodgerBlue DarkOrange
+		return (
+			<ul className="tasks">
+				{this.state.usertasks.map(task => {
+					this.selectedDate(); //
+					if (
+						task.date.substring(0, 10) === this.selectedDate() && color
+							? task.color === color
+							: task.color === undefined
+					) {
+						return (
+							<li key={task._id}>
+								<ReactTooltip />
+								<span>
+									<i
+										className={
+											task.status === 'completed' ? 'far fa-check-circle' : 'far fa-circle'
+										}
+										data-tip={
+											task.status === 'completed' ? 'Incomplete the task' : 'Complete the task'
+										}
+										style={{
+											color: task.color,
+										}}
+										onMouseEnter={this.onHover}
+										onMouseLeave={e => this.inHover(e, task.status)}
+										onClick={() => this.completedStatus(task._id)}></i>{' '}
+								</span>
+								<span className={task.status === 'completed' ? 'text-decoration text-muted' : ''}>
+									{task.title}
+								</span>
+								<span className="float-right">
+									<small className="text-muted mr-2" data-tip="Time worked for the task">
+										{task.timeWorked ? `${task.timeWorked} min` : null}
+									</small>
+									<i
+										className="fas fa-hourglass-start mr-2"
+										data-tip="Let's start to work"
+										id={task._id}
+										onClick={this.setTimerScreen}
+										style={{
+											display:
+												this.state.turnTodayDisplay === 'inline' || task.status === 'completed'
+													? 'none'
+													: 'inline',
+										}}></i>
+									<i
+										className="fas fa-pen mr-2"
+										data-tip="Edit the task"
+										onClick={() => this.onSetSidebarOpen(true, task._id)}></i>
+									<i
+										className="fas fa-trash-alt"
+										data-tip="Delete the task"
+										id={task._id}
+										onClick={this.deleteItem}></i>
+								</span>
+							</li>
+						);
+					}
+				})}
+			</ul>
+		);
+	};
+
 	render() {
 		if (this.state.directlyDashboard) return <Redirect to="/" />;
 		if (this.state.isSetting)
@@ -454,6 +525,43 @@ export default class Dashboard extends Component {
 								}}
 								onKeyPress={this.postItem}
 							/>
+
+							<Dropdown style={{ display: 'inline-block' }}>
+								<Dropdown.Toggle style={{ background: 'transparent', border: 'none', color: 'black' }}>
+									<i class="fas fa-ellipsis-v"></i>
+								</Dropdown.Toggle>
+
+								<Dropdown.Menu>
+									<Dropdown.Item onClick={this.filterColor} id="remove-filter">
+										Remove Filter
+									</Dropdown.Item>
+									<Dropdown.Item>
+										<p className="" onChange={null}>
+											<i
+												className="far fa-circle pr-2 cursor-pointer"
+												style={{ color: 'LimeGreen' }}
+												onClick={this.filterColor}
+												id="green"></i>
+											<i
+												className="far fa-circle pr-2 cursor-pointer"
+												style={{ color: 'Crimson' }}
+												onClick={this.filterColor}
+												id="red"></i>
+											<i
+												className="far fa-circle pr-2 cursor-pointer"
+												style={{ color: 'DodgerBlue' }}
+												onClick={this.filterColor}
+												id="blue"></i>
+											<i
+												className="far fa-circle pr-2 cursor-pointer"
+												style={{ color: 'DarkOrange' }}
+												onClick={this.filterColor}
+												id="yellow"></i>
+										</p>
+									</Dropdown.Item>
+								</Dropdown.Menu>
+							</Dropdown>
+
 							{isTimerScreen === true ? (
 								<Timer
 									id={taskIdInTimer}
@@ -462,74 +570,26 @@ export default class Dashboard extends Component {
 									currentUser={loggedUser}
 								/>
 							) : (
-								<ul className="tasks">
-									{this.state.usertasks.map(task => {
-										this.selectedDate();
-										if (task.date.substring(0, 10) === this.selectedDate()) {
-											return (
-												<li key={task._id}>
-													<ReactTooltip />
-													<span>
-														<i
-															className={
-																task.status === 'completed'
-																	? 'far fa-check-circle'
-																	: 'far fa-circle'
-															}
-															data-tip={
-																task.status === 'completed'
-																	? 'Incomplete the task'
-																	: 'Complete the task'
-															}
-															style={{
-																color: task.color,
-															}}
-															onMouseEnter={this.onHover}
-															onMouseLeave={e => this.inHover(e, task.status)}
-															onClick={() => this.completedStatus(task._id)}></i>{' '}
-													</span>
-													<span
-														className={
-															task.status === 'completed'
-																? 'text-decoration text-muted'
-																: ''
-														}>
-														{task.title}
-													</span>
-													<span className="float-right">
-														<small
-															className="text-muted mr-2"
-															data-tip="Time worked for the task">
-															{task.timeWorked ? `${task.timeWorked} min` : null}
-														</small>
-														<i
-															className="fas fa-hourglass-start mr-2"
-															data-tip="Let's start to work"
-															id={task._id}
-															onClick={this.setTimerScreen}
-															style={{
-																display:
-																	turnTodayDisplay === 'inline' ||
-																	task.status === 'completed'
-																		? 'none'
-																		: 'inline',
-															}}></i>
-														<i
-															className="fas fa-pen mr-2"
-															data-tip="Edit the task"
-															onClick={() => this.onSetSidebarOpen(true, task._id)}></i>
-														<i
-															className="fas fa-trash-alt"
-															data-tip="Delete the task"
-															id={task._id}
-															onClick={this.deleteItem}></i>
-													</span>
-												</li>
-											);
-										}
-									})}
+								// this.x()
+								<ul className="tasksbox">
+									{this.state.colorToFilter === 'red' ? this.x('crimson') : null}
+									{this.state.colorToFilter === 'yellow' ? this.x('darkorange') : null}
+									{this.state.colorToFilter === 'green' ? this.x('limegreen') : null}
+									{this.state.colorToFilter === 'blue' ? this.x('dodgerblue') : null}
+									{this.state.colorToFilter === '' || this.state.colorToFilter === 'remove-filter' ? (
+										<div>
+											{this.x('crimson')}
+											{this.x('darkorange')}
+											{this.x('dodgerblue')}
+											{this.x('limegreen')}
+											{this.x()}
+										</div>
+									) : null}
 								</ul>
 							)}
+							<p className="text-center p-0 m-0" style={{ fontSize: '1.5rem' }}>
+								<i className="fas fa-sort-down"></i>
+							</p>
 						</div>
 					</div>
 				</div>

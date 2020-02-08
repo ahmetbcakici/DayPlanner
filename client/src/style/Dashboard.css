@@ -48,7 +48,7 @@ span>i:hover {
 
 /* Tasks Card */
 
-ul.tasks {
+ul.tasksbox {
     /* max-height: 23em !important; rem */
     max-height: 50vh !important;
     overflow: hidden !important;
@@ -59,12 +59,16 @@ ul.tasks {
     list-style-type: none;
 }
 
-ul.tasks::-webkit-scrollbar {
+ul.tasksbox::-webkit-scrollbar {
     display: none;
 }
 
 
 /* Optional: show position indicator in red */
+
+ul.tasks {
+    padding-left: 0;
+}
 
 ul.tasks>li {
     background: rgba(255, 255, 255, 0.3);
@@ -97,6 +101,10 @@ ul.tasks>li:hover {
 .arrow-left {
     right: 100%;
     margin-right: 1rem;
+}
+
+.add-task {
+    width: 91% !important;
 }
 
 .add-task,
