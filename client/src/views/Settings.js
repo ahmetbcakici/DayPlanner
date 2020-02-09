@@ -4,10 +4,20 @@ import Navbar from '../components/Navbar';
 import SettingsSidebar from '../components/SettingsSidebar';
 import '../style/Settings.css';
 import SecuritySettings from '../components/SecuritySettings';
+import PreferencesSettings from '../components/PreferencesSettings';
 
 export default class Settings extends Component {
-	state = {
-		loggedUser: '',
+	constructor(props){
+		super(props);
+		this.state = {
+			loggedUser: '',
+			whichPage: <SecuritySettings/>,
+		};
+	}	
+
+	p = () => {
+		console.log("d")
+		// this.setState({ whichPage: <PreferencesSettings /> });
 	};
 
 	componentDidMount() {
@@ -18,7 +28,6 @@ export default class Settings extends Component {
             background-repeat: no-repeat;
             background-size: cover;
 		`;
-		console.log(this.props)
 	}
 
 	render() {
@@ -28,12 +37,10 @@ export default class Settings extends Component {
 				<Navbar currentUser={this.state.loggedUser} />
 				<div className="container mt-3">
 					<div className="row">
-						<div className="col-2 border-right">
-							<SettingsSidebar />
+						<div className="col-2 border-right" >
+							<SettingsSidebar func={this.p} />
 						</div>
-						<div className="col-10">
-							<SecuritySettings />
-						</div>
+						<div className="col-10">{this.state.whichPage}</div>
 					</div>
 				</div>
 			</div>

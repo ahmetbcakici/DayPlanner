@@ -307,18 +307,16 @@ export default class Dashboard extends Component {
 		this.setState({ colorToFilter: e.target.id });
 	};
 
-	x = color => {
+	renderTasks = color => {
 		//LimeGreen Crimson DodgerBlue DarkOrange
-		let y;
-		if (color) y = color;
-		else y = undefined;
+		let filterCheck;
+		if (color) filterCheck = color;
+		else filterCheck = undefined;
 		return (
 			<ul className="tasks">
 				{this.state.usertasks.map(task => {
 					this.selectedDate(); //
-					if (task.date.substring(0, 10) === this.selectedDate() && task.color === y) {
-						// console.log(this.selectedDate())
-						// console.log(task.date.substring(0,10))
+					if (task.date.substring(0, 10) === this.selectedDate() && task.color === filterCheck) {
 						return (
 							<li key={task._id}>
 								<ReactTooltip />
@@ -574,29 +572,20 @@ export default class Dashboard extends Component {
 									currentUser={loggedUser}
 								/>
 							) : (
-								// this.x()
 								<ul className="tasksbox">
-									{this.state.colorToFilter === 'red' ? this.x('crimson') : console.log('redelse')}
-									{this.state.colorToFilter === 'yellow'
-										? this.x('darkorange')
-										: console.log('yellowelse')}
-									{this.state.colorToFilter === 'green'
-										? this.x('limegreen')
-										: console.log('greenelse')}
-									{this.state.colorToFilter === 'blue'
-										? this.x('dodgerblue')
-										: console.log('blueelse')}
+									{this.state.colorToFilter === 'red' ? this.renderTasks('crimson') : null}
+									{this.state.colorToFilter === 'yellow' ? this.renderTasks('darkorange') : null}
+									{this.state.colorToFilter === 'green' ? this.renderTasks('limegreen') : null}
+									{this.state.colorToFilter === 'blue' ? this.renderTasks('dodgerblue') : null}
 									{this.state.colorToFilter === 'remove-filter' ? (
 										<div>
-											{this.x('crimson')}
-											{this.x('darkorange')}
-											{this.x('dodgerblue')}
-											{this.x('limegreen')}
-											{this.x()}
+											{this.renderTasks('crimson')}
+											{this.renderTasks('darkorange')}
+											{this.renderTasks('dodgerblue')}
+											{this.renderTasks('limegreen')}
+											{this.renderTasks()}
 										</div>
-									) : (
-										console.log('removefkerelse')
-									)}
+									) : null}
 								</ul>
 							)}
 							{/* <p className="text-center p-0 m-0" style={{ fontSize: '1.5rem' }}>

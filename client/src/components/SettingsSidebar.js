@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 
 export default class SettingsSidebar extends Component {
+	constructor(props) {
+		super(props);
+		console.log(props);
+	}
+
 	render() {
 		return (
 			<div>
@@ -12,7 +17,7 @@ export default class SettingsSidebar extends Component {
 						</a>
 					</li>
 					<li className="nav-item active border-bottom">
-						<a className="nav-link" href="#">
+						<a className="nav-link" href="#" onClick={this.props.func}>
 							<i class="fas fa-sliders-h mr-2"></i>
 							<span>Preferences</span>
 						</a>
