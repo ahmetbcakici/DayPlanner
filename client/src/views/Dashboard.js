@@ -34,7 +34,7 @@ export default class Dashboard extends Component {
 			directlyDashboard: false,
 			minDate: false,
 			isSetting: false,
-			colorToFilter: '',
+			colorToFilter: 'remove-filter',
 		};
 	}
 
@@ -149,14 +149,14 @@ export default class Dashboard extends Component {
 	};
 
 	minus = async () => {
-		await this.setState({ minusPlus: this.state.minusPlus - 1 });
+		await this.setState({ minusPlus: this.state.minusPlus - 1, colorToFilter: 'remove-filter' });
 		this.getDate();
 		this.checkIsToday();
 		this.minDateControl();
 	};
 
 	plus = async () => {
-		await this.setState({ minusPlus: this.state.minusPlus + 1 });
+		await this.setState({ minusPlus: this.state.minusPlus + 1, colorToFilter: 'remove-filter' });
 		this.getDate();
 		this.checkIsToday();
 		this.minDateControl();
@@ -309,15 +309,16 @@ export default class Dashboard extends Component {
 
 	x = color => {
 		//LimeGreen Crimson DodgerBlue DarkOrange
+		let y;
+		if (color) y = color;
+		else y = undefined;
 		return (
 			<ul className="tasks">
 				{this.state.usertasks.map(task => {
 					this.selectedDate(); //
-					if (
-						task.date.substring(0, 10) === this.selectedDate() && color
-							? task.color === color
-							: task.color === undefined
-					) {
+					if (task.date.substring(0, 10) === this.selectedDate() && task.color === y) {
+						// console.log(this.selectedDate())
+						// console.log(task.date.substring(0,10))
 						return (
 							<li key={task._id}>
 								<ReactTooltip />
@@ -526,7 +527,10 @@ export default class Dashboard extends Component {
 								onKeyPress={this.postItem}
 							/>
 
-							<Dropdown style={{ display: 'inline-block' }}>
+							<Dropdown
+								style={{
+									display: isTimerScreen || turnTodayDisplay === 'inline' ? 'none' : 'inline-block',
+								}}>
 								<Dropdown.Toggle style={{ background: 'transparent', border: 'none', color: 'black' }}>
 									<i class="fas fa-ellipsis-v"></i>
 								</Dropdown.Toggle>
@@ -535,7 +539,7 @@ export default class Dashboard extends Component {
 									<Dropdown.Item onClick={this.filterColor} id="remove-filter">
 										Remove Filter
 									</Dropdown.Item>
-									<Dropdown.Item>
+									<Dropdown.Item className="dropdownitem">
 										<p className="" onChange={null}>
 											<i
 												className="far fa-circle pr-2 cursor-pointer"
@@ -572,11 +576,17 @@ export default class Dashboard extends Component {
 							) : (
 								// this.x()
 								<ul className="tasksbox">
-									{this.state.colorToFilter === 'red' ? this.x('crimson') : null}
-									{this.state.colorToFilter === 'yellow' ? this.x('darkorange') : null}
-									{this.state.colorToFilter === 'green' ? this.x('limegreen') : null}
-									{this.state.colorToFilter === 'blue' ? this.x('dodgerblue') : null}
-									{this.state.colorToFilter === '' || this.state.colorToFilter === 'remove-filter' ? (
+									{this.state.colorToFilter === 'red' ? this.x('crimson') : console.log('redelse')}
+									{this.state.colorToFilter === 'yellow'
+										? this.x('darkorange')
+										: console.log('yellowelse')}
+									{this.state.colorToFilter === 'green'
+										? this.x('limegreen')
+										: console.log('greenelse')}
+									{this.state.colorToFilter === 'blue'
+										? this.x('dodgerblue')
+										: console.log('blueelse')}
+									{this.state.colorToFilter === 'remove-filter' ? (
 										<div>
 											{this.x('crimson')}
 											{this.x('darkorange')}
@@ -584,12 +594,14 @@ export default class Dashboard extends Component {
 											{this.x('limegreen')}
 											{this.x()}
 										</div>
-									) : null}
+									) : (
+										console.log('removefkerelse')
+									)}
 								</ul>
 							)}
-							<p className="text-center p-0 m-0" style={{ fontSize: '1.5rem' }}>
+							{/* <p className="text-center p-0 m-0" style={{ fontSize: '1.5rem' }}>
 								<i className="fas fa-sort-down"></i>
-							</p>
+							</p> */}
 						</div>
 					</div>
 				</div>

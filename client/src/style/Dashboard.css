@@ -156,3 +156,7 @@ p>.fa-circle:hover {
 
 
 /* Sidebar */
+
+.dropdownitem:hover {
+    background: white !important;
+}
