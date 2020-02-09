@@ -4,12 +4,14 @@ import { Dropdown } from 'react-bootstrap';
 import ReactTooltip from 'react-tooltip';
 import axios from 'axios';
 import '../style/Dashboard.css';
+import '../style/Settings.css';
 import Sidebar from 'react-sidebar';
 import Navbar from '../components/Navbar';
 import Timer from '../components/Timer';
 import SettingsSidebar from '../components/SettingsSidebar';
-import SecuritySettings from '../components/SecuritySettings';
+import AccountSettings from '../components/AccountSettings';
 import PreferencesSettings from '../components/PreferencesSettings';
+import DailySettings from '../components/DailySettings';
 
 export default class Dashboard extends Component {
 	constructor(props) {
@@ -34,6 +36,7 @@ export default class Dashboard extends Component {
 			directlyDashboard: false,
 			minDate: false,
 			isSetting: false,
+			whichSettingsPage: 'Account',
 			colorToFilter: 'remove-filter',
 		};
 	}
@@ -303,6 +306,10 @@ export default class Dashboard extends Component {
 		this.setState({ isSetting: !this.state.isSetting });
 	};
 
+	setWhichSettingsPage = pageName => {
+		this.setState({ whichSettingsPage: pageName });
+	};
+
 	filterColor = e => {
 		this.setState({ colorToFilter: e.target.id });
 	};
@@ -376,18 +383,25 @@ export default class Dashboard extends Component {
 		if (this.state.isSetting)
 			return (
 				<div>
-					<Navbar currentUser={this.state.loggedUser} />
+					<Navbar currentUser={this.state.loggedUser} func={this.setSettingsPage} />
 					<div className="container mt-3">
-						<div className="float-right" onClick={this.setSettingsPage}>
-							<i class="fas fa-times"></i>
+						<div className="float-right">
+							<i class="fas fa-times" onClick={this.setSettingsPage}></i>
 						</div>
 						<div className="row">
 							<div className="col-2 border-right">
-								<SettingsSidebar />
+								<SettingsSidebar func={this.setWhichSettingsPage} />
 							</div>
 							<div className="col-10">
-								{true ? <SecuritySettings currentUser={this.state.loggedUser} /> : null}
-								{false ? <PreferencesSettings currentUser={this.state.loggedUser} /> : null}
+								{this.state.whichSettingsPage === 'Account' ? (
+									<AccountSettings currentUser={this.state.loggedUser} />
+								) : null}
+								{this.state.whichSettingsPage === 'Preferences' ? (
+									<PreferencesSettings currentUser={this.state.loggedUser} />
+								) : null}
+								{this.state.whichSettingsPage === 'Daily' ? (
+									<DailySettings currentUser={this.state.loggedUser} />
+								) : null}
 							</div>
 						</div>
 					</div>

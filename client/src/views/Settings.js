@@ -1,3 +1,4 @@
+/*
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import Navbar from '../components/Navbar';
@@ -7,16 +8,16 @@ import SecuritySettings from '../components/SecuritySettings';
 import PreferencesSettings from '../components/PreferencesSettings';
 
 export default class Settings extends Component {
-	constructor(props){
+	constructor(props) {
 		super(props);
 		this.state = {
 			loggedUser: '',
-			whichPage: <SecuritySettings/>,
+			whichPage: <SecuritySettings />,
 		};
-	}	
+	}
 
 	p = () => {
-		console.log("d")
+		console.log('d');
 		// this.setState({ whichPage: <PreferencesSettings /> });
 	};
 
@@ -37,8 +38,8 @@ export default class Settings extends Component {
 				<Navbar currentUser={this.state.loggedUser} />
 				<div className="container mt-3">
 					<div className="row">
-						<div className="col-2 border-right" >
-							<SettingsSidebar func={this.p} />
+						<div className="col-2 border-right">
+							<SettingsSidebar />
 						</div>
 						<div className="col-10">{this.state.whichPage}</div>
 					</div>
@@ -47,3 +48,4 @@ export default class Settings extends Component {
 		);
 	}
 }
+*/

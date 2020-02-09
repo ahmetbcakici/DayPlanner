@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import ErrorAlert from '../components/ErrorAlert';
-import SuccessAlert from '../components/SuccessAlert';
+import ErrorAlert from './ErrorAlert';
+import SuccessAlert from './SuccessAlert';
 import { Redirect } from 'react-router-dom';
 
-export default class SecuritySettings extends Component {
+export default class AccountSettings extends Component {
 	state = {
 		currentPassword: '',
 		newPassword: '',
