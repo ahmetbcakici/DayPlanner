@@ -15,7 +15,7 @@ export default class SettingsSidebar extends Component {
 							<span>Account</span>
 						</a>
 					</li>
-					<li className="nav-item active border-bottom">
+					{/* <li className="nav-item active border-bottom">
 						<a className="nav-link" href="#" onClick={() => this.props.func('Preferences')}>
 							<i class="fas fa-sliders-h mr-2"></i>
 							<span>Preferences</span>
@@ -26,7 +26,7 @@ export default class SettingsSidebar extends Component {
 							<i class="fas fa-chart-pie mr-2"></i>
 							<span>Daily Routine</span>
 						</a>
-					</li>
+					</li> */}
 				</ul>
 			</div>
 		);

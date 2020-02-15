@@ -79,6 +79,7 @@ export default class AccountSettings extends Component {
 		return (
 			<div className="mt-3">
 				<div className="row p-3">
+					<div className="col-3"></div>
 					<div className="col-6">
 						<form action="#" onSubmit={this.changePasswordSubmitHandle}>
 							<legend>Change your password</legend>
@@ -139,8 +140,9 @@ export default class AccountSettings extends Component {
 							) : null}
 						</form>
 					</div>
-					<div className="col-6">
-						<form>
+					<div className="col-3"></div>
+					{/* <div className="col-6"> */}
+					{/* <form>
 							<legend>Change your email</legend>
 							<hr />
 							<div className="form-group">
@@ -164,8 +166,8 @@ export default class AccountSettings extends Component {
 								onClick={this.deleteAccount}>
 								Delete your account permanently.
 							</button>
-						</div>
-					</div>
+						</div> */}
+					{/* </div> */}
 				</div>
 			</div>
 		);
