@@ -50,7 +50,7 @@ export default class Timer extends Component {
 	workSessionCompleted = async () => {
 		axios
 			.put(
-				`http://localhost:3001/task/put`,
+				`task/put`,
 				{
 					id: this.state.taskInTimer._id,
 					timeWorked: this.state.timeWorked,
@@ -94,7 +94,7 @@ export default class Timer extends Component {
 	endAndCompleteSession = () => {
 		axios
 			.put(
-				`http://localhost:3001/task/put`,
+				`task/put`,
 				{ id: this.state.taskInTimer._id },
 				{ params: { loggedUser: this.props.currentUser } }
 			)
@@ -108,15 +108,6 @@ export default class Timer extends Component {
 				clearInterval(timer);
 				return;
 			}
-			// if (!document.hidden) {
-			// 	console.log('if');
-			// 	this.setState({ isInactive: false });
-			// } else {
-			// 	console.log("else")
-			// 	this.setState({ isInactive: true });
-			// }
-
-			// if(this.state.remainMinute === 0) console.log("0 sa")
 
 			if (this.state.remainMinute < 1 && this.state.remainSecond < 1) {
 				this.setState({ isBreak: !this.state.isBreak }, () => {

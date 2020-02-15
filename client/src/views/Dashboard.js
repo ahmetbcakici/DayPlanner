@@ -16,12 +16,11 @@ import DailySettings from '../components/DailySettings';
 export default class Dashboard extends Component {
 	constructor(props) {
 		super(props);
-		// this.currentUser();
 		this.state = {
 			usertasks: [],
 			minusPlus: 0,
 			turnTodayDisplay: 'none',
-			sidebarOpen: false, // default : false
+			sidebarOpen: false,
 			selectedColor: '',
 			taskNote: '',
 			workTime: 25,
@@ -31,8 +30,7 @@ export default class Dashboard extends Component {
 			taskToPut: '',
 			isTimerScreen: false,
 			taskIdInTimer: '',
-			// loggedUser: this.props.location.state.loggedUser, // ERROR you have to handle catch, see also line 47 currentUser func
-			loggedUser: '', // ERROR you have to handle catch, see also line 47 currentUser func
+			loggedUser: '',
 			directlyDashboard: false,
 			minDate: false,
 			isSetting: false,
@@ -51,11 +49,6 @@ export default class Dashboard extends Component {
 	`;
 		this.currentUser();
 	}
-
-	// componentDidCatch(err){
-	// 	console.log("op")
-	// 	console.log(err)
-	// }
 
 	currentUser = async () => {
 		try {
@@ -76,7 +69,7 @@ export default class Dashboard extends Component {
 	};
 
 	getItem = () => {
-		axios.get(`http://localhost:3001/task/get`, { params: { loggedUser: this.state.loggedUser } }).then(res => {
+		axios.get(`task/get`, { params: { loggedUser: this.state.loggedUser } }).then(res => {
 			const usertasks = res.data;
 			usertasks.reverse(); // For that : Users should be see task on top whichever is new
 			this.setState({ usertasks });
@@ -87,7 +80,7 @@ export default class Dashboard extends Component {
 		if (e.key === 'Enter' && e.target.value !== '') {
 			axios
 				.post(
-					`http://localhost:3001/task/post`,
+					`task/post`,
 					{ title: e.target.value, date: this.selectedDate() },
 					{ params: { loggedUser: this.state.loggedUser } }
 				)
@@ -102,7 +95,7 @@ export default class Dashboard extends Component {
 		const { editingTask, taskToPut, selectedColor, taskNote, workTime, breakTime, loggedUser } = this.state;
 		axios
 			.put(
-				`http://localhost:3001/task/put`,
+				`task/put`,
 				{
 					id: editingTask._id,
 					title: taskToPut,
@@ -124,7 +117,7 @@ export default class Dashboard extends Component {
 		const { loggedUser } = this.state;
 		const { id } = e.target;
 		axios
-			.delete(`http://localhost:3001/task/delete`, {
+			.delete(`task/delete`, {
 				data: { id },
 				params: { loggedUser },
 			})
@@ -275,7 +268,7 @@ export default class Dashboard extends Component {
 
 	completedStatus = id => {
 		axios
-			.put(`http://localhost:3001/task/put`, { id }, { params: { loggedUser: this.state.loggedUser } })
+			.put(`task/put`, { id }, { params: { loggedUser: this.state.loggedUser } })
 			.then(() => this.getItem());
 	};
 
@@ -315,14 +308,13 @@ export default class Dashboard extends Component {
 	};
 
 	renderTasks = color => {
-		//LimeGreen Crimson DodgerBlue DarkOrange
 		let filterCheck;
 		if (color) filterCheck = color;
 		else filterCheck = undefined;
 		return (
 			<ul className="tasks">
 				{this.state.usertasks.map(task => {
-					this.selectedDate(); //
+					this.selectedDate();
 					if (task.date.substring(0, 10) === this.selectedDate() && task.color === filterCheck) {
 						return (
 							<li key={task._id}>

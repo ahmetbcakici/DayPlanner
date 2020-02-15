@@ -31,7 +31,7 @@ export default class Homepage extends Component {
 		(() => {
 			const token = localStorage.getItem('token');
 			axios
-				.get('http://localhost:3001/user/jwt', { headers: { Authorization: 'Bearer ' + token } })
+				.get('user/jwt', { headers: { Authorization: 'Bearer ' + token } })
 				.then(response => {
 					this.setState({ isLogged: true, loggedUser: response.data });
 				});

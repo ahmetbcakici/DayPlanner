@@ -92,7 +92,7 @@ export default class Register extends Component {
 	registerSubmitHandle = e => {
 		e.preventDefault();
 		axios
-			.post('http://localhost:3001/user/register', {
+			.post('user/register', {
 				mail: this.state.mail,
 				username: this.state.username,
 				password: this.state.password,
@@ -100,7 +100,7 @@ export default class Register extends Component {
 			})
 			.then(response => {
 				axios
-					.post('http://localhost:3001/user/login', {
+					.post('user/login', {
 						username: this.state.username,
 						password: this.state.password,
 					})

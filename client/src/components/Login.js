@@ -32,7 +32,7 @@ export default class Login extends Component {
 
 	loginSubmitHandle = () => {
 		axios
-			.post('http://localhost:3001/user/login', { username: this.state.username, password: this.state.password })
+			.post('user/login', { username: this.state.username, password: this.state.password })
 			.then(response => {
 				localStorage.setItem('token', response.data.token);
 				this.setState({ redirect: true });

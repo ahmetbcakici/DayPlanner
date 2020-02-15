@@ -36,7 +36,7 @@ export default class AccountSettings extends Component {
 
 		axios
 			.put(
-				`http://localhost:3001/user/put`,
+				`user/put`,
 				{
 					currentPassword,
 					newPassword,
@@ -65,7 +65,7 @@ export default class AccountSettings extends Component {
 
 	deleteAccount = () => {
 		axios
-			.delete(`http://localhost:3001/user/delete`, {
+			.delete(`user/delete`, {
 				params: { loggedUser: this.props.currentUser },
 			})
 			.then(() => {

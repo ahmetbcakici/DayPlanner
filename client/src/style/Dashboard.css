@@ -160,3 +160,7 @@ p>.fa-circle:hover {
 .dropdownitem:hover {
     background: white !important;
 }
+
+.fa-user:hover {
+    color: inherit !important;
+}
