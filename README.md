@@ -15,6 +15,11 @@ You can plan & manage your time. Actually it is like ToDoApp but litle advanced 
 ### Database Config
 You should import database that i [exported](https://github.com/ahmetbcakici/DayPlanner/tree/master/DayPlannerDATABASE). If you have no idea about import MongoDB take a look [here](https://stackoverflow.com/questions/11255630/how-to-export-all-collections-in-mongodb)
 
+### Environment Config
+My .env file hidden content:
+JWT_SECRETKEY=secret_key
+MONGO_URL=connection_url
+
 ## Installation
 ```
 git clone https://github.com/ahmetbcakici/DayPlanner.git # Clone repo
