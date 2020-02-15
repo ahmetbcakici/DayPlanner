@@ -17,8 +17,10 @@ You should import database that i [exported](https://github.com/ahmetbcakici/Day
 
 ### Environment Config
 My .env file hidden content:<br>
-JWT_SECRETKEY=secret_key<br>
+```
+JWT_SECRETKEY=secret_key
 MONGO_URL=connection_url
+```
 
 ## Installation
 ```
