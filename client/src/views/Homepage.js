@@ -60,9 +60,9 @@ export default class Homepage extends Component {
 						<h2
 							className="text-center text-white font-weight-bold pl-5 pr-3 mt-5"
 							style={{ fontFamily: 'sans-serif', fontSize: '4rem' }}>
-							Plan your day
+							Manage your time
 							<br /> with our <br />
-							advanced{' '}
+							useful{' '}
 							<span className="text-light" style={{ 'text-decoration': 'underline' }}>
 								Day Planner
 							</span>
