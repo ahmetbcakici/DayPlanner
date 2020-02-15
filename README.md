@@ -28,5 +28,6 @@ npm run dev # To run project , check http://localhost:3000 on your browser
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
 
 ## GIF belongs to project
-![Screencapture 15 02 2020 13 34 39-1](https://user-images.githubusercontent.com/36089310/74586947-060ca180-4ffe-11ea-952a-08e16af761b9.gif)
+![Screencapture-15 02 2020-13 34 39-1](https://user-images.githubusercontent.com/36089310/74587501-3eaf7980-5004-11ea-8023-7ff5f309c245.gif)
+
 
