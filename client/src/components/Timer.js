@@ -134,7 +134,7 @@ export default class Timer extends Component {
 			);
 		};
 		timerProcess();
-		let timer = setInterval(timerProcess, this.state.isInactive ? 100 : 5);
+		let timer = setInterval(timerProcess, this.state.isInactive ? 1000 : 1000);
 	}
 
 	handleBack = async () => {
