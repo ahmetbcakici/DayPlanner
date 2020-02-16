@@ -1,4 +1,4 @@
-# Dynamic Personal Website
+# Day Planner
 
 You can plan & manage your time. Actually it is like ToDoApp but litle advanced version. You can enter tasks for every day and work on them with workTime & breakTime which has specified by yourself.
 <div align="center">
@@ -16,7 +16,7 @@ You can plan & manage your time. Actually it is like ToDoApp but litle advanced 
 You should import database that i [exported](https://github.com/ahmetbcakici/DayPlanner/tree/master/DayPlannerDATABASE). If you have no idea about import MongoDB take a look [here](https://stackoverflow.com/questions/11255630/how-to-export-all-collections-in-mongodb)
 
 ### Environment Config
-My .env file hidden content:<br>
+My hidden .env file content:<br>
 ```
 JWT_SECRETKEY=secret_key
 MONGO_URL=connection_url
