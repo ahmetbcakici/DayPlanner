@@ -42,9 +42,11 @@ export default class Timer extends Component {
 		await this.findTaskById();
 		this.setState(
 			{
-				workTime: this.state.taskInTimer.workTime,
-				breakTime: this.state.taskInTimer.breakTime,
+				// workTime: this.state.taskInTimer.workTime,
+				// breakTime: this.state.taskInTimer.breakTime,
 				totalTimeWorked: this.state.taskInTimer.timeWorked,
+				workTime: 1,
+				breakTime: 1,
 			},
 			() => this.setState({ remainMinute: this.state.workTime })
 		);
@@ -89,7 +91,8 @@ export default class Timer extends Component {
 		if (this.state.isBreak) {
 			return;
 		}
-		this.setState({ timeWorked: this.state.workTime - this.state.remainMinute }, async () => {
+
+		this.setState({ timeWorked: this.state.workTime - this.state.remainMinute, isPlayed: false }, async () => {
 			await this.workSessionCompleted();
 			this.setState({ remainMinute: this.state.breakTime, remainSecond: 0, secondCounter: 0, isBreak: true });
 		});
@@ -109,7 +112,8 @@ export default class Timer extends Component {
 				return;
 			}
 
-			if (this.state.secondCounter > 2) {
+			if (this.state.secondCounter > 3) {
+				console.log('ll');
 				this.setState({ isPlayed: true });
 			}
 
@@ -125,7 +129,12 @@ export default class Timer extends Component {
 						});
 						return;
 					}
-					this.setState({ remainMinute: this.state.workTime, remainSecond: 0, secondCounter: 0 });
+					this.setState({
+						remainMinute: this.state.workTime,
+						remainSecond: 0,
+						secondCounter: 0,
+						isPlayed: false,
+					});
 				});
 			}
 
@@ -143,7 +152,7 @@ export default class Timer extends Component {
 			);
 		};
 		timerProcess();
-		let timer = setInterval(timerProcess, this.state.isInactive ? 1000 : 1000);
+		let timer = setInterval(timerProcess, this.state.isInactive ? 1000 : 300);
 	}
 
 	handleBack = async () => {
@@ -152,18 +161,22 @@ export default class Timer extends Component {
 	};
 
 	skipBreak = () => {
-		this.setState({ isBreak: false, remainMinute: this.state.workTime, remainSecond: 0, secondCounter: 0 });
+		this.setState({
+			isBreak: false,
+			remainMinute: this.state.workTime,
+			remainSecond: 0,
+			secondCounter: 0,
+			isPlayed: false,
+		});
 	};
 
 	render() {
 		return (
 			<div>
 				<ReactTooltip />
-				{!this.state.isPlayed && this.state.isBreak ? (
+				{!this.state.isPlayed && this.state.progressVariant !== 'primary' && !this.state.isBack ? (
 					<Sound url={soundfile} playStatus={Sound.status.PLAYING} />
-				) : (
-					console.log('is briktşr')
-				)}
+				) : null}
 				<div className="text-center">
 					<span style={{ position: 'absolute', left: '1rem' }}>
 						<i className="fas fa-arrow-left" data-tip="Back to tasks page" onClick={this.handleBack}></i>
@@ -256,10 +269,6 @@ export default class Timer extends Component {
 							<small>{this.state.totalTimeWorked ? `${this.state.totalTimeWorked} min` : null}</small>
 						</p>
 					</div>
-					{/* <p className="text-center mt-1 pr-3 pl-3">
-						{this.state.taskInTimer.note ? this.state.taskInTimer.note : null}
-					</p> */}
-					{/* {this.state.taskInTimer.note ? <p className="text-center mt-1 pr-3 pl-3">{this.state.taskInTimer.note}</p> : null} */}
 					<div className="w-100">
 						<p className="text-center pr-3 pl-3">{this.state.taskInTimer.note}</p>
 					</div>
