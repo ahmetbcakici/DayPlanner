@@ -7,6 +7,8 @@ import '../style/Timer.css';
 import { easeQuadInOut } from 'd3-ease';
 import AnimatedProgressProvider from './AnimatedProgressProvider';
 import ReactTooltip from 'react-tooltip';
+import soundfile from '../mp3/bell.mp3';
+import Sound from 'react-sound';
 
 export default class Timer extends Component {
 	state = {
@@ -27,6 +29,7 @@ export default class Timer extends Component {
 		totalTimeWorked: 0,
 		isBack: false,
 		backModalDisplay: 'none',
+		isPlayed: false,
 	};
 
 	findTaskById = () => {
@@ -48,6 +51,7 @@ export default class Timer extends Component {
 	}
 
 	workSessionCompleted = async () => {
+		console.log('work sessino bitti');
 		axios
 			.put(
 				`task/put`,
@@ -93,11 +97,7 @@ export default class Timer extends Component {
 
 	endAndCompleteSession = () => {
 		axios
-			.put(
-				`task/put`,
-				{ id: this.state.taskInTimer._id },
-				{ params: { loggedUser: this.props.currentUser } }
-			)
+			.put(`task/put`, { id: this.state.taskInTimer._id }, { params: { loggedUser: this.props.currentUser } })
 			.then(() => this.endSession())
 			.then(() => this.handleBack());
 	};
@@ -109,11 +109,20 @@ export default class Timer extends Component {
 				return;
 			}
 
+			if (this.state.secondCounter > 2) {
+				this.setState({ isPlayed: true });
+			}
+
 			if (this.state.remainMinute < 1 && this.state.remainSecond < 1) {
 				this.setState({ isBreak: !this.state.isBreak }, () => {
 					if (this.state.isBreak) {
 						this.workSessionCompleted();
-						this.setState({ remainMinute: this.state.breakTime, remainSecond: 0, secondCounter: 0 });
+						this.setState({
+							remainMinute: this.state.breakTime,
+							remainSecond: 0,
+							secondCounter: 0,
+							isPlayed: false,
+						});
 						return;
 					}
 					this.setState({ remainMinute: this.state.workTime, remainSecond: 0, secondCounter: 0 });
@@ -150,6 +159,11 @@ export default class Timer extends Component {
 		return (
 			<div>
 				<ReactTooltip />
+				{!this.state.isPlayed && this.state.isBreak ? (
+					<Sound url={soundfile} playStatus={Sound.status.PLAYING} />
+				) : (
+					console.log('is briktşr')
+				)}
 				<div className="text-center">
 					<span style={{ position: 'absolute', left: '1rem' }}>
 						<i className="fas fa-arrow-left" data-tip="Back to tasks page" onClick={this.handleBack}></i>

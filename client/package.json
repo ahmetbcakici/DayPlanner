@@ -18,6 +18,7 @@
         "react-router-dom": "^5.1.2",
         "react-scripts": "3.3.0",
         "react-sidebar": "^3.0.2",
+        "react-sound": "^1.2.0",
         "react-tooltip": "^3.11.3"
     },
     "scripts": {
