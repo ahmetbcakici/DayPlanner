@@ -7,7 +7,8 @@ import '../style/Timer.css';
 import { easeQuadInOut } from 'd3-ease';
 import AnimatedProgressProvider from './AnimatedProgressProvider';
 import ReactTooltip from 'react-tooltip';
-import soundfile from '../mp3/bell.mp3';
+import soundfile from '../assets/mp3/bell.mp3';
+
 import Sound from 'react-sound';
 
 export default class Timer extends Component {

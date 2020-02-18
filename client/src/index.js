@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 import axios from 'axios';
-import { HashRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import { MemoryRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Homepage from './views/Homepage';
