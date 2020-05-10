@@ -1,0 +1,14 @@
+body {
+    overflow: hidden;
+}
+
+footer {
+    /* z-index: -1; */
+    text-align: center;
+    color: #bab6b5;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 2.5rem;
+    padding-top: 0.5rem;
+}
