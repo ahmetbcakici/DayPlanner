@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "d3cf847f5cec6e3ff3af3d358012ebd1",
+    "revision": "da99670da1c981d9b3d4f6d2a0dc3391",
     "url": "/dayplanner/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/dayplanner/static/css/2.7e9c9ab4.chunk.css"
   },
   {
-    "revision": "f99c079f8e478ad973a4",
+    "revision": "be5f1b9e1510eb0cb390",
     "url": "/dayplanner/static/css/main.f6676d6d.chunk.css"
   },
   {
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/dayplanner/static/js/2.752d977e.chunk.js.LICENSE"
   },
   {
-    "revision": "f99c079f8e478ad973a4",
-    "url": "/dayplanner/static/js/main.4e8e8091.chunk.js"
+    "revision": "be5f1b9e1510eb0cb390",
+    "url": "/dayplanner/static/js/main.ead81d37.chunk.js"
   },
   {
     "revision": "08df441f0fbc0a5f0cb6",
